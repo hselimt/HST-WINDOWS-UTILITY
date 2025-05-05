@@ -10,10 +10,10 @@ HST (Windows System Tweaker) is a powerful Windows utility designed to optimize 
 
 ### System Management
 - **Restore Point Creation**: Create system restore points before making changes to ensure you can revert if needed
-- **Registry Optimization**: Apply performance-oriented registry tweaks
+- **Registry Optimization**: Apply registry tweaks
 - **Task Scheduler Management**: Disable unnecessary scheduled tasks that consume system resources
 - **Windows Updates Control**: Disable Windows updates to prevent unwanted system changes and resource usage
-- **Visual Effects**: Lower visual effects to improve performance on lower-end hardware
+- **Visual Effects**: Lower visual effects to improve performance
 - **Dark Mode Toggle**: Switch Windows to dark mode
 - **Custom Power Plan**: Apply an optimized power plan for maximum performance
 
@@ -34,20 +34,16 @@ HST (Windows System Tweaker) is a powerful Windows utility designed to optimize 
 
 HST has been tested on the following system configurations:
 - Windows 10/11 (64-bit)
+- .NET should be installed or you can install it when you run executable
 - Administrator privileges required
 
 ## Installation
 
 1. Download the latest release from the [Releases](https://github.com/username/HST/releases) page
 2. Extract the files to a location of your choice
-3. Run `HST WINDOWS UTILITY.exe` as Administrator
+3. Run `HST WINDOWS UTILITY.exe`
 
-## Usage
-
-1. Launch HST with administrator privileges
-2. **Always create a restore point before using this tool**
-3. Select the desired optimizations from the available categories
-4. Restart your system
+**Always create a restore point before using this tool**
 
 ## Technical Details
 
