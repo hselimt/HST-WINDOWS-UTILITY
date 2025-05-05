@@ -1,0 +1,72 @@
+﻿/*
+ * 
+ * HAVING ISSUES WITH WINDOWS 11 24H2 UPDATE SO THIS PART IS UNDER PROGRESS
+ * 
+ * 
+ * 
+        private static readonly string[] MsPackages = new[]
+        {
+            "Clipchamp.Clipchamp",
+            "Disney",
+            "LinkedInforWindows",
+            "Microsoft",
+            "Microsoft.BingNews",
+            "Microsoft.BingSearch",
+            "Microsoft.BingWeather",
+            "Microsoft.GetHelp",
+            "Microsoft.Getstarted",
+            "Microsoft.MSPaint",
+            "Microsoft.Microsoft3DViewer",
+            "Microsoft.MicrosoftOfficeHub",
+            "Microsoft.MicrosoftSolitaireCollection",
+            "Microsoft.MicrosoftStickyNotes",
+            "Microsoft.MixedReality.Portal",
+            "Microsoft.Office.OneNote",
+            "Microsoft.OutlookforWindows",
+            "Microsoft.Paint",
+            "Microsoft.People",
+            "Microsoft.PowerAutomateDesktop",
+            "Microsoft.Windows.RemoteDesktop",
+            "Microsoft.ScreenSketch",
+            "Microsoft.SkypeApp",
+            "Microsoft.SkyDrive.Desktop",
+            "Microsoft.WindowsTerminal",
+            "Microsoft.Todos",
+            "Microsoft.Wallet",
+            "Microsoft.WindowsAlarms",
+            "Microsoft.WindowsCalculator",
+            "Microsoft.WindowsCamera",
+            "MicrosoftCorporationII.MicrosoftFamily",
+            "Microsoft.WindowsFeedbackHub",
+            "Microsoft.WindowsMaps",
+            "Microsoft.Windows.DevHome",
+            "Microsoft.WindowsSoundRecorder",
+            "Microsoft.YourPhone",
+            "Microsoft.ZuneMusic",
+            "Microsoft.ZuneVideo",
+            "MicrosoftCorporationII.QuickAssist",
+            "MicrosoftTeams",
+            "MSTeams",
+            "MicrosoftWindows.Client.WebExperience",
+            "SpotifyAB.SpotifyMusic",
+            "Microsoft.WindowsCommunicationsApps"
+        };
+
+        private static readonly string[] XBOXPackages = new[]
+        {
+            "Microsoft.GamingApp",
+            "Microsoft.Xbox.App",
+            "Microsoft.Xbox.TCUI",
+            "Microsoft.XboxApp",
+            "Microsoft.XboxGameOverlay",
+            "Microsoft.XboxGamingOverlay",
+            "Microsoft.XboxSpeechToTextOverlay",
+            "Microsoft.XboxIdentityProvider"
+        };
+
+        private static readonly string[] STOREPackages = new[]
+        {
+            "Microsoft.WindowsStore",
+            "Microsoft.StorePurchaseApp",
+        };
+*/
