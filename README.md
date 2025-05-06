@@ -6,7 +6,7 @@ HST.png
 
 HST (Windows System Tweaker) is a powerful Windows utility designed to optimize your system's performance by providing easy access to various system configurations and tweaking options. It's perfect for gamers looking to maximize their hardware efficiency.
 
-## Features
+!!! Debloat section currently under work because Windows 11 24h2's new update causing errors but you can use debloat.bat which is included in release. !!!
 
 ### System Management
 - **Restore Point Creation**: Create system restore points before making changes to ensure you can revert if needed
