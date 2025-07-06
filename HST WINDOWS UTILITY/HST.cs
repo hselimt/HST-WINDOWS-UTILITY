@@ -257,7 +257,7 @@ namespace HST_WINDOWS_UTILITY
 
                 if (clbSS.GetItemChecked(1))
                 {
-                    additionalServices.AddRange(new[] { "HvHost", "vmickvpexchange", "vmicguestinterface" });
+                    additionalServices.AddRange(new[] { "HvHost", "vmickvpexchange", "vmicguestinterface", "vmicshutdown", "vmicheartbeat", "vmicvmsession", "vmicrdv", "vmictimesync", "vmicvss" });
                 }
 
                 if (clbSS.GetItemChecked(2))
