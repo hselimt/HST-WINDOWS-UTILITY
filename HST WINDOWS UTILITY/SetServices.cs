@@ -28,7 +28,7 @@ namespace SetServicesApp
             "SDRSVC", "FrameServer", "wcncsvc", "Wecsvc", "wisvc", "MixedRealityOpenXRSvc",
             "icssvc", "spectrum", "perceptionsimulation", "WpnUserService*", "PushToInstall",
             "W32Time", "WFDSConMgrSvc", "WSearch", "LanmanWorkstation", "AppVClient",
-            "cloudidsvc", "diagnosticshub.standardcollector.service", "wlidsvc"
+            "cloudidsvc", "diagnosticshub.standardcollector.service", "wlidsvc", "workfolderssvc", "MapsBroker"
         };
 
         public async Task DisableConfiguredServices()
