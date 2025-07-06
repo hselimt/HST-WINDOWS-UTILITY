@@ -20,8 +20,10 @@ namespace PackageRemoverApp
         private static readonly string[] MsPackages = new[]
         {
             "Clipchamp",
+            "Clipchamp.Clipchamp",
             "Disney",
             "LinkedInforWindows",
+            "LinkedIn",
             "Microsoft",
             "Microsoft.BingNews",
             "Microsoft.BingSearch",
