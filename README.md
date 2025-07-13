@@ -35,5 +35,5 @@ HST WINDOWS UTILITY is a powerful Windows utility designed to optimize your syst
 - Runs with Administrator privileges
 
 ## Installation
-1. Download the latest release from the [Releases](https://github.com/username/HST/releases) page
+1. Download the latest release from the [BETA RELEASE]([https://github.com/username/HST/releases](https://github.com/hselimt/HST-WINDOWS-UTILITY/releases/tag/v1.0-beta))
 2. Run `HST WINDOWS UTILITY.exe`
