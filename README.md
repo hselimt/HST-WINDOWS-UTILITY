@@ -6,6 +6,7 @@
 HST WINDOWS UTILITY is a powerful Windows utility designed to optimize your system's performance by providing easy access to various system configurations and tweaking options. It's perfect for gamers looking to maximize their hardware efficiency.
 
 **Always create a restore point before using this tool**
+**If you plan to remove OneDrive with this tool, make sure to disable all backup features first. Otherwise, essential folders like Documents and Desktop that OneDrive is backing up will be deleted**
 
 ### System Management
 - **Restore Point Creation**: Manually create system restore points to ensure you can revert changes if needed
