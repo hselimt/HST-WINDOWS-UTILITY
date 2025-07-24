@@ -7,7 +7,7 @@ HST WINDOWS UTILITY is a powerful Windows utility designed to optimize your syst
 
 **Always create a restore point before using this tool**
 
-**If you plan to remove OneDrive with this tool, make sure to disable all backup features first. Otherwise, essential folders like Documents and Desktop that OneDrive is backing up will be deleted**
+**If you plan to remove OneDrive with this tool, make sure to disable all backup features first. Otherwise, essential folders that OneDrive is backing up will be deleted**
 
 ### System Management
 - **Restore Point Creation**: Manually create system restore points to ensure you can revert changes if needed
