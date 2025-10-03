@@ -1,0 +1,30 @@
+﻿{
+  "name": "hst-app",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build-win": "electron-builder --win",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.0.0"
+  },
+  "build": {
+    "appId": "com.hst.app",
+    "productName": "HST",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "HST.exe",
+      "**/*"
+    ],
+    "win": {
+      "target": "portable",
+      "requestedExecutionLevel": "requireAdministrator"
+    }
+  }
+}

@@ -1,0 +1,2 @@
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-family:Segoe UI,-apple-system,BlinkMacSystemFont,sans-serif;margin:0}code{font-family:source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace}.animate-spin{animation:spin 1s linear infinite}@keyframes spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}@keyframes gradient-flow{0%,to{background-position:0 50%}50%{background-position:100% 50%}}
+/*# sourceMappingURL=main.33570293.css.map*/
