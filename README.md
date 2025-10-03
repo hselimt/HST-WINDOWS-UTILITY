@@ -10,7 +10,7 @@ HST UTILITY is a powerful Windows utility designed to optimize your system's per
 **If you plan to remove OneDrive with this tool, make sure to disable all backup features first. Otherwise, essential folders that OneDrive is backing up will be deleted**
 
 ### System Management
-- **Restore Point Creation**: Manually create system restore points to ensure you can revert changes if needed
+- **Restore Point Creation**: Automatically create system restore points to ensure you can revert changes if needed
 - **Registry Optimization**: Apply registry tweaks
 - **Task Scheduler Management**: Disable unnecessary scheduled tasks
 - **Windows Updates Control**: Disable Windows updates
@@ -21,6 +21,7 @@ HST UTILITY is a powerful Windows utility designed to optimize your system's per
 ### Services Management
 - disable non-essential Windows services while maintaining system stability
 - Customizable service disabling with options for:
+  - Recommended services
   - Bluetooth services
   - Hyper-V virtualization services
   - Xbox gaming services
