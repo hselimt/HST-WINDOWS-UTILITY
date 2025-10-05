@@ -1,0 +1,48 @@
+cd "C:\Users\HST\source\repos\HST WINDOWS UTILITY\HST WINDOWS UTILITY"
+
+---
+
+# Clean .NET artifacts
+dotnet clean
+
+---
+
+# Remove old build outputs
+rd /s /q bin
+rd /s /q obj
+rd /s /q dist
+
+---
+
+cd "C:\Users\HST\Desktop\FRONTEND"
+
+# Install dependencies (if needed)
+npm install
+
+# Build React app
+npm run build
+
+---
+
+# Copy new build to wwwroot
+
+---
+
+# Build .NET backend
+dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
+
+# Copy everything from publish folder to bin root for Electron to find
+xcopy /E /I /Y "bin\Release\net8.0\win-x64\publish\*" "bin\"
+
+---
+
+# Install Electron dependencies (if needed)
+npm install
+
+# Build portable exe
+npm run build
+
+---
+
+# Run the exe
+dist\HST-WINDOWS-UTILITY-1.0.0.exe
