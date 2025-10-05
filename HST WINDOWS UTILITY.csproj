@@ -15,17 +15,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Update="HST.pow">
+		<None Update="AppsConfig.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="AppsConfig.json">
+		</None>
+		<None Update="ServicesConfig.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="ServicesConfig.json">
+		</None>
+		<None Update="GUIDConfig.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="GUIDConfig.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
+		</None>
 	</ItemGroup>
+
+	<Target Name="CopyPowerPlanFile" AfterTargets="Publish">
+		<Copy SourceFiles="wwwroot\Powerplan\HST.pow"
+			  DestinationFolder="$(PublishDir)"
+			  SkipUnchangedFiles="false" />
+	</Target>
+
 </Project>

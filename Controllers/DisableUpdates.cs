@@ -23,7 +23,7 @@ namespace HST.Controllers.DisableUpdate
             try
             {
                 // Load services from JSON
-                var json = await System.IO.File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "servicesConfig.json"));
+                var json = await System.IO.File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ServicesConfig.json"));
                 var config = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json);
                 var WUservicesToDisable = config["windowsUpdate"];
 
