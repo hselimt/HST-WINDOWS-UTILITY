@@ -1,0 +1,516 @@
+{
+  "recommended": [
+    {
+      "service": "tzautoupdate",
+      "name": "Auto Time Zone Updater"
+    },
+    {
+      "service": "BthAvctpSvc",
+      "name": "AVCTP service"
+    },
+    {
+      "service": "BDESVC",
+      "name": "BitLocker Drive Encryption Service"
+    },
+    {
+      "service": "wbengine",
+      "name": "Block Level Backup Engine Service"
+    },
+    {
+      "service": "autotimesvc",
+      "name": "Cellular Time"
+    },
+    {
+      "service": "CaptureService*",
+      "name": "CaptureService"
+    },
+    {
+      "service": "CloudBackupRestoreSvc*",
+      "name": "Windows Backup"
+    },
+    {
+      "service": "ClipSVC",
+      "name": "Client License Service (ClipSVC)"
+    },
+    {
+      "service": "cbdhsvc*",
+      "name": "Clipboard User Service"
+    },
+    {
+      "service": "DiagTrack",
+      "name": "Connected User Experiences and Telemetry"
+    },
+    {
+      "service": "ConsentUxUserSvc*",
+      "name": "ConsentUX User Service"
+    },
+    {
+      "service": "PimIndexMaintenanceSvc*",
+      "name": "Contact Data"
+    },
+    {
+      "service": "CDPUserSvc*",
+      "name": "Connected Devices Platform User Service"
+    },
+    {
+      "service": "DsSvc",
+      "name": "Data Sharing Service"
+    },
+    {
+      "service": "DusmSvc*",
+      "name": "Data Usage"
+    },
+    {
+      "service": "DoSvc",
+      "name": "Delivery Optimization"
+    },
+    {
+      "service": "DmEnrollmentSvc",
+      "name": "Device Management Enrollment Service"
+    },
+    {
+      "service": "dmwappushservice",
+      "name": "Device Management WAP Push Service"
+    },
+    {
+      "service": "DevicePickerUserSvc*",
+      "name": "Device Picker User Service"
+    },
+    {
+      "service": "DevicesFlowUserSvc*",
+      "name": "Devices Flow User Service"
+    },
+    {
+      "service": "diagsvc",
+      "name": "Diagnostic Execution Service"
+    },
+    {
+      "service": "DPS",
+      "name": "Diagnostic Policy Service"
+    },
+    {
+      "service": "DialogBlockingService",
+      "name": "DialogBlockingService"
+    },
+    {
+      "service": "DisplayEnhancementService",
+      "name": "Display Enhancement Service"
+    },
+    {
+      "service": "fhsvc",
+      "name": "File History Service"
+    },
+    {
+      "service": "BcastDVRUserService*",
+      "name": "GameDVR and Broadcast User Service"
+    },
+    {
+      "service": "lfsvc",
+      "name": "Geolocation Service"
+    },
+    {
+      "service": "iphlpsvc",
+      "name": "IP Helper"
+    },
+    {
+      "service": "LxpSvc*",
+      "name": "Language Experience Service"
+    },
+    {
+      "service": "MapsBroker",
+      "name": "Downloaded Maps Manager"
+    },
+    {
+      "service": "MessagingService*",
+      "name": "Messaging Service"
+    },
+    {
+      "service": "MicrosoftEdgeElevationService",
+      "name": "Microsoft Edge Elevation Service"
+    },
+    {
+      "service": "edgeupdate",
+      "name": "Microsoft Edge Update Service"
+    },
+    {
+      "service": "edgeupdatem",
+      "name": "Microsoft Edge Update Service (edgeupdatem)"
+    },
+    {
+      "service": "MsKeyboardFilter",
+      "name": "Microsoft Keyboard Filter"
+    },
+    {
+      "service": "NgcSvc",
+      "name": "Microsoft Passport"
+    },
+    {
+      "service": "NgcCtnrSvc",
+      "name": "Microsoft Passport Container"
+    },
+    {
+      "service": "InstallService",
+      "name": "Microsoft Store Install Service"
+    },
+    {
+      "service": "uhssvc",
+      "name": "Microsoft Update Health Service"
+    },
+    {
+      "service": "SmsRouter",
+      "name": "Microsoft Windows SMS Router Service"
+    },
+    {
+      "service": "NetTcpPortSharing",
+      "name": "Net.Tcp Port Sharing Service"
+    },
+    {
+      "service": "Netlogon",
+      "name": "Netlogon"
+    },
+    {
+      "service": "NcbService",
+      "name": "Network Connection Broker"
+    },
+    {
+      "service": "CscService",
+      "name": "Offline Files"
+    },
+    {
+      "service": "defragsvc",
+      "name": "Optimize drives"
+    },
+    {
+      "service": "WpcMonSvc",
+      "name": "Parental Controls"
+    },
+    {
+      "service": "SEMgrSvc",
+      "name": "Payments and NFC/SE Manager"
+    },
+    {
+      "service": "PhoneSvc",
+      "name": "Phone Service"
+    },
+    {
+      "service": "Spooler",
+      "name": "Print Spooler"
+    },
+    {
+      "service": "PrintDeviceConfigurationService",
+      "name": "PrintDeviceConfiguration Service"
+    },
+    {
+      "service": "PrintNotify",
+      "name": "Printer Extensions and Notifications"
+    },
+    {
+      "service": "PrintWorkflowUserSvc*",
+      "name": "PrintWorkflow"
+    },
+    {
+      "service": "wercplsupport",
+      "name": "Problem Reports Control Panel Support"
+    },
+    {
+      "service": "PcaSvc",
+      "name": "Program Compatibility Assistant Service"
+    },
+    {
+      "service": "QWAVE",
+      "name": "Quality Windows Audio Video Experience"
+    },
+    {
+      "service": "RmSvc",
+      "name": "Radio Management Service"
+    },
+    {
+      "service": "TroubleshootingSvc",
+      "name": "Recommended Troubleshooting Service"
+    },
+    {
+      "service": "RasAuto",
+      "name": "Remote Access Auto Connection Manager"
+    },
+    {
+      "service": "RasMan",
+      "name": "Remote Access Connection Manager"
+    },
+    {
+      "service": "SessionEnv",
+      "name": "Remote Desktop Configuration"
+    },
+    {
+      "service": "UmRdpService",
+      "name": "Remote Desktop Services UserMode Port Redirector"
+    },
+    {
+      "service": "RemoteRegistry",
+      "name": "Remote Registry"
+    },
+    {
+      "service": "RemoteAccess",
+      "name": "Routing and Remote Access"
+    },
+    {
+      "service": "RetailDemo",
+      "name": "Retail Demo Service"
+    },
+    {
+      "service": "SensorDataService",
+      "name": "Sensor Data Service"
+    },
+    {
+      "service": "SensrSvc",
+      "name": "Sensor Monitoring Service"
+    },
+    {
+      "service": "SensorService",
+      "name": "Sensor Service"
+    },
+    {
+      "service": "LanmanServer",
+      "name": "Server"
+    },
+    {
+      "service": "shpamsvc",
+      "name": "Shared PC Account Manager"
+    },
+    {
+      "service": "SCardSvr",
+      "name": "Smart Card"
+    },
+    {
+      "service": "ScDeviceEnum",
+      "name": "Smart Card Device Enumeration Service"
+    },
+    {
+      "service": "SCPolicySvc",
+      "name": "Smart Card Removal Policy"
+    },
+    {
+      "service": "OneSyncSvc*",
+      "name": "Sync Host"
+    },
+    {
+      "service": "SysMain",
+      "name": "SysMain"
+    },
+    {
+      "service": "TabletInputService",
+      "name": "Touch Keyboard and Handwriting Panel Service"
+    },
+    {
+      "service": "TapiSrv",
+      "name": "Telephony"
+    },
+    {
+      "service": "UserDataSvc*",
+      "name": "User Data Access"
+    },
+    {
+      "service": "UnistoreSvc*",
+      "name": "User Data Storage"
+    },
+    {
+      "service": "UevAgentService",
+      "name": "User Experience Virtualization Service"
+    },
+    {
+      "service": "SDRSVC",
+      "name": "Windows Backup"
+    },
+    {
+      "service": "FrameServer",
+      "name": "Windows Camera Frame Server"
+    },
+    {
+      "service": "wcncsvc",
+      "name": "Windows Connect Now - Config Registrar"
+    },
+    {
+      "service": "Wecsvc",
+      "name": "Windows Event Collector"
+    },
+    {
+      "service": "wisvc",
+      "name": "Windows Insider Service"
+    },
+    {
+      "service": "MixedRealityOpenXRSvc",
+      "name": "Windows Mixed Reality OpenXR Service"
+    },
+    {
+      "service": "icssvc",
+      "name": "Windows Mobile Hotspot Service"
+    },
+    {
+      "service": "spectrum",
+      "name": "Windows Perception Service"
+    },
+    {
+      "service": "perceptionsimulation",
+      "name": "Windows Perception Simulation Service"
+    },
+    {
+      "service": "WpnUserService*",
+      "name": "Windows Push Notifications User Service"
+    },
+    {
+      "service": "PushToInstall",
+      "name": "Windows PushToInstall Service"
+    },
+    {
+      "service": "W32Time",
+      "name": "Windows Time"
+    },
+    {
+      "service": "WFDSConMgrSvc",
+      "name": "Wi-Fi Direct Services Connection Manager Service"
+    },
+    {
+      "service": "WSearch",
+      "name": "Windows Search"
+    },
+    {
+      "service": "LanmanWorkstation",
+      "name": "Workstation"
+    },
+    {
+      "service": "AppVClient",
+      "name": "Microsoft App-V Client"
+    },
+    {
+      "service": "cloudidsvc",
+      "name": "Microsoft Cloud Identity Service"
+    },
+    {
+      "service": "diagnosticshub.standardcollector.service",
+      "name": "Microsoft Diagnostics Hub Standard Collector Service"
+    },
+    {
+      "service": "WbioSrvc",
+      "name": "Windows Biometric Service"
+    },
+    {
+      "service": "WdiSystemHost",
+      "name": "Diagnostic System Host"
+    },
+    {
+      "service": "WdiServiceHost",
+      "name": "Diagnostic Service Host"
+    },
+    {
+      "service": "wlidsvc",
+      "name": "Microsoft Account Sign-in Assistant"
+    },
+    {
+      "service": "WerSvc",
+      "name": "Windows Error Reporting Service"
+    },
+    {
+      "service": "workfolderssvc",
+      "name": "Work Folders"
+    }
+  ],
+  "bluetooth": [
+    {
+      "service": "BTAGService",
+      "name": "Bluetooth Audio Gateway Service"
+    },
+    {
+      "service": "bthserv",
+      "name": "Bluetooth Support Service"
+    },
+    {
+      "service": "BluetoothUserService*",
+      "name": "Bluetooth User Support Service"
+    },
+    {
+      "service": "DeviceAssociationBrokerSvc*",
+      "name": "Device Association Broker"
+    }
+  ],
+  "hyperv": [
+    {
+      "service": "HvHost",
+      "name": "HV Host Service"
+    },
+    {
+      "service": "vmickvpexchange",
+      "name": "Hyper-V Data Exchange Service"
+    },
+    {
+      "service": "vmicguestinterface",
+      "name": "Hyper-V Guest Service Interface"
+    },
+    {
+      "service": "vmicshutdown",
+      "name": "Hyper-V Guest Shutdown Service"
+    },
+    {
+      "service": "vmicheartbeat",
+      "name": "Hyper-V Heartbeat Service"
+    },
+    {
+      "service": "vmcompute",
+      "name": "Hyper-V Host Compute Service"
+    },
+    {
+      "service": "vmicvmsession",
+      "name": "Hyper-V PowerShell Direct Service"
+    },
+    {
+      "service": "vmicrdv",
+      "name": "Hyper-V Remote Desktop Virtualization Service"
+    },
+    {
+      "service": "vmictimesync",
+      "name": "Hyper-V Time Synchronization Service"
+    },
+    {
+      "service": "vmms",
+      "name": "Hyper-V Virtual Machine Management"
+    },
+    {
+      "service": "vmicvss",
+      "name": "Hyper-V Volume Shadow Copy Requestor"
+    }
+  ],
+  "xbox": [
+    {
+      "service": "XboxGipSvc",
+      "name": "Xbox Accessory Management Service"
+    },
+    {
+      "service": "XblAuthManager",
+      "name": "Xbox Live Auth Manager"
+    },
+    {
+      "service": "XblGameSave",
+      "name": "Xbox Live Game Save"
+    },
+    {
+      "service": "XboxNetApiSvc",
+      "name": "Xbox Live Networking Service"
+    }
+  ],
+  "windowsUpdate": [
+    {
+      "service": "WaaSMedicSvc",
+      "name": "Windows Update Medic Service"
+    },
+    {
+      "service": "wuauserv",
+      "name": "Windows Update"
+    },
+    {
+      "service": "UsoSvc",
+      "name": "Update Orchestrator Service"
+    },
+    {
+      "service": "BITS",
+      "name": "Background Intelligent Transfer Service"
+    }
+  ]
+}

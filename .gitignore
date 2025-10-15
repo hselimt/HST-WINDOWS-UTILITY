@@ -1,0 +1,15 @@
+# Build outputs 
+bin/ 
+obj/ 
+dist/ 
+ 
+# Dependencies 
+node_modules/ 
+ 
+# Visual Studio 
+.vs/ 
+*.user 
+*.suo 
+ 
+# Temp files 
+*.log 
