@@ -9,15 +9,40 @@
 <img src="https://img.shields.io/badge/Electron-27-47848F?style=for-the-badge&logo=electron&logoColor=white"/>
 </p>
 
-![HST Interface](./HST.jpg)
+---
+
+## 🚀 Choose Your Version
+
+<table align="center">
+<tr>
+<td align="center" width="50%">
+
+### 🖥️ GUI
+
+</td>
+<td align="center" width="50%">
+
+### ⌨️ CLI
+
+</td>
+</tr>
+<tr>
+<td align="center">
+<img src="./HST.jpg" width="500" height="500"/>
+</td>
+<td align="center">
+<img src="./HSTCLI.jpg" width="500" height="500"/>
+</td>
+</tr>
+</table>
+
+**Windows optimization tools designed to maximize system performance through registry tweaks, service management, and system cleanup. Perfect for gamers and power users seeking maximum hardware efficiency.**
+
+[![Download](https://img.shields.io/badge/Download-Latest%20Release-success?style=for-the-badge&logo=github)](https://github.com/hselimt/HST-WINDOWS-UTILITY/releases)
 
 </div>
 
 ---
-
-## 📋 Overview
-
-HST UTILITY is a **powerful Windows optimization tool** designed to maximize system performance through registry tweaks, service management, and system cleanup. Perfect for gamers and power users seeking maximum hardware efficiency.
 
 ### ⚠️ WARNINGS
 
@@ -36,7 +61,7 @@ HST UTILITY is a **powerful Windows optimization tool** designed to maximize sys
 ### 🛡️ System Management
 
 - **Restore Point Creation** - Automatic system restore points for safe rollback
-- **Registry Optimization** - Performance-focused registry tweaks
+- **Registry Optimization** - 500+ performance-focused registry tweaks
 - **Task Scheduler** - Disable unnecessary scheduled tasks
 - **Windows Updates** - Control automatic updates
 - **Visual Effects** - Reduce animations for better performance
@@ -45,25 +70,19 @@ HST UTILITY is a **powerful Windows optimization tool** designed to maximize sys
 
 ### ⚙️ Services Management
 
-- ✅ Recommended services
+- ✅ 99+ recommended services disabled
 - 🔵 Bluetooth services
 - 💻 Hyper-V virtualization
 - 🎮 Xbox gaming services
 
-### 🧹 System Cleanup
+### 🧹 System Cleanup & Debloat
 
 - 📁 Temporary files removal
-- 🌐 Browser cache cleanup (Chrome)
+- 🌐 Browser cache cleanup
 - 📊 Event logs cleanup
 - ⚡ Unused power plans removal
-
----
-
-## 📥 Installation
-
-### Download and run the latest release
-
-[![Download](https://img.shields.io/badge/Download-Latest%20Release-success?style=for-the-badge&logo=github)](https://github.com/hselimt/HST-WINDOWS-UTILITY/releases)
+- 🗑️ Remove MS Apps / Xbox Apps / Store Apps
+- 🌐 Remove Edge / OneDrive
 
 ---
 
@@ -75,14 +94,16 @@ HST UTILITY is a **powerful Windows optimization tool** designed to maximize sys
 - PowerShell Integration
 - System Registry Access
 
-**Frontend**
+**Frontend (GUI)**
 - React
 - JavaScript
 - Lucide Icons
+- Electron Desktop
 
-**Desktop**
-- Electron
-- Single executable distribution
+**CLI**
+- Batch scripting
+- Native Windows commands
+- Same optimizations as GUI
 
 ---
 
@@ -92,7 +113,7 @@ HST UTILITY is a **powerful Windows optimization tool** designed to maximize sys
 - Windows 10 (64-bit) or later
 - Administrator privileges
 - 100 MB free disk space
-- .NET 8.0 Runtime (included)
+- .NET 8.0 Runtime (GUI only, included in .exe)
 
 ---
 
@@ -103,6 +124,7 @@ HST UTILITY is a **powerful Windows optimization tool** designed to maximize sys
 - ✅ Batch and PowerShell scripts/commands
 - ✅ All optimization logic and safety checks
 - ✅ Years of Windows tweaking knowledge
+- ✅ CLI version with 20+ optimization modules
 - ✅ Full integration and testing
 
 **AI-Assisted:**
