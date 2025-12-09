@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.0" />
+		<PackageReference Include="Microsoft.Windows.Compatibility" Version="8.0.0" />
+		<PackageReference Include="System.Management.Automation" Version="7.4.0" />
+		<PackageReference Include="System.Management" Version="8.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="AppsConfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ServicesConfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="GUIDConfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ScheduledTasksConfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<Target Name="CopyPowerPlanFile" AfterTargets="Publish">
+		<Copy SourceFiles="wwwroot\Powerplan\HST.pow"
+			  DestinationFolder="$(PublishDir)"
+			  SkipUnchangedFiles="false" />
+	</Target>
+
+</Project>
