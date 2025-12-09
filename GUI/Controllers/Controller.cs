@@ -244,6 +244,31 @@ namespace HST.Controllers
             }
         }
 
+        [HttpPost("remove-startup-apps")]
+        public async Task<IActionResult> RemoveStartupApps()
+        {
+            try
+            {
+                await _debloater.RemoveStartupAppsAsync();
+                return Ok(new
+                {
+                    status = "STARTUP APPS REMOVED",
+                    message = "Startup apps have been removed",
+                    success = true
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"ERROR: {ex.Message}");
+                return Ok(new
+                {
+                    status = "REMOVING STARTUP APPS FAILED",
+                    error = ex.Message,
+                    success = false
+                });
+            }
+        }
+
 
         [HttpPost("debloat-apps")]
         public async Task<IActionResult> DebloatApps([FromBody] DebloatOptions options = null)
@@ -441,6 +466,91 @@ namespace HST.Controllers
                 });
             }
         }
+
+        [HttpPost("revert-configurations")]
+        public async Task<IActionResult> RevertConfigurations([FromBody] RevertOptions options = null)
+        {
+            if (options == null)
+            {
+                return Ok(new
+                {
+                    status = "NO OPTIONS PROVIDED",
+                    message = "Please provide options",
+                    success = false
+                });
+            }
+
+            bool anyReverted = false;
+
+            if (options.Service)
+            {
+                try
+                {
+                    await _setServices.DisableConfiguredServicesRevert();
+                    anyReverted = true;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"ERROR: {ex.Message}");
+                }
+            }
+
+            if (options.Task)
+            {
+                try
+                {
+                    await _tsOptimizer.DisableAllScheduledTasksRevertAsync();
+                    anyReverted = true;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"An error occurred during task scheduler revert: {ex.Message}");
+                }
+            }
+
+            if (options.WUpdate)
+            {
+                try
+                {
+                    await _disableWindowsUpdates.DisableWUpdatesRevert();
+                    anyReverted = true;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"An error occurred while reverting windows updates: {ex.Message}");
+                }
+            }
+
+            if (options.Registry)
+            {
+                try
+                {
+                    await _regOptimizer.OptimizeRegistryRevertAsync();
+                    anyReverted = true;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"An error occurred during registry revertion: {ex.Message}");
+                }
+            }
+
+            if (anyReverted)
+            {
+                return Ok(new
+                {
+                    status = "CONFIGURATIONS REVERTED",
+                    message = "Selected configurations have been reverted",
+                    success = true
+                });
+            }
+
+            return Ok(new
+            {
+                status = "NO OPTIONS SELECTED",
+                message = "Please select at least one option to revert",
+                success = false
+            });
+        }
     }
 
     public class SystemInfoDto
@@ -476,6 +586,14 @@ namespace HST.Controllers
         public bool Cache { get; set; }
         public bool EventLog { get; set; }
         public bool PowerPlan { get; set; }
+    }
+
+    public class RevertOptions
+    {
+        public bool Service { get; set; }
+        public bool Task { get; set; }
+        public bool WUpdate { get; set; }
+        public bool Registry { get; set; }
     }
 
 }

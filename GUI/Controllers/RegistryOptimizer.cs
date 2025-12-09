@@ -596,12 +596,6 @@ namespace HST.Controllers.RegOptimizerMethods
                     key.SetValue("Start", 0x4, RegistryValueKind.DWord);
                 }
 
-                /*
-                // --- Disable Startup Apps ---
-                Registry.LocalMachine.DeleteSubKeyTree(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", false);
-                Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
-                */
-
                 // --- Disable Store Auto Downloads ---
                 using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\WindowsStore"))
                 {
@@ -723,11 +717,634 @@ namespace HST.Controllers.RegOptimizerMethods
             });
         }
 
+        public async Task OptimizeRegistryRevertAsync()
+        {
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\PriorityControl"))
+            {
+                if (key != null) key.SetValue("Win32PrioritySeparation", 2, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Power"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("HiberbootEnabled", 1, RegistryValueKind.DWord);
+                    key.SetValue("SleepStudyDisabled", 0, RegistryValueKind.DWord);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Power"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("HibernateEnabled", 1, RegistryValueKind.DWord);
+                    key.DeleteValue("ExitLatency", false);
+                    key.DeleteValue("ExitLatencyCheckEnabled", false);
+                    key.DeleteValue("Latency", false);
+                    key.DeleteValue("LatencyToleranceDefault", false);
+                    key.DeleteValue("LatencyToleranceFSVP", false);
+                    key.DeleteValue("LatencyTolerancePerfOverride", false);
+                    key.DeleteValue("LatencyToleranceScreenOffIR", false);
+                    key.DeleteValue("RtlCapabilityCheckLatency", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance"))
+            {
+                if (key != null) key.SetValue("MaintenanceDisabled", 0, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Power\PowerThrottling"))
+            {
+                if (key != null) key.DeleteValue("PowerThrottlingOff", false);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\GraphicsDrivers"))
+            {
+                if (key != null) key.SetValue("HwSchMode", 2, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\GameBar"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("AllowAutoGameMode", 1, RegistryValueKind.DWord);
+                    key.SetValue("AutoGameModeEnabled", 1, RegistryValueKind.DWord);
+                    key.SetValue("AllowGameBarControllerButton", 1, RegistryValueKind.DWord);
+                    key.SetValue("UseNexusForGameBarEnabled", 1, RegistryValueKind.DWord);
+                }
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"System\GameConfigStore"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("GameDVR_Enabled", 1, RegistryValueKind.DWord);
+                    key.SetValue("GameDVR_FSEBehaviorMode", 2, RegistryValueKind.DWord);
+                    key.SetValue("GameDVR_FSEBehavior", 2, RegistryValueKind.DWord);
+                    key.SetValue("GameDVR_HonorUserFSEBehaviorMode", 0, RegistryValueKind.DWord);
+                    key.SetValue("GameDVR_DXGIHonorFSEWindowsCompatible", 0, RegistryValueKind.DWord);
+                    key.SetValue("GameDVR_EFSEFeatureFlags", 1, RegistryValueKind.DWord);
+                    key.SetValue("GameDVR_DSEBehavior", 2, RegistryValueKind.DWord);
+                    key.DeleteValue("GameDVR_DXGI_AGILITY_FACTOR", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\GameDVR"))
+            {
+                if (key != null) key.DeleteValue("AllowGameDVR", false);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR"))
+            {
+                if (key != null) key.SetValue("AppCaptureEnabled", 1, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Control Panel\Desktop"))
+            {
+                if (key != null) key.SetValue("MenuShowDelay", "400", RegistryValueKind.String);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Control Panel\Accessibility\HighContrast"))
+            {
+                if (key != null) key.SetValue("Flags", "126", RegistryValueKind.String);
+            }
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Control Panel\Accessibility\ToggleKeys"))
+            {
+                if (key != null) key.SetValue("Flags", "62", RegistryValueKind.String);
+            }
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Control Panel\Accessibility\StickyKeys"))
+            {
+                if (key != null) key.SetValue("Flags", "510", RegistryValueKind.String);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile"))
+            {
+                if (key != null)
+                {
+                    key.DeleteValue("NoLazyMode", false);
+                    key.DeleteValue("AlwaysOn", false);
+                    key.SetValue("NetworkThrottlingIndex", 10, RegistryValueKind.DWord);
+                    key.SetValue("SystemResponsiveness", 20, RegistryValueKind.DWord);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games"))
+            {
+                if (key != null)
+                {
+                    key.DeleteValue("Affinity", false);
+                    key.DeleteValue("Background Only", false);
+                    key.DeleteValue("GPU Priority", false);
+                    key.DeleteValue("Priority", false);
+                    key.DeleteValue("Scheduling Category", false);
+                    key.DeleteValue("SFIO Priority", false);
+                    key.DeleteValue("Latency Sensitive", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power"))
+            {
+                if (key != null)
+                {
+                    string[] values = {
+                    "DefaultD3TransitionLatencyActivelyUsed", "DefaultD3TransitionLatencyIdleLongTime",
+                    "DefaultD3TransitionLatencyIdleMonitorOff", "DefaultD3TransitionLatencyIdleNoContext",
+                    "DefaultD3TransitionLatencyIdleShortTime", "DefaultD3TransitionLatencyIdleVeryLongTime",
+                    "DefaultLatencyToleranceIdle0", "DefaultLatencyToleranceIdle0MonitorOff",
+                    "DefaultLatencyToleranceIdle1", "DefaultLatencyToleranceIdle1MonitorOff",
+                    "DefaultLatencyToleranceMemory", "DefaultLatencyToleranceNoContext",
+                    "DefaultLatencyToleranceNoContextMonitorOff", "DefaultLatencyToleranceOther",
+                    "DefaultLatencyToleranceTimerPeriod", "DefaultMemoryRefreshLatencyToleranceActivelyUsed",
+                    "DefaultMemoryRefreshLatencyToleranceMonitorOff", "DefaultMemoryRefreshLatencyToleranceNoContext",
+                    "Latency", "MaxIAverageGraphicsLatencyInOneBucket", "MiracastPerfTrackGraphicsLatency",
+                    "MonitorLatencyTolerance", "MonitorRefreshLatencyTolerance", "TransitionLatency"
+                };
+                    foreach (var v in values) key.DeleteValue(v, false);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000"))
+            {
+                if (key != null)
+                {
+                    key.DeleteValue("EnableUlps", false);
+                    key.DeleteValue("EnableUlps_NA", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\FileSystem"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("NtfsDisableLastAccessUpdate", 1, RegistryValueKind.DWord);
+                    key.SetValue("NtfsDisable8dot3NameCreation", 2, RegistryValueKind.DWord);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\kernel"))
+            {
+                if (key != null) key.DeleteValue("DistributeTimers", false);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\wuauclt.exe\PerfOptions"))
+            {
+                if (key != null)
+                {
+                    key.DeleteValue("CpuPriorityClass", false);
+                    key.DeleteValue("IoPriority", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\SearchIndexer.exe\PerfOptions"))
+            {
+                if (key != null)
+                {
+                    key.DeleteValue("CpuPriorityClass", false);
+                    key.DeleteValue("IoPriority", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Control Panel\Keyboard"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("KeyboardDelay", "1", RegistryValueKind.String);
+                    key.SetValue("KeyboardSpeed", "31", RegistryValueKind.String);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Services\mouclass\Parameters"))
+            {
+                if (key != null) key.DeleteValue("MouseDataQueueSize", false);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Services\kbdclass\Parameters"))
+            {
+                if (key != null) key.DeleteValue("KeyboardDataQueueSize", false);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Control Panel\Mouse"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("MouseSpeed", "1", RegistryValueKind.String);
+                    key.SetValue("MouseThreshold1", "6", RegistryValueKind.String);
+                    key.SetValue("MouseThreshold2", "10", RegistryValueKind.String);
+                }
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"))
+            {
+                if (key != null)
+                {
+                    string[] subs = {
+                    "SubscribedContent-338393Enabled", "SubscribedContent-338388Enabled", "SubscribedContent-314559Enabled",
+                    "SubscribedContent-280815Enabled", "SubscribedContent-202914Enabled", "SubscribedContent-353694Enabled",
+                    "SubscribedContent-353696Enabled", "SubscribedContent-338387Enabled", "SubscribedContent-353698Enabled",
+                    "SubscribedContent-338389Enabled", "SubscribedContent-310093Enabled", "SubscribedContent-314563Enabled",
+                    "RotatingLockScreenOverlayEnabled", "RotatingLockScreenEnabled", "ContentDeliveryAllowed",
+                    "OemPreInstalledAppsEnabled", "PreInstalledAppsEnabled", "PreInstalledAppsEverEnabled",
+                    "SilentInstalledAppsEnabled", "SoftLandingEnabled", "SubscribedContentEnabled",
+                    "FeatureManagementEnabled", "SystemPaneSuggestionsEnabled", "RemediationRequired"
+                };
+                    foreach (var s in subs) key.SetValue(s, 1, RegistryValueKind.DWord);
+                }
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("TailoredExperiencesWithDiagnosticDataEnabled", 1, RegistryValueKind.DWord);
+                    key.SetValue("Start_TrackProgs", 1, RegistryValueKind.DWord);
+                    key.DeleteValue("AppSuggestions", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\Windows Feeds"))
+            {
+                if (key != null) key.DeleteValue("EnableFeeds", false);
+            }
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\Explorer"))
+            {
+                if (key != null) key.DeleteValue("ShowOrHideMostUsedApps", false);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\CloudContent"))
+            {
+                if (key != null)
+                {
+                    key.DeleteValue("ConfigureWindowsSpotlight", false);
+                    key.DeleteValue("IncludeEnterpriseSpotlight", false);
+                    key.DeleteValue("DisableWindowsSpotlightFeatures", false);
+                    key.DeleteValue("DisableWindowsSpotlightWindowsWelcomeExperience", false);
+                    key.DeleteValue("DisableWindowsSpotlightOnActionCenter", false);
+                    key.DeleteValue("DisableWindowsSpotlightOnSettings", false);
+                    key.DeleteValue("DisableThirdPartySuggestions", false);
+                    key.DeleteValue("DisableTailoredExperiencesWithDiagnosticData", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\CloudContent"))
+            {
+                if (key != null)
+                {
+                    key.DeleteValue("DisableThirdPartySuggestions", false);
+                    key.DeleteValue("DisableWindowsConsumerFeatures", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Dsh"))
+            {
+                if (key != null) key.DeleteValue("AllowNewsAndInterests", false);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation"))
+            {
+                if (key != null) key.SetValue("DisableStartupSound", 0, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Remote Assistance"))
+            {
+                if (key != null) key.SetValue("fAllowToGetHelp", 1, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("ShowFrequent", 1, RegistryValueKind.DWord);
+                    key.SetValue("ShowRecent", 1, RegistryValueKind.DWord);
+                    key.SetValue("NoRecentDocsHistory", 0, RegistryValueKind.DWord);
+                    key.DeleteValue("TelemetrySalt", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("NoRecentDocsHistory", 0, RegistryValueKind.DWord);
+                    key.DeleteValue("HideSCAMeetNow", false);
+                    key.DeleteValue("DisableNotificationCenter", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\Maps"))
+            {
+                if (key != null) key.SetValue("AutoUpdateEnabled", 1, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("DontSearchWindowsUpdate", 0, RegistryValueKind.DWord);
+                    key.DeleteValue("SearchOrderConfig", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection"))
+            {
+                if (key != null) key.SetValue("AllowTelemetry", 3, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\DataCollection"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("AllowTelemetry", 3, RegistryValueKind.DWord);
+                    key.DeleteValue("AllowDeviceNameInTelemetry", false);
+                    key.DeleteValue("AllowCommercialDataPipeline", false);
+                    key.DeleteValue("LimitEnhancedDiagnosticDataWindowsAnalytics", false);
+                    key.DeleteValue("DoNotShowFeedbackNotifications", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Search"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("HistoryViewEnabled", 1, RegistryValueKind.DWord);
+                    key.SetValue("DeviceHistoryEnabled", 1, RegistryValueKind.DWord);
+                    key.SetValue("BingSearchEnabled", 1, RegistryValueKind.DWord);
+                    key.SetValue("SearchboxTaskbarMode", 1, RegistryValueKind.DWord);
+                }
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\SearchSettings"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("IsDynamicSearchBoxEnabled", 1, RegistryValueKind.DWord);
+                    key.SetValue("IsDeviceSearchHistoryEnabled", 1, RegistryValueKind.DWord);
+                }
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\PushNotifications"))
+            {
+                if (key != null) key.SetValue("ToastEnabled", 1, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance"))
+            {
+                if (key != null) key.SetValue("Enabled", 1, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications"))
+            {
+                if (key != null) key.SetValue("GlobalUserDisabled", 0, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings"))
+            {
+                if (key != null) key.DeleteValue("TaskbarEndTask", false);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Personalization\Settings"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("AcceptedPrivacyPolicy", 1, RegistryValueKind.DWord);
+                    key.SetValue("RestrictImplicitInkCollection", 0, RegistryValueKind.DWord);
+                    key.SetValue("RestrictImplicitTextCollection", 0, RegistryValueKind.DWord);
+                }
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack\EventTranscriptKey"))
+            {
+                if (key != null) key.SetValue("EnableEventTranscript", 1, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Siuf\Rules"))
+            {
+                if (key != null) key.DeleteValue("NumberOfSIUFInPeriod", false);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\System"))
+            {
+                if (key != null)
+                {
+                    key.DeleteValue("PublishUserActivities", false);
+                    key.DeleteValue("UploadUserActivities", false);
+                    key.DeleteValue("EnableActivityFeed", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Control Panel\Accessibility"))
+            {
+                if (key != null) key.SetValue("DynamicScrollbars", 1, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo"))
+            {
+                if (key != null) key.SetValue("Enabled", 1, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Control Panel\International\User Profile"))
+            {
+                if (key != null) key.SetValue("HttpAcceptLanguageOptOut", 0, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\SystemSettings\AccountNotifications"))
+            {
+                if (key != null) key.SetValue("EnableAccountNotifications", 1, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\SmartActionPlatform\SmartClipboard"))
+            {
+                if (key != null) key.SetValue("Disabled", 0, RegistryValueKind.DWord);
+            }
+
+            string[] capabilities = {
+                        "appointments", "appDiagnostics", "broadFileSystemAccess", "bluetoothSync", "chat",
+                        "contacts", "documentsLibrary", "downloadsFolder", "email", "graphicsCaptureProgrammatic",
+                        "graphicsCaptureWithoutBorder", "location", "microphone", "musicLibrary", "phoneCall",
+                        "phoneCallHistory", "picturesLibrary", "radios", "webcam", "userAccountInformation",
+                        "userDataTasks", "userNotificationListener", "videosLibrary"
+                    };
+
+            foreach (var cap in capabilities)
+            {
+                using (RegistryKey key = Registry.LocalMachine.CreateSubKey($@"SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\{cap}"))
+                {
+                    if (key != null) key.DeleteValue("Value", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Speech_OneCore\Settings\OnlineSpeechPrivacy"))
+            {
+                if (key != null) key.SetValue("HasAccepted", 1, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Speech_OneCore\Settings\VoiceActivation\UserPreferenceForAllApps"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("AgentActivationEnabled", 1, RegistryValueKind.DWord);
+                    key.DeleteValue("AgentActivationLastUsed", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync"))
+            {
+                if (key != null) key.SetValue("SyncPolicy", 0, RegistryValueKind.DWord);
+            }
+
+            string[] syncGroups = { "Accessibility", "AppSync", "Personalization", "BrowserSettings", "Credentials", "Language", "Windows" };
+
+            foreach (var sg in syncGroups)
+            {
+                using (RegistryKey key = Registry.CurrentUser.CreateSubKey($@"SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\{sg}"))
+                {
+                    if (key != null) key.SetValue("Enabled", 1, RegistryValueKind.DWord);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting"))
+            {
+                if (key != null)
+                {
+                    key.DeleteValue("Disabled", false);
+                    key.DeleteValue("DoReport", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\StorageSense"))
+            {
+                if (key != null) key.DeleteValue("AllowStorageSenseGlobal", false);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Edge"))
+            {
+                if (key != null)
+                {
+                    key.DeleteValue("StartupBoostEnabled", false);
+                    key.DeleteValue("HardwareAccelerationModeEnabled", false);
+                    key.DeleteValue("BackgroundModeEnabled", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Services\MicrosoftEdgeElevationService"))
+            {
+                if (key != null) key.SetValue("Start", 3, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Services\edgeupdate"))
+            {
+                if (key != null) key.SetValue("Start", 2, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Services\edgeupdatem"))
+            {
+                if (key != null) key.SetValue("Start", 3, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Google\Chrome"))
+            {
+                if (key != null)
+                {
+                    key.DeleteValue("StartupBoostEnabled", false);
+                    key.DeleteValue("HardwareAccelerationModeEnabled", false);
+                    key.DeleteValue("BackgroundModeEnabled", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Services\GoogleChromeElevationService"))
+            {
+                if (key != null) key.SetValue("Start", 3, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Services\gupdate"))
+            {
+                if (key != null) key.SetValue("Start", 2, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Services\gupdatem"))
+            {
+                if (key != null) key.SetValue("Start", 3, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\WindowsStore"))
+            {
+                if (key != null) key.DeleteValue("AutoDownload", false);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("TaskbarMn", 1, RegistryValueKind.DWord);
+                    key.SetValue("ShowTaskViewButton", 1, RegistryValueKind.DWord);
+                    key.DeleteValue("TaskbarAnimations", false);
+                    key.DeleteValue("IconsOnly", false);
+                    key.DeleteValue("ListviewAlphaSelect", false);
+                    key.DeleteValue("ListviewShadow", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings"))
+            {
+                if (key != null)
+                {
+                    key.DeleteValue("ShowLockOption", false);
+                    key.DeleteValue("ShowSleepOption", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"))
+            {
+                if (key != null) key.SetValue("EnableTransparency", 1, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"AppEvents\Schemes"))
+            {
+                if (key != null) key.SetValue("", ".Default", RegistryValueKind.String);
+            }
+
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects"))
+            {
+                if (key != null) key.SetValue("VisualFXSetting", 0, RegistryValueKind.DWord);
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Control Panel\Desktop"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("UserPreferencesMask", new byte[] { 0x9E, 0x3E, 0x07, 0x80, 0x12, 0x00, 0x00, 0x00 }, RegistryValueKind.Binary);
+                    key.SetValue("MinAnimate", "1", RegistryValueKind.String);
+                    key.SetValue("DragFullWindows", "1", RegistryValueKind.String);
+                    key.SetValue("FontSmoothing", "2", RegistryValueKind.String);
+                    key.DeleteValue("WindowAnimation", false);
+                    key.DeleteValue("MenuAnimation", false);
+                    key.DeleteValue("TaskbarAnimations", false);
+                    key.DeleteValue("IconAnimation", false);
+                    key.DeleteValue("ScrollAnimation", false);
+                    key.DeleteValue("ScrollSmoothness", false);
+                }
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\DWM"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("EnableAeroPeek", 1, RegistryValueKind.DWord);
+                    key.SetValue("AlwaysHibernateThumbnails", 1, RegistryValueKind.DWord);
+                }
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Control Panel\Desktop\WindowMetrics"))
+            {
+                if (key != null) key.SetValue("MinAnimate", "1", RegistryValueKind.String);
+            }
+        }
+
         public async Task SwitchDarkModeAsync()
         {
             await Task.Run(() =>
             {
-                // --- Enable Dark Mode for Apps and System ---
                 using (RegistryKey key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"))
                 {
                     key.SetValue("AppsUseLightTheme", 0, RegistryValueKind.DWord);

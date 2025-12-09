@@ -1,15 +1,13 @@
-﻿using HST.Controllers.RemovalTools;
-using System.Diagnostics;
+﻿using System.Text;
 using System.Text.Json;
-
-#pragma warning disable CS8600
-#pragma warning disable CS8602
+using HST.Controllers.RemovalTools;
 
 namespace HST.Controllers.TaskSchedulerOptimizerMethods
 {
     public class TaskSchedulerOptimizer
     {
         private readonly RemovalHelpers _removalTools;
+        private const string ConfigFileName = "ScheduledTasksConfig.json";
 
         public TaskSchedulerOptimizer(RemovalHelpers removalTools)
         {
@@ -18,23 +16,40 @@ namespace HST.Controllers.TaskSchedulerOptimizerMethods
 
         public async Task DisableAllScheduledTasksAsync()
         {
-            var json = await File.ReadAllTextAsync(
-                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ScheduledTasksConfig.json"));
-            var config = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json);
-            var tasksToDisable = config["tasks"];
+            await ProcessTasksAsync(disable: true);
+        }
 
-            string taskList = string.Join("', '", tasksToDisable);
-            string disableTasksScript = $@"
-            $ErrorActionPreference = 'SilentlyContinue'
+        public async Task DisableAllScheduledTasksRevertAsync()
+        {
+            await ProcessTasksAsync(disable: false);
+        }
+
+        private async Task ProcessTasksAsync(bool disable)
+        {
+            var configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigFileName);
+
+            if (!File.Exists(configPath)) { throw new FileNotFoundException($"Configuration file not found: {configPath}"); }
+
+            var json = await File.ReadAllTextAsync(configPath);
+            var config = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json);
+
+            if (config == null || !config.TryGetValue("tasks", out var tasks) || tasks == null) { return; }
+
+            var taskList = string.Join("', '", tasks.Select(t => t.Replace("'", "''")));
+            var command = disable
+                ? "Stop-ScheduledTask -TaskName $task -ErrorAction SilentlyContinue; Disable-ScheduledTask -TaskName $task -ErrorAction SilentlyContinue"
+                : "Enable-ScheduledTask -TaskName $task -ErrorAction SilentlyContinue";
+
+            string psScript = $@"
             $tasks = @('{taskList}')
             foreach ($task in $tasks) {{
-                Stop-ScheduledTask -TaskName $task
-                Disable-ScheduledTask -TaskName $task
-            }}
-            ";
+                {command}
+            }}";
 
-            await _removalTools.RunCommandAsync("powershell.exe",
-                $"-NoProfile -ExecutionPolicy Bypass -Command \"{disableTasksScript.Replace("\"", "\"\"")}\"");
+            var scriptBytes = Encoding.Unicode.GetBytes(psScript);
+            var encodedScript = Convert.ToBase64String(scriptBytes);
+
+            await _removalTools.RunCommandAsync("powershell.exe", $"-NoProfile -ExecutionPolicy Bypass -EncodedCommand {encodedScript}");
         }
     }
 }

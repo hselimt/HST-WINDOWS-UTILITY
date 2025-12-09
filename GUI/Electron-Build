@@ -1,4 +1,4 @@
-cd ".\HST-WINDOWS-UTILITY"
+cd "C:\Users\HST\Documents\HST-WINDOWS-UTILITY\GUI"
 
 # Clean .NET artifacts
 dotnet clean
@@ -9,12 +9,12 @@ rd /s /q obj
 rd /s /q dist
 
 # Build React frontend
-cd ".\FRONTEND"
+cd "C:\Users\HST\Documents\HST-WINDOWS-UTILITY\GUI\View"
 npm install
 npm run build
 
 # Build .NET backend
-cd ".\HST-WINDOWS-UTILITY"
+cd "C:\Users\HST\Documents\HST-WINDOWS-UTILITY\GUI"
 dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
 
 # Copy everything from publish folder to bin root for Electron to find
@@ -28,5 +28,5 @@ npm run build
 dist\HST-WINDOWS-UTILITY-1.0.0.exe
 
 # If the exe doesn't launch, run it directly from command prompt to see the error:
-cd ".\HST-WINDOWS-UTILITY\dist"
+cd "C:\Users\HST\Documents\HST-WINDOWS-UTILITY\GUI\dist"
 HST-WINDOWS-UTILITY-1.0.0.exe

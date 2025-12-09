@@ -1,8 +1,9 @@
 @echo off
 setlocal EnableDelayedExpansion
-title HST WINDOWS UTILITY - SCRIPT VERSION v1.0.0
+title HST WINDOWS UTILITY - SCRIPT VERSION v1.5.0
 color 0B
 
+mode con: cols=90 lines=110
 
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 if '%errorlevel%' NEQ '0' (
@@ -18,58 +19,60 @@ if '%errorlevel%' NEQ '0' (
 set "nul=>NUL 2>&1"
 :MAIN_MENU
 cls
-echo.
-
-
-echo           _____                    _____                _____
-echo          /\    \                  /\    \              /\    \
-echo         /::\____\                /::\    \            /::\    \
-echo        /:::/    /               /::::\    \           \:::\    \
-echo       /:::/    /               /::::::\    \           \:::\    \
-echo      /:::/    /               /:::/\:::\    \           \:::\    \
-echo     /:::/____/               /:::/__\:::\    \           \:::\    \
-echo    /::::\    \               \:::\   \:::\    \          /::::\    \
-echo   /::::::\    \   _____    ___\:::\   \:::\    \        /::::::\    \
-echo  /:::/\:::\    \ /\    \  /\   \:::\   \:::\    \      /:::/\:::\    \
-echo /:::/  \:::\    /::\____\/::\   \:::\   \:::\____\    /:::/  \:::\____\
-echo \::/    \:::\  /:::/    /\:::\   \:::\   \::/    /   /:::/    \::/    /
-echo  \/____/ \:::\/:::/    /  \:::\   \:::\   \/____/   /:::/    / \/____/
-echo           \::::::/    /    \:::\   \:::\    \      /:::/    /
-echo            \::::/    /      \:::\   \:::\____\    /:::/    /
-echo            /:::/    /        \:::\  /:::/    /    \::/    /
-echo           /:::/    /          \:::\/:::/    /      \/____/
-echo          /:::/    /            \::::::/    /
-echo         /:::/    /              \::::/    /
-echo         \::/    /                \::/    /
-echo          \/____/                  \/____/
+set "choice="
+echo                    _____                    _____                _____
+echo                   /\    \                  /\    \              /\    \
+echo                  /::\____\                /::\    \            /::\    \
+echo                 /:::/    /               /::::\    \           \:::\    \
+echo                /:::/    /               /::::::\    \           \:::\    \
+echo               /:::/    /               /:::/\:::\    \           \:::\    \
+echo              /:::/____/               /:::/__\:::\    \           \:::\    \
+echo             /::::\    \     SELIM     \:::\   \:::\    \   BABA   /::::\    \
+echo            /::::::\    \   _____    ___\:::\   \:::\    \        /::::::\    \
+echo           /:::/\:::\    \ /\    \  /\   \:::\   \:::\    \      /:::/\:::\    \
+echo          /:::/  \:::\    /::\____\/::\   \:::\   \:::\____\    /:::/  \:::\____\
+echo          \::/    \:::\  /:::/    /\:::\   \:::\   \::/    /   /:::/    \::/    /
+echo           \/____/ \:::\/:::/    /  \:::\   \:::\   \/____/   /:::/    / \/____/
+echo                    \::::::/    /    \:::\   \:::\    \      /:::/    /
+echo                     \::::/    /      \:::\   \:::\____\    /:::/    /
+echo                     /:::/    /        \:::\  /:::/    /    \::/    /
+echo                    /:::/    /          \:::\/:::/    /      \/____/
+echo                   /:::/    /   ONLINE   \::::::/    /  _  _  ____  
+echo                  /:::/    /              \::::/    /  ( \/ )(  _ \ 
+echo                  \::/    /                \::/    /    )  (  )(_) )
+echo                   \/____/                  \/____/    (_/\_)(____/ 
 echo.
 echo.
+echo                             RESTART COMPUTER TO APPLY CHANGES
+echo                ============================================================
+echo                =     [0] EXIT                    [H] HELP                 =
+echo                ============================================================
+echo                =     [1] CREATE RESTORE POINT    [2] FULL OPTIMIZATION    =
+echo                ============================================================
+echo                =     [3] OPTIMIZE REGISTRY       [4] LOWER EFFECTS        =
+echo                =     [5] ENABLE DARK MODE                                 =
+echo                ============================================================
+echo                =     [6] OPTIMIZE SCHEDULER      [7] DISABLE UPDATES      =
+echo                =     [8] OPTIMIZE SERVICES       [9] ADD POWERPLAN        =
+echo                ============================================================
+echo                =     [10] REMOVE MS APPS         [13] REMOVE EDGE         =
+echo                =     [11] REMOVE XBOX APPS       [14] REMOVE ONEDRIVE     =
+echo                =     [12] REMOVE STORE APPS      [15] REMOVE STARTUP APPS =
+echo                ============================================================
+echo                =     [16] CLEAN TEMP FILES       [19] CLEAN POWER PLANS   =
+echo                =     [17] CLEAN CACHE FILES      [20] CLEAN RECYCLE BIN   =
+echo                =     [18] CLEAN EVENT LOGS       [21] FULL CLEANUP        =
+echo                ============================================================
+echo                =     [22] RESTORE REGISTRY       [25] RESTORE UPDATES     =
+echo                =     [23] RESTORE SERVICES       [26] RESTORE ALL         =
+echo                =     [24] RESTORE TASKS                                   =
+echo                ============================================================
 echo.
-echo.
-echo         HST WINDOWS UTILITY - SCRIPT VERSION v1.0.0
-echo ============================================================
-echo.
-echo  [0] EXIT
-echo.
-echo  [1] CREATE RESTORE POINT            DEBLOAT
-echo  [2] FULL OPTIMIZATION               [10] REMOVE MS APPS
-echo                                      [11] REMOVE XBOX APPS
-echo  REGISTRY OPTIMIZATIONS              [12] REMOVE STORE APPS
-echo  [3] OPTIMIZE REGISTRY               [13] REMOVE EDGE
-echo  [4] LOWER VISUAL EFFECTS            [14] REMOVE ONEDRIVE
-echo  [5] ENABLE DARK MODE
-echo                                      CLEANUP
-echo  SYSTEM MANAGEMENT                   [15] CLEAN TEMP FILES
-echo  [6] OPTIMIZE SCHEDULER              [16] CLEAN CACHE FILES
-echo  [7] DISABLE WINDOWS UPDATES         [17] CLEAN EVENT LOGS
-echo  [8] OPTIMIZE SERVICES               [18] CLEAN POWER PLANS
-echo  [9] ADD CUSTOM POWERPLAN            [19] CLEAN RECYCLE BIN
-echo                                      [20] FULL CLEANUP
-echo.
-echo ============================================================
-set /p choice="YOUR CHOICE: "
+echo                                       YOUR CHOICE: 
+set /p choice=""
 
 if "%choice%"=="0" goto EXIT
+if /i "%choice%"=="H" goto SHOW_HELP
 if "%choice%"=="1" goto CREATE_RESTORE_POINT
 if "%choice%"=="2" goto FULL_OPTIMIZATION
 if "%choice%"=="3" goto OPTIMIZE_REGISTRY
@@ -84,17 +87,22 @@ if "%choice%"=="11" goto REMOVE_XBOX_APPS
 if "%choice%"=="12" goto REMOVE_STORE_APPS
 if "%choice%"=="13" goto REMOVE_EDGE
 if "%choice%"=="14" goto REMOVE_ONEDRIVE
-if "%choice%"=="15" goto CLEAN_TEMP
-if "%choice%"=="16" goto CLEAN_CACHE
-if "%choice%"=="17" goto CLEAN_EVENTLOGS
-if "%choice%"=="18" goto CLEAN_POWERPLANS
-if "%choice%"=="19" goto CLEAN_RECYCLE
-if "%choice%"=="20" goto FULL_CLEANUP
+if "%choice%"=="15" goto REMOVE_STARTUP_APPS
+if "%choice%"=="16" goto CLEAN_TEMP
+if "%choice%"=="17" goto CLEAN_CACHE
+if "%choice%"=="18" goto CLEAN_EVENTLOGS
+if "%choice%"=="19" goto CLEAN_POWERPLANS
+if "%choice%"=="20" goto CLEAN_RECYCLE
+if "%choice%"=="21" goto FULL_CLEANUP
+if "%choice%"=="22" goto RESTORE_REGISTRY
+if "%choice%"=="23" goto RESTORE_SERVICES
+if "%choice%"=="24" goto RESTORE_TASKS
+if "%choice%"=="25" goto RESTORE_UPDATES
+if "%choice%"=="26" goto RESTORE_ALL
 
 echo INVALID CHOICE
 pause
 goto MAIN_MENU
-
 
 :CREATE_RESTORE_POINT
 cls
@@ -116,6 +124,121 @@ if %errorLevel% equ 0 (
     echo.
     echo WARNING: ERROR CREATING RESTORE POINT
 )
+echo.
+pause
+goto MAIN_MENU
+
+:SHOW_HELP
+cls
+echo                         HST WINDOWS UTILITY - HELP GUIDE v1.5.0
+echo                ============================================================
+echo                =                    IMPORTANT WARNINGS                    =
+echo                ============================================================
+echo                 - ALWAYS create a restore point before making changes
+echo                 - Some changes require a restart to take full effect
+echo                 - Disabling updates means you can't update Windows
+echo                 - OneDrive removal will delete all backed-up files
+echo                 - Store removal prevents installing Store apps
+echo.
+echo                ============================================================
+echo                =                         GENERAL                          =
+echo                ============================================================
+echo                 [1] CREATE RESTORE POINT
+echo                     Creates a system restore point for safe rollback
+echo                     Use this BEFORE making any changes
+echo                 [2] FULL OPTIMIZATION
+echo                     Runs ALL optimizations in sequence:
+echo                     - Registry tweaks, Visual effects, Task scheduler
+echo                     - Disables Windows updates, Optimizes services
+echo                     - Adds custom power plan, Full cleanup
+echo                ============================================================
+echo                =                  REGISTRY MODIFICATIONS                  =
+echo                ============================================================
+echo                 [3] OPTIMIZE REGISTRY
+echo                     Applies 500+ performance-focused registry tweaks:
+echo                     - Gaming optimizations (GPU/CPU priority, latency)
+echo                     - Network optimizations (reduces throttling)
+echo                     - Disables telemetry, Game DVR, unnecessary features
+echo                     - Power latency optimizations
+echo                 [4] LOWER VISUAL EFFECTS
+echo                     Disables Windows animations and visual effects:
+echo                     - Menu animations, Window animations, Taskbar animations
+echo                     - Thumbnail previews, Shadow effects
+echo                     - Improves performance on low-end systems
+echo                 [5] ENABLE DARK MODE
+echo                     Enables system-wide dark theme for Windows and apps
+echo                ============================================================
+echo                =                    SYSTEM MANAGEMENT                     =
+echo                ============================================================
+echo                 [6] OPTIMIZE SCHEDULER
+echo                     Disables 50+ unnecessary scheduled tasks:
+echo                     - Windows Update tasks, CEIP tasks, Diagnostics
+echo                     - Defrag, Maintenance, Bluetooth tasks
+echo                     - Reduces background CPU usage
+echo                 [7] DISABLE WINDOWS UPDATES
+echo                     Completely disables automatic Windows updates:
+echo                     - Stops update services
+echo                     - Sets service permissions to prevent re-enabling
+echo                     WARNING: You must manually update Windows
+echo                 [8] OPTIMIZE SERVICES
+echo                     Disables unnecessary Windows services
+echo                     - Recommended: 80 general services
+echo                     - Bluetooth: 4 services
+echo                     - Hyper-V: 11 virtualization services
+echo                     - Xbox: 4 gaming services
+echo                 [9] ADD CUSTOM POWERPLAN
+echo                     Imports and activates HST high-performance power plan
+echo                     Optimized for maximum performance and low latency
+echo                ============================================================
+echo                =                         DEBLOAT                          =
+echo                ============================================================
+echo                 [10] REMOVE MS APPS
+echo                      Removes 40+ Microsoft bloatware apps:
+echo                      - Clipchamp, Teams, OneDrive, Xbox apps
+echo                      - Bing Weather, News, Solitaire, Sticky Notes
+echo                      - Mail, Calendar, Get Help, Tips
+echo                 [11] REMOVE XBOX APPS
+echo                      Removes all Xbox-related applications
+echo                 [12] REMOVE STORE APPS
+echo                      Removes Microsoft Store
+echo                      WARNING: Cannot install apps after removal
+echo                 [13] REMOVE EDGE
+echo                      Completely removes Microsoft Edge browser
+echo                      Deletes all Edge files, folders, and shortcuts
+echo                 [14] REMOVE ONEDRIVE
+echo                      Uninstalls OneDrive completely
+echo                      WARNING: Backed-up files will be deleted
+echo                      Disable OneDrive sync BEFORE running this
+echo                 [15] REMOVE STARTUP APPS
+echo                      Stop apps from running at startup
+echo                ============================================================
+echo                =                         CLEANUP                          =
+echo                ============================================================
+echo                 [16] CLEAN TEMP FILES
+echo                      Deletes temporary files from Windows and user folders
+echo                 [17] CLEAN CACHE FILES
+echo                      Clears browser caches and Windows Update cache
+echo                 [18] CLEAN EVENT LOGS
+echo                      Clears Windows event logs
+echo                 [19] CLEAN POWER PLANS
+echo                      Removes default Windows power plans
+echo                 [20] CLEAN RECYCLE BIN
+echo                      Empties the recycle bin
+echo                 [21] FULL CLEANUP
+echo                      Runs all cleanup operations
+echo                ============================================================
+echo                =                    RESTORE DEFAULTS                      =
+echo                ============================================================
+echo                 [22] RESTORE REGISTRY
+echo                      Reverts all registry tweaks to Windows defaults
+echo                 [23] RESTORE SERVICES
+echo                      Re-enables all disabled services to default types
+echo                 [24] RESTORE TASKS
+echo                      Re-enables all disabled scheduled tasks
+echo                 [25] RESTORE UPDATES
+echo                      Sets permissions and Re-enables Update services
+echo                 [26] RESTORE ALL
+echo                      Runs all restore operations
 echo.
 pause
 goto MAIN_MENU
@@ -1169,6 +1292,26 @@ echo [5/5] CLEANING RECYCLE BIN
 call :CLEAN_RECYCLE_SILENT
 exit /b
 
+:REMOVE_STARTUP_APPS
+cls
+echo ============================================================
+echo                   REMOVING STARTUP APPS
+echo ============================================================
+echo.
+set /p confirm="APPS WON'T AUTOMATICALLY START ONCE REMOVED. CONTINUE? (Y/N): "
+if /i not "%confirm%"=="Y" goto MAIN_MENU
+
+echo   - REMOVING ALL STARTUP APPS
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /va /f %nul%
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /va /f %nul%
+
+echo.
+echo ============================================================
+echo                           DONE
+echo ============================================================
+echo.
+pause
+goto MAIN_MENU
 
 :CLEAN_TEMP
 cls
@@ -1327,6 +1470,675 @@ call :FULL_CLEANUP_SILENT
 echo.
 echo ============================================================
 echo                           DONE
+echo ============================================================
+echo.
+pause
+goto MAIN_MENU
+
+:RESTORE_REGISTRY
+cls
+echo ============================================================
+echo                    RESTORING REGISTRY DEFAULTS
+echo ============================================================
+echo.
+call :RESTORE_REGISTRY_SILENT
+echo.
+echo ============================================================
+echo                           DONE
+echo ============================================================
+echo.
+pause
+goto MAIN_MENU
+
+
+:RESTORE_REGISTRY_SILENT
+echo   - RESTORING PERFORMANCE SETTINGS
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d 2 /f %nul%
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v "HiberbootEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v "SleepStudyDisabled" /t REG_DWORD /d 0 /f %nul%
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v "HibernateEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance" /v "MaintenanceDisabled" /t REG_DWORD /d 0 /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling" /v "PowerThrottlingOff" /f %nul%
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers" /v "HwSchMode" /t REG_DWORD /d 2 /f %nul%
+
+echo   - RESTORING GAME MODE AND DVR
+reg add "HKCU\Software\Microsoft\GameBar" /v "AllowAutoGameMode" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\GameBar" /v "AutoGameModeEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\GameBar" /v "AllowGameBarControllerButton" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\GameBar" /v "UseNexusForGameBarEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_FSEBehaviorMode" /t REG_DWORD /d 2 /f %nul%
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_FSEBehavior" /t REG_DWORD /d 2 /f %nul%
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_HonorUserFSEBehaviorMode" /t REG_DWORD /d 0 /f %nul%
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_DXGIHonorFSEWindowsCompatible" /t REG_DWORD /d 0 /f %nul%
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_EFSEFeatureFlags" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_DSEBehavior" /t REG_DWORD /d 2 /f %nul%
+reg delete "HKCU\System\GameConfigStore" /v "GameDVR_DXGI_AGILITY_FACTOR" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v "AllowGameDVR" /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR" /v "AppCaptureEnabled" /t REG_DWORD /d 1 /f %nul%
+
+echo   - RESTORING MENU DELAY
+reg add "HKCU\Control Panel\Desktop" /v "MenuShowDelay" /t REG_SZ /d "400" /f %nul%
+
+echo   - RESTORING ACCESSIBILITY SHORTCUTS
+reg add "HKCU\Control Panel\Accessibility\HighContrast" /v "Flags" /t REG_SZ /d "126" /f %nul%
+reg add "HKCU\Control Panel\Accessibility\ToggleKeys" /v "Flags" /t REG_SZ /d "62" /f %nul%
+reg add "HKCU\Control Panel\Accessibility\StickyKeys" /v "Flags" /t REG_SZ /d "510" /f %nul%
+
+echo   - RESTORING NETWORK AND LATENCY
+reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "NoLazyMode" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "AlwaysOn" /f %nul%
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "NetworkThrottlingIndex" /t REG_DWORD /d 10 /f %nul%
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "SystemResponsiveness" /t REG_DWORD /d 20 /f %nul%
+
+echo   - RESTORING GAMING TASK PRIORITY
+reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Affinity" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Background Only" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "GPU Priority" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Priority" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Scheduling Category" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "SFIO Priority" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Latency Sensitive" /f %nul%
+
+echo   - RESTORING POWER LATENCY
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v "ExitLatency" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v "ExitLatencyCheckEnabled" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v "Latency" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v "LatencyToleranceDefault" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v "LatencyToleranceFSVP" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v "LatencyTolerancePerfOverride" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v "LatencyToleranceScreenOffIR" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v "RtlCapabilityCheckLatency" /f %nul%
+
+echo   - RESTORING GPU LATENCY
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultD3TransitionLatencyActivelyUsed" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultD3TransitionLatencyIdleLongTime" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultD3TransitionLatencyIdleMonitorOff" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultD3TransitionLatencyIdleNoContext" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultD3TransitionLatencyIdleShortTime" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultD3TransitionLatencyIdleVeryLongTime" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultLatencyToleranceIdle0" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultLatencyToleranceIdle0MonitorOff" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultLatencyToleranceIdle1" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultLatencyToleranceIdle1MonitorOff" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultLatencyToleranceMemory" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultLatencyToleranceNoContext" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultLatencyToleranceNoContextMonitorOff" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultLatencyToleranceOther" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultLatencyToleranceTimerPeriod" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultMemoryRefreshLatencyToleranceActivelyUsed" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultMemoryRefreshLatencyToleranceMonitorOff" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "DefaultMemoryRefreshLatencyToleranceNoContext" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "Latency" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "MaxIAverageGraphicsLatencyInOneBucket" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "MiracastPerfTrackGraphicsLatency" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "MonitorLatencyTolerance" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "MonitorRefreshLatencyTolerance" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power" /v "TransitionLatency" /f %nul%
+
+echo   - RESTORING AMD GPU ULPS
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000" /v "EnableUlps" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000" /v "EnableUlps_NA" /f %nul%
+
+echo   - RESTORING NTFS OPTIMIZATIONS
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "NtfsDisableLastAccessUpdate" /t REG_DWORD /d 1 /f %nul%
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "NtfsDisable8dot3NameCreation" /t REG_DWORD /d 2 /f %nul%
+
+echo   - RESTORING DISTRIBUTE TIMERS
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v "DistributeTimers" /f %nul%
+
+echo   - RESTORING BACKGROUND PROCESS PRIORITY
+reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\wuauclt.exe\PerfOptions" /v "CpuPriorityClass" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\wuauclt.exe\PerfOptions" /v "IoPriority" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\SearchIndexer.exe\PerfOptions" /v "CpuPriorityClass" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\SearchIndexer.exe\PerfOptions" /v "IoPriority" /f %nul%
+
+echo   - RESTORING KEYBOARD AND MOUSE
+reg add "HKCU\Control Panel\Keyboard" /v "KeyboardDelay" /t REG_SZ /d "1" /f %nul%
+reg add "HKCU\Control Panel\Keyboard" /v "KeyboardSpeed" /t REG_SZ /d "31" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Services\mouclass\Parameters" /v "MouseDataQueueSize" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Services\kbdclass\Parameters" /v "KeyboardDataQueueSize" /f %nul%
+reg add "HKCU\Control Panel\Mouse" /v "MouseSpeed" /t REG_SZ /d "1" /f %nul%
+reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold1" /t REG_SZ /d "6" /f %nul%
+reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold2" /t REG_SZ /d "10" /f %nul%
+
+echo   - RESTORING CONTENT DELIVERY MANAGER
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SubscribedContent-338393Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SubscribedContent-338388Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SubscribedContent-314559Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SubscribedContent-280815Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SubscribedContent-202914Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SubscribedContent-353694Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SubscribedContent-353696Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SubscribedContent-338387Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SubscribedContent-353698Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SubscribedContent-338389Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SubscribedContent-310093Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SubscribedContent-314563Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "RotatingLockScreenOverlayEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "RotatingLockScreenEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "ContentDeliveryAllowed" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "OemPreInstalledAppsEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "PreInstalledAppsEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "PreInstalledAppsEverEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SilentInstalledAppsEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SoftLandingEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SubscribedContentEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "FeatureManagementEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SystemPaneSuggestionsEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "RemediationRequired" /t REG_DWORD /d 1 /f %nul%
+
+echo   - RESTORING PRIVACY SETTINGS
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" /v "TailoredExperiencesWithDiagnosticDataEnabled" /t REG_DWORD /d 1 /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds" /v "EnableFeeds" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer" /v "ShowOrHideMostUsedApps" /f %nul%
+
+echo   - RESTORING WINDOWS SPOTLIGHT
+reg delete "HKCU\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v "ConfigureWindowsSpotlight" /f %nul%
+reg delete "HKCU\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v "IncludeEnterpriseSpotlight" /f %nul%
+reg delete "HKCU\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v "DisableWindowsSpotlightFeatures" /f %nul%
+reg delete "HKCU\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v "DisableWindowsSpotlightWindowsWelcomeExperience" /f %nul%
+reg delete "HKCU\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v "DisableWindowsSpotlightOnActionCenter" /f %nul%
+reg delete "HKCU\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v "DisableWindowsSpotlightOnSettings" /f %nul%
+reg delete "HKCU\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v "DisableThirdPartySuggestions" /f %nul%
+reg delete "HKCU\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v "DisableTailoredExperiencesWithDiagnosticData" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v "DisableThirdPartySuggestions" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v "DisableWindowsConsumerFeatures" /f %nul%
+
+echo   - RESTORING MISC SETTINGS
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Dsh" /v "AllowNewsAndInterests" /f %nul%
+reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation" /v "DisableStartupSound" /t REG_DWORD /d 0 /f %nul%
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Remote Assistance" /v "fAllowToGetHelp" /t REG_DWORD /d 1 /f %nul%
+
+echo   - RESTORING FILE EXPLORER
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "ShowFrequent" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "ShowRecent" /t REG_DWORD /d 1 /f %nul%
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "TelemetrySalt" /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "NoRecentDocsHistory" /t REG_DWORD /d 0 /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoRecentDocsHistory" /t REG_DWORD /d 0 /f %nul%
+
+echo   - RESTORING MAPS AND DRIVERS
+reg add "HKLM\SYSTEM\Maps" /v "AutoUpdateEnabled" /t REG_DWORD /d 1 /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching" /v "SearchOrderConfig" /f %nul%
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching" /v "DontSearchWindowsUpdate" /t REG_DWORD /d 0 /f %nul%
+
+echo   - RESTORING TELEMETRY
+reg add "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 3 /f %nul%
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 3 /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowDeviceNameInTelemetry" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowCommercialDataPipeline" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "LimitEnhancedDiagnosticDataWindowsAnalytics" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "DoNotShowFeedbackNotifications" /f %nul%
+
+echo   - RESTORING SEARCH SETTINGS
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "HistoryViewEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "DeviceHistoryEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "BingSearchEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "SearchboxTaskbarMode" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\SearchSettings" /v "IsDynamicSearchBoxEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\SearchSettings" /v "IsDeviceSearchHistoryEnabled" /t REG_DWORD /d 1 /f %nul%
+
+echo   - RESTORING NOTIFICATIONS
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\PushNotifications" /v "ToastEnabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance" /v "Enabled" /t REG_DWORD /d 1 /f %nul%
+reg delete "HKCU\SOFTWARE\Policies\Microsoft\Windows\Explorer" /v "DisableNotificationCenter" /f %nul%
+
+echo   - RESTORING BACKGROUND APPS
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications" /v "GlobalUserDisabled" /t REG_DWORD /d 0 /f %nul%
+
+echo   - RESTORING AUTO-ENDTASK
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings" /v "TaskbarEndTask" /f %nul%
+
+echo   - RESTORING PERSONALIZATION PRIVACY
+reg add "HKCU\Software\Microsoft\Personalization\Settings" /v "AcceptedPrivacyPolicy" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Personalization\Settings" /v "RestrictImplicitInkCollection" /t REG_DWORD /d 0 /f %nul%
+reg add "HKCU\Software\Microsoft\Personalization\Settings" /v "RestrictImplicitTextCollection" /t REG_DWORD /d 0 /f %nul%
+
+echo   - RESTORING DIAGNOSTICS AND ACTIVITY
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack\EventTranscriptKey" /v "EnableEventTranscript" /t REG_DWORD /d 1 /f %nul%
+reg delete "HKCU\SOFTWARE\Microsoft\Siuf\Rules" /v "NumberOfSIUFInPeriod" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "PublishUserActivities" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "UploadUserActivities" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "EnableActivityFeed" /f %nul%
+
+echo   - RESTORING MISC PRIVACY
+reg add "HKCU\Control Panel\Accessibility" /v "DynamicScrollbars" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Control Panel\International\User Profile" /v "HttpAcceptLanguageOptOut" /t REG_DWORD /d 0 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Privacy" /v "Start_TrackProgs" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\SystemSettings\AccountNotifications" /v "EnableAccountNotifications" /t REG_DWORD /d 1 /f %nul%
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Privacy" /v "AppSuggestions" /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\SmartActionPlatform\SmartClipboard" /v "Disabled" /t REG_DWORD /d 0 /f %nul%
+
+echo   - RESTORING CAPABILITY ACCESS MANAGER
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\appointments" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\appDiagnostics" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\broadFileSystemAccess" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\bluetoothSync" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\chat" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\contacts" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\documentsLibrary" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\downloadsFolder" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\email" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\graphicsCaptureProgrammatic" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\graphicsCaptureWithoutBorder" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\musicLibrary" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\phoneCall" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\phoneCallHistory" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\picturesLibrary" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\radios" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userAccountInformation" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userDataTasks" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userNotificationListener" /v "Value" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\videosLibrary" /v "Value" /f %nul%
+
+echo   - RESTORING SPEECH AND VOICE
+reg add "HKCU\SOFTWARE\Microsoft\Speech_OneCore\Settings\OnlineSpeechPrivacy" /v "HasAccepted" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Speech_OneCore\Settings\VoiceActivation\UserPreferenceForAllApps" /v "AgentActivationEnabled" /t REG_DWORD /d 1 /f %nul%
+reg delete "HKCU\SOFTWARE\Microsoft\Speech_OneCore\Settings\VoiceActivation\UserPreferenceForAllApps" /v "AgentActivationLastUsed" /f %nul%
+
+echo   - RESTORING SYNC SETTINGS
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync" /v "SyncPolicy" /t REG_DWORD /d 0 /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Accessibility" /v "Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\AppSync" /v "Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Personalization" /v "Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\BrowserSettings" /v "Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Credentials" /v "Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Language" /v "Enabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Windows" /v "Enabled" /t REG_DWORD /d 1 /f %nul%
+
+echo   - RESTORING ERROR REPORTING AND STORAGE
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" /v "DoReport" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\StorageSense" /v "AllowStorageSenseGlobal" /f %nul%
+
+echo   - RESTORING BROWSER OPTIMIZATION
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v "StartupBoostEnabled" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v "HardwareAccelerationModeEnabled" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v "BackgroundModeEnabled" /f %nul%
+sc config MicrosoftEdgeElevationService start= demand %nul%
+sc config edgeupdate start= auto %nul%
+sc config edgeupdatem start= demand %nul%
+
+reg delete "HKLM\SOFTWARE\Policies\Google\Chrome" /v "StartupBoostEnabled" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Google\Chrome" /v "HardwareAccelerationModeEnabled" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Google\Chrome" /v "BackgroundModeEnabled" /f %nul%
+sc config GoogleChromeElevationService start= demand %nul%
+sc config gupdate start= auto %nul%
+sc config gupdatem start= demand %nul%
+
+echo   - RESTORING STORE AND TASKBAR
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\WindowsStore" /v "AutoDownload" /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarMn" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ShowTaskViewButton" /t REG_DWORD /d 1 /f %nul%
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "HideSCAMeetNow" /f %nul%
+reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings" /v "ShowLockOption" /f %nul%
+reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings" /v "ShowSleepOption" /f %nul%
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "EnableTransparency" /t REG_DWORD /d 1 /f %nul%
+
+echo   - RESTORING SOUND SCHEME
+reg add "HKCU\AppEvents\Schemes" /v "" /t REG_SZ /d ".Default" /f %nul%
+
+echo   - RESTORING VISUAL EFFECTS
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" /v "VisualFXSetting" /t REG_DWORD /d 0 /f %nul%
+reg add "HKCU\Control Panel\Desktop" /v "UserPreferencesMask" /t REG_BINARY /d 9E3E078012000000 /f %nul%
+reg add "HKCU\Control Panel\Desktop" /v "MinAnimate" /t REG_SZ /d "1" /f %nul%
+reg add "HKCU\Control Panel\Desktop" /v "DragFullWindows" /t REG_SZ /d "1" /f %nul%
+reg add "HKCU\Control Panel\Desktop" /v "FontSmoothing" /t REG_SZ /d "2" /f %nul%
+reg delete "HKCU\Control Panel\Desktop" /v "WindowAnimation" /f %nul%
+reg delete "HKCU\Control Panel\Desktop" /v "MenuAnimation" /f %nul%
+reg delete "HKCU\Control Panel\Desktop" /v "TaskbarAnimations" /f %nul%
+reg delete "HKCU\Control Panel\Desktop" /v "IconAnimation" /f %nul%
+reg delete "HKCU\Control Panel\Desktop" /v "ScrollAnimation" /f %nul%
+reg delete "HKCU\Control Panel\Desktop" /v "ScrollSmoothness" /f %nul%
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarAnimations" /f %nul%
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "IconsOnly" /f %nul%
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ListviewAlphaSelect" /f %nul%
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ListviewShadow" /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\DWM" /v "EnableAeroPeek" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows\DWM" /v "AlwaysHibernateThumbnails" /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Control Panel\Desktop\WindowMetrics" /v "MinAnimate" /t REG_SZ /d "1" /f %nul%
+
+exit /b
+
+
+:RESTORE_SERVICES
+cls
+echo ============================================================
+echo                    RESTORING SERVICES DEFAULTS
+echo ============================================================
+echo.
+call :RESTORE_SERVICES_SILENT
+echo.
+echo ============================================================
+echo                           DONE
+echo ============================================================
+echo.
+pause
+goto MAIN_MENU
+
+
+:RESTORE_SERVICES_SILENT
+echo   - RESTORING SERVICES (BATCH 1/8)
+sc config tzautoupdate start= demand %nul%
+sc config BthAvctpSvc start= demand %nul%
+sc config BDESVC start= demand %nul%
+sc config wbengine start= demand %nul%
+sc config autotimesvc start= demand %nul%
+sc config ClipSVC start= demand %nul%
+sc config DiagTrack start= auto %nul%
+sc config DsSvc start= demand %nul%
+sc config DoSvc start= auto %nul%
+sc config DmEnrollmentSvc start= demand %nul%
+
+echo   - RESTORING SERVICES (BATCH 2/8)
+sc config dmwappushservice start= demand %nul%
+sc config diagsvc start= demand %nul%
+sc config DPS start= auto %nul%
+sc config DialogBlockingService start= disabled %nul%
+sc config DisplayEnhancementService start= demand %nul%
+sc config fhsvc start= demand %nul%
+sc config lfsvc start= demand %nul%
+sc config iphlpsvc start= auto %nul%
+sc config MapsBroker start= auto %nul%
+sc config MicrosoftEdgeElevationService start= demand %nul%
+
+echo   - RESTORING SERVICES (BATCH 3/8)
+sc config edgeupdate start= auto %nul%
+sc config edgeupdatem start= demand %nul%
+sc config MsKeyboardFilter start= disabled %nul%
+sc config NgcSvc start= demand %nul%
+sc config NgcCtnrSvc start= demand %nul%
+sc config InstallService start= demand %nul%
+sc config uhssvc start= demand %nul%
+sc config SmsRouter start= demand %nul%
+sc config NetTcpPortSharing start= disabled %nul%
+sc config Netlogon start= demand %nul%
+
+echo   - RESTORING SERVICES (BATCH 4/8)
+sc config NcbService start= demand %nul%
+sc config CscService start= demand %nul%
+sc config defragsvc start= demand %nul%
+sc config WpcMonSvc start= demand %nul%
+sc config SEMgrSvc start= demand %nul%
+sc config PhoneSvc start= demand %nul%
+sc config Spooler start= auto %nul%
+sc config PrintDeviceConfigurationService start= demand %nul%
+sc config PrintNotify start= demand %nul%
+sc config wercplsupport start= demand %nul%
+
+echo   - RESTORING SERVICES (BATCH 5/8)
+sc config PcaSvc start= auto %nul%
+sc config QWAVE start= demand %nul%
+sc config RmSvc start= demand %nul%
+sc config TroubleshootingSvc start= demand %nul%
+sc config RasAuto start= demand %nul%
+sc config RasMan start= demand %nul%
+sc config SessionEnv start= demand %nul%
+sc config UmRdpService start= demand %nul%
+sc config RemoteRegistry start= disabled %nul%
+sc config RemoteAccess start= disabled %nul%
+
+echo   - RESTORING SERVICES (BATCH 6/8)
+sc config RetailDemo start= demand %nul%
+sc config SensorDataService start= demand %nul%
+sc config SensrSvc start= demand %nul%
+sc config SensorService start= demand %nul%
+sc config LanmanServer start= auto %nul%
+sc config shpamsvc start= disabled %nul%
+sc config SCardSvr start= demand %nul%
+sc config ScDeviceEnum start= demand %nul%
+sc config SCPolicySvc start= demand %nul%
+sc config SysMain start= auto %nul%
+
+echo   - RESTORING SERVICES (BATCH 7/8)
+sc config TabletInputService start= demand %nul%
+sc config TapiSrv start= demand %nul%
+sc config UevAgentService start= disabled %nul%
+sc config SDRSVC start= demand %nul%
+sc config FrameServer start= demand %nul%
+sc config wcncsvc start= demand %nul%
+sc config Wecsvc start= demand %nul%
+sc config wisvc start= demand %nul%
+sc config MixedRealityOpenXRSvc start= demand %nul%
+sc config icssvc start= demand %nul%
+
+echo   - RESTORING SERVICES (BATCH 8/8)
+sc config spectrum start= demand %nul%
+sc config perceptionsimulation start= demand %nul%
+sc config PushToInstall start= demand %nul%
+sc config W32Time start= demand %nul%
+sc config WFDSConMgrSvc start= demand %nul%
+sc config WSearch start= auto %nul%
+sc config LanmanWorkstation start= auto %nul%
+sc config AppVClient start= disabled %nul%
+sc config cloudidsvc start= demand %nul%
+sc config diagnosticshub.standardcollector.service start= demand %nul%
+sc config WbioSrvc start= demand %nul%
+sc config WdiSystemHost start= demand %nul%
+sc config WdiServiceHost start= demand %nul%
+sc config wlidsvc start= demand %nul%
+sc config WerSvc start= demand %nul%
+sc config workfolderssvc start= demand %nul%
+
+echo   - RESTORING BLUETOOTH SERVICES
+sc config BTAGService start= demand %nul%
+sc config bthserv start= demand %nul%
+
+echo   - RESTORING HYPER-V SERVICES
+sc config HvHost start= demand %nul%
+sc config vmickvpexchange start= demand %nul%
+sc config vmicguestinterface start= demand %nul%
+sc config vmicshutdown start= demand %nul%
+sc config vmicheartbeat start= demand %nul%
+sc config vmcompute start= demand %nul%
+sc config vmicvmsession start= demand %nul%
+sc config vmicrdv start= demand %nul%
+sc config vmictimesync start= demand %nul%
+sc config vmms start= demand %nul%
+sc config vmicvss start= demand %nul%
+
+echo   - RESTORING XBOX SERVICES
+sc config XboxGipSvc start= demand %nul%
+sc config XblAuthManager start= demand %nul%
+sc config XblGameSave start= demand %nul%
+sc config XboxNetApiSvc start= demand %nul%
+
+exit /b
+
+
+:RESTORE_TASKS
+cls
+echo ============================================================
+echo                   RESTORING TASKS DEFAULTS
+echo ============================================================
+echo.
+call :RESTORE_TASKS_SILENT
+echo.
+echo ============================================================
+echo                           DONE
+echo ============================================================
+echo.
+pause
+goto MAIN_MENU
+
+
+:RESTORE_TASKS_SILENT
+echo   - RE-ENABLING GOOGLE TASKS
+schtasks /Change /TN "\GoogleSystem\GoogleUpdater" /Enable %nul%
+schtasks /Change /TN "\GoogleSystem\GoogleUpdaterInternalService" /Enable %nul%
+
+echo   - RE-ENABLING APPLICATION DATA TASKS
+schtasks /Change /TN "\Microsoft\Windows\ApplicationData\appuriverifierdaily" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\ApplicationData\appuriverifierinstall" /Enable %nul%
+
+echo   - RE-ENABLING APPLICATION EXPERIENCE TASKS
+schtasks /Change /TN "\Microsoft\Windows\Application Experience\PcaPatchDbTask" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Application Experience\ProgramDataUpdater" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Application Experience\StartupAppTask" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Application Experience\MareBackup" /Enable %nul%
+
+echo   - RE-ENABLING BACKUP AND SYNC TASKS
+schtasks /Change /TN "\Microsoft\Windows\AppListBackup\Backup" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Autochk\Proxy" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Bluetooth\UninstallDeviceTask" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\CloudExperienceHost\CreateObjectTask" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\CloudRestore\Backup" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\CloudRestore\Restore" /Enable %nul%
+
+echo   - RE-ENABLING CEIP TASKS
+schtasks /Change /TN "\Microsoft\Windows\Customer Experience Improvement Program\Consolidator" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Customer Experience Improvement Program\UsbCeip" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Customer Experience Improvement Program\BthSQM" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Customer Experience Improvement Program\KernelCeipTask" /Enable %nul%
+
+echo   - RE-ENABLING DEFRAG AND DIAGNOSTICS
+schtasks /Change /TN "\Microsoft\Windows\Defrag\ScheduledDefrag" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Diagnosis\RecommendedTroubleshootingScanner" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Diagnosis\Scheduled" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\DiskCleanup\SilentCleanup" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticResolver" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\DiskFootprint\Diagnostics" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\DiskFootprint\StorageSense" /Enable %nul%
+
+echo   - RE-ENABLING FILE HISTORY
+schtasks /Change /TN "\Microsoft\Windows\FileHistory\File History (maintenance mode)" /Enable %nul%
+
+echo   - RE-ENABLING MISC TASKS
+schtasks /Change /TN "\Microsoft\Windows\International\Synchronize Language Settings" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Maintenance\WinSAT" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Maps\MapsToastTask" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Maps\MapsUpdateTask" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\MemoryDiagnostic\RunFullMemoryDiagnostic" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\MemoryDiagnostic\ProcessMemoryDiagnosticEvents" /Enable %nul%
+
+echo   - RE-ENABLING OFFLINE FILES
+schtasks /Change /TN "\Microsoft\Windows\Offline Files\Background Synchronization" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Offline Files\Logon Synchronization" /Enable %nul%
+
+echo   - RE-ENABLING POWER AND PRINTING
+schtasks /Change /TN "\Microsoft\Windows\Power Efficiency Diagnostics\AnalyzeSystem" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Printing\EduPrintProv" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Printing\PrinterCleanupTask" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Printing\PrintJobCleanupTask" /Enable %nul%
+
+echo   - RE-ENABLING RETAIL AND REGISTRY
+schtasks /Change /TN "\Microsoft\Windows\RetailDemo\CleanupOfflineContent" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Registry\RegIdleBackup" /Enable %nul%
+
+echo   - RE-ENABLING FAMILY SAFETY
+schtasks /Change /TN "\Microsoft\Windows\Shell\FamilySafetyMonitor" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Shell\FamilySafetyRefreshTask" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Shell\FamilySafetyUpload" /Enable %nul%
+
+echo   - RE-ENABLING SPEECH AND TIME
+schtasks /Change /TN "\Microsoft\Windows\Speech\SpeechModelDownloadTask" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Time Synchronization\ForceSynchronizeTime" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Time Synchronization\SynchronizeTime" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Time Zone\SynchronizeTimeZone" /Enable %nul%
+
+echo   - RE-ENABLING WINDOWS DEFENDER
+schtasks /Change /TN "\Microsoft\Windows\Windows Defender\Windows Defender Cache Maintenance" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Windows Defender\Windows Defender Cleanup" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Windows Defender\Windows Defender Verification" /Enable %nul%
+
+echo   - RE-ENABLING ERROR REPORTING AND UPDATES
+schtasks /Change /TN "\Microsoft\Windows\Windows Error Reporting\QueueReporting" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Windows Media Sharing\UpdateLibrary" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\WindowsUpdate\Scheduled Start" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Wininet\CacheTask" /Enable %nul%
+
+echo   - RE-ENABLING WORK FOLDERS
+schtasks /Change /TN "\Microsoft\Windows\Work Folders\Work Folders Logon Synchronization" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Work Folders\Work Folders Maintenance Work" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\Workplace Join\Automatic-Device-Join" /Enable %nul%
+
+echo   - RE-ENABLING WS TASKS
+schtasks /Change /TN "\Microsoft\Windows\WS\WSRefreshBannedAppsListTask" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\WS\WSTask" /Enable %nul%
+
+echo   - RE-ENABLING UPDATE ORCHESTRATOR
+schtasks /Change /TN "\Microsoft\Windows\UpdateOrchestrator\Schedule Scan" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\UpdateOrchestrator\Schedule Maintenance Work" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\UpdateOrchestrator\UpdateAssistant" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\WaaSMedic\PerformRemediation" /Enable %nul%
+
+exit /b
+
+
+:RESTORE_UPDATES
+cls
+echo ============================================================
+echo                 RESTORING WINDOWS UPDATES
+echo ============================================================
+echo.
+call :RESTORE_UPDATES_SILENT
+echo.
+echo ============================================================
+echo                           DONE
+echo ============================================================
+echo.
+pause
+goto MAIN_MENU
+
+
+:RESTORE_UPDATES_SILENT
+echo   - REMOVING UPDATE BLOCKING POLICIES
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "NoAutoUpdate" /f %nul%
+reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "AUOptions" /f %nul%
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config" /v "DODownloadMode" /f %nul%
+
+echo   - RESETTING SERVICE PERMISSIONS
+reg delete "HKLM\SYSTEM\CurrentControlSet\Services\wuauserv\Security" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Services\BITS\Security" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc\Security" /f %nul%
+reg delete "HKLM\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc\Security" /f %nul%
+
+echo   - RE-ENABLING UPDATE SERVICES (Registry Bypass to avoid permissions)
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\wuauserv" /v "Start" /t REG_DWORD /d 3 /f %nul%
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc" /v "Start" /t REG_DWORD /d 2 /f %nul%
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /v "Start" /t REG_DWORD /d 3 /f %nul%
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\BITS" /v "Start" /t REG_DWORD /d 2 /f %nul%
+
+echo   - RE-ENABLING UPDATE SCHEDULED TASKS
+schtasks /Change /TN "\Microsoft\Windows\WindowsUpdate\Scheduled Start" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\UpdateOrchestrator\Schedule Scan" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\UpdateOrchestrator\Schedule Maintenance Work" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\UpdateOrchestrator\UpdateAssistant" /Enable %nul%
+schtasks /Change /TN "\Microsoft\Windows\WaaSMedic\PerformRemediation" /Enable %nul%
+
+exit /b
+
+
+:RESTORE_ALL
+cls
+echo ============================================================
+echo                    RESTORING ALL DEFAULTS
+echo ============================================================
+echo.
+
+echo [1/4] RESTORING REGISTRY
+call :RESTORE_REGISTRY_SILENT
+
+echo [2/4] RESTORING SERVICES
+call :RESTORE_SERVICES_SILENT
+
+echo [3/4] RESTORING TASKS
+call :RESTORE_TASKS_SILENT
+
+echo [4/4] RESTORING UPDATES
+call :RESTORE_UPDATES_SILENT
+
+echo.
+echo ============================================================
+echo                     ALL RESTORED TO DEFAULTS
+echo                   RESTART YOUR COMPUTER NOW
 echo ============================================================
 echo.
 pause

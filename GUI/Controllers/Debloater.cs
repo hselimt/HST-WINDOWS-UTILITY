@@ -1,5 +1,6 @@
 ﻿using HST.Controllers.RemovalTools;
 using System.Diagnostics;
+using Microsoft.Win32;
 using System.IO.Packaging;
 using static HST.Controllers.RemovalTools.Paths;
 
@@ -119,6 +120,26 @@ namespace HST.Controllers.DebloatApps
             {
                 Debug.WriteLine($"Error removing OneDrive: {ex.Message}");
             }
+        }
+
+        public async Task RemoveStartupAppsAsync()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    string runPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+                    Registry.LocalMachine.DeleteSubKeyTree(runPath, false);
+                    Registry.LocalMachine.CreateSubKey(runPath);
+
+                    Registry.CurrentUser.DeleteSubKeyTree(runPath, false);
+                    Registry.CurrentUser.CreateSubKey(runPath);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error deleting start-up apps registry keys: {ex.Message}");
+                }
+            });
         }
     }
 }
