@@ -28,10 +28,17 @@
 </tr>
 <tr>
 <td align="center">
+<<<<<<< HEAD
 <img src="./GUI/HST.png" width="500" height="500"/>
 </td>
 <td align="center">
 <img src="./CLI/HST.png" width="500" height="500"/>
+=======
+<img src="./GUI/HST.jpg" width="500" height="500"/>
+</td>
+<td align="center">
+<img src="./CLI/HSTCLI.jpg" width="500" height="500"/>
+>>>>>>> 17c9134edf281582e837e53beeb5d4995224fdf3
 </td>
 </tr>
 </table>
