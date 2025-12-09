@@ -28,10 +28,10 @@
 </tr>
 <tr>
 <td align="center">
-<img src="./HST.jpg" width="500" height="500"/>
+<img src="./GUI/HST.jpg" width="500" height="500"/>
 </td>
 <td align="center">
-<img src="./HSTCLI.jpg" width="500" height="500"/>
+<img src="./CLI/HSTCLI.jpg" width="500" height="500"/>
 </td>
 </tr>
 </table>
