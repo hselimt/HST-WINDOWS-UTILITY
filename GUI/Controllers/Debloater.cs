@@ -1,4 +1,4 @@
-﻿using HST.Controllers.RemovalTools;
+using HST.Controllers.RemovalTools;
 using System.Diagnostics;
 using Microsoft.Win32;
 using System.IO.Packaging;
@@ -121,15 +121,39 @@ namespace HST.Controllers.DebloatApps
             {
                 try
                 {
+                    var safeToRemove = new[] { "Steam", "Discord", "Lightshot", "Spotify", "Slack", "Teams", "Zoom", 
+                                            "Epic", "Origin", "Uplay", "Battle.net", "Skype", 
+                                            "Dropbox", "Google Drive", "OneDrive", "Adobe", 
+                                            "WhatsApp", "Telegram", "CCleaner" };
+                    
                     string runPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
-                    Registry.LocalMachine.DeleteSubKeyTree(runPath, false);
-                    Registry.LocalMachine.CreateSubKey(runPath);
-                    Registry.CurrentUser.DeleteSubKeyTree(runPath, false);
-                    Registry.CurrentUser.CreateSubKey(runPath);
+                    
+                    using (var key = Registry.CurrentUser.OpenSubKey(runPath, true))
+                    {
+                        if (key != null)
+                        {
+                            foreach (string name in key.GetValueNames().ToList())
+                            {
+                                if (safeToRemove.Any(app => name.Contains(app, StringComparison.OrdinalIgnoreCase)))
+                                    key.DeleteValue(name, false);
+                            }
+                        }
+                    }
+                    using (var key = Registry.LocalMachine.OpenSubKey(runPath, true))
+                    {
+                        if (key != null)
+                        {
+                            foreach (string name in key.GetValueNames().ToList())
+                            {
+                                if (safeToRemove.Any(app => name.Contains(app, StringComparison.OrdinalIgnoreCase)))
+                                    key.DeleteValue(name, false);
+                            }
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"Error deleting start-up apps registry keys: {ex.Message}");
+                    Debug.WriteLine($"Error removing startup apps: {ex.Message}");
                 }
             });
         }
