@@ -1298,12 +1298,30 @@ echo ============================================================
 echo                   REMOVING STARTUP APPS
 echo ============================================================
 echo.
-set /p confirm="APPS WON'T AUTOMATICALLY START ONCE REMOVED. CONTINUE? (Y/N): "
+set /p confirm="REMOVE DISCORD, STEAM, SPOTIFY, ETC FROM STARTUP? (Y/N): "
 if /i not "%confirm%"=="Y" goto MAIN_MENU
 
-echo   - REMOVING ALL STARTUP APPS
-reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /va /f %nul%
-reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /va /f %nul%
+echo   - REMOVING USER APPS FROM STARTUP
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Steam" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Discord" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Spotify" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Slack" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Teams" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Zoom" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Epic Games Launcher" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Origin" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Uplay" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Battle.net" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Skype" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Dropbox" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "GoogleDriveSync" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Adobe Creative Cloud" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "CCleaner" /f 2>nul
+
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Steam" /f 2>nul
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Discord" /f 2>nul
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Spotify" /f 2>nul
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Adobe Creative Cloud" /f 2>nul
 
 echo.
 echo ============================================================
