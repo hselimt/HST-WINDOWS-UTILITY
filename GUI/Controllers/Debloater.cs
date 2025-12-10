@@ -4,10 +4,6 @@ using Microsoft.Win32;
 using System.IO.Packaging;
 using static HST.Controllers.RemovalTools.Paths;
 
-#pragma warning disable CS8600
-#pragma warning disable CS8625
-#pragma warning disable CS8604
-
 namespace HST.Controllers.DebloatApps
 {
     public class Debloater
@@ -29,7 +25,6 @@ namespace HST.Controllers.DebloatApps
                 {
                     await _removalTools.RunCommandAsync("powershell.exe",
                         $"-NoProfile -ExecutionPolicy Bypass -Command \"Get-AppxPackage -Name '{package}' -AllUsers | Remove-AppxPackage -AllUsers\"");
-
                     await _removalTools.RunCommandAsync("powershell.exe",
                         $"-NoProfile -ExecutionPolicy Bypass -Command \"Get-AppxProvisionedPackage -Online | Where-Object {{ $_.DisplayName -like '{package}' }} | ForEach-Object {{ Remove-AppxProvisionedPackage -Online -PackageName $_.PackageName }}\"");
                 }
@@ -56,9 +51,7 @@ namespace HST.Controllers.DebloatApps
                 _removalTools.DeleteDirectoryIfExists(@"C:\Program Files\Microsoft\EdgeUpdate");
                 _removalTools.DeleteDirectoryIfExists(@"C:\ProgramData\Microsoft\Edge");
                 _removalTools.DeleteDirectoryIfExists(@"C:\ProgramData\Microsoft\EdgeUpdate");
-
                 _removalTools.DeleteDirectoryIfExists(Path.Combine(AppDataPath, "Internet Explorer"));
-
                 _removalTools.DeleteFileIfExists(Path.Combine(AppDataPath, @"Microsoft\Windows\Start Menu\Programs\Microsoft Edge.lnk"));
                 _removalTools.DeleteFileIfExists(Path.Combine(ProgramDataPath, @"Microsoft\Windows\Start Menu\Programs\Microsoft Edge.lnk"));
                 _removalTools.DeleteFileIfExists(Path.Combine(PublicDesktopPath, "Microsoft Edge.lnk"));
@@ -131,7 +124,6 @@ namespace HST.Controllers.DebloatApps
                     string runPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
                     Registry.LocalMachine.DeleteSubKeyTree(runPath, false);
                     Registry.LocalMachine.CreateSubKey(runPath);
-
                     Registry.CurrentUser.DeleteSubKeyTree(runPath, false);
                     Registry.CurrentUser.CreateSubKey(runPath);
                 }

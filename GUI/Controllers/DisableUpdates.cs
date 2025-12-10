@@ -4,9 +4,6 @@ using System.Diagnostics;
 using System.Text.Json;
 using Microsoft.Win32;
 
-#pragma warning disable CA1416
-#pragma warning disable CS8602
-
 namespace HST.Controllers.DisableUpdate
 {
     public class DisableWindowsUpdates

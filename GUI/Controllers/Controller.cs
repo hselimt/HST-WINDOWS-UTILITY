@@ -11,10 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Text.Json;
 
-#pragma warning disable CA1416
-#pragma warning disable CS8625
-#pragma warning disable CS8602
-
 namespace HST.Controllers
 {
     [ApiController]

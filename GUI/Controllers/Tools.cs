@@ -3,8 +3,6 @@ using System.Diagnostics;
 using System.Management;
 using static HST.Controllers.SystemController;
 
-#pragma warning disable CA1416
-
 namespace HST.Controllers.Tool
 {
     public class RestorePointCreator

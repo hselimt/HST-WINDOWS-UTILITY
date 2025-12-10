@@ -3,10 +3,6 @@ using HST.Controllers.RemovalTools;
 using System.Diagnostics;
 using Microsoft.Win32;
 
-#pragma warning disable CA1416
-#pragma warning disable CS8600
-#pragma warning disable CS8618
-
 namespace HST.Controllers.SetService
 {
     public class ServiceInfo

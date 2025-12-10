@@ -3,10 +3,6 @@ using System.Diagnostics;
 using System.Text.Json;
 using static HST.Controllers.RemovalTools.Paths;
 
-#pragma warning disable CS8600
-#pragma warning disable CS8618
-#pragma warning disable CS8602
-
 namespace HST.Controllers.Clear
 {
     public class CleanUp
@@ -56,7 +52,6 @@ namespace HST.Controllers.Clear
             {
                 await _removalHelpers.RunCommandAsync("net", "stop wuauserv");
                 await _removalHelpers.RunCommandAsync("net", "stop bits");
-
                 await Task.Delay(200);
 
                 _removalHelpers.DeleteDirectoryIfExists(@"C:\Windows\SoftwareDistribution\Download");

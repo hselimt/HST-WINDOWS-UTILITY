@@ -1,7 +1,5 @@
 ﻿using Microsoft.Win32;
 
-#pragma warning disable CA1416
-
 namespace HST.Controllers.RegOptimizerMethods
 {
     public class RegistryOptimizer

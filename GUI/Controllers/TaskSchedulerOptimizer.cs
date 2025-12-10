@@ -7,8 +7,6 @@ namespace HST.Controllers.TaskSchedulerOptimizerMethods
     public class TaskSchedulerOptimizer
     {
         private readonly RemovalHelpers _removalTools;
-        private const string ConfigFileName = "ScheduledTasksConfig.json";
-
         public TaskSchedulerOptimizer(RemovalHelpers removalTools)
         {
             _removalTools = removalTools ?? throw new ArgumentNullException(nameof(removalTools));
@@ -26,14 +24,10 @@ namespace HST.Controllers.TaskSchedulerOptimizerMethods
 
         private async Task ProcessTasksAsync(bool disable)
         {
-            var configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigFileName);
-
-            if (!File.Exists(configPath)) { throw new FileNotFoundException($"Configuration file not found: {configPath}"); }
-
-            var json = await File.ReadAllTextAsync(configPath);
+            var json = await File.ReadAllTextAsync(
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ScheduledTasksConfig.json"));
             var config = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json);
-
-            if (config == null || !config.TryGetValue("tasks", out var tasks) || tasks == null) { return; }
+            var tasks = config["tasks"];
 
             var taskList = string.Join("', '", tasks.Select(t => t.Replace("'", "''")));
             var command = disable
