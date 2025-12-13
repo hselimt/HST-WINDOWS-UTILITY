@@ -58,13 +58,13 @@ Right-click each file → Properties → Check "Unblock" → Apply
 
 ### 🚫 Read Before Use
 
-- **Create a restore point first** (option 1)
+- **Create a restore point first**
 - **OneDrive removal deletes synced files** - disable sync first
-- **VM users**: Don't use registry tweaks (3) or Hyper-V services (8)
-- **Laptop users**: Avoid power plan (9) and registry tweaks (3)
-- **Work/School PCs**: Don't disable Windows Updates (7)
+- **VM users**: Don't use registry tweaks or Hyper-V services
+- **Laptop users**: Avoid power plan and registry tweaks
+- **Work/School PCs**: Don't disable Windows Updates
 - **If issues occur**: Run as admin, check if antivirus is blocking
-- **Package removals (10-14) are permanent**
+- **Package removals are permanent**
 
 ---
 
