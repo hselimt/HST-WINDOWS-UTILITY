@@ -11,7 +11,7 @@
 
 ---
 
-## 🚀 Choose Your Version
+##  Choose Your Version
 
 <table align="center">
 <tr>
@@ -40,19 +40,31 @@
 
 [![Download](https://img.shields.io/badge/Download-Latest%20Release-success?style=for-the-badge&logo=github)](https://github.com/hselimt/HST-WINDOWS-UTILITY/releases)
 
+---
+
+### ⚠️ IMPORTANT: Unblock Files After Download
+
+**Windows will block the files by default. You MUST unblock them:**
+
+Right-click each file → Properties → Check "Unblock" → Apply
+
+![BLOCK](./BLOCK.png)
+
+**Then run as Administrator**
+
 </div>
 
 ---
 
-### ⚠️ WARNINGS
+### 🚫 Read Before Use
 
-> **🛡️ Always create a restore point before using this tool**
-
-> **☁️ OneDrive Removal**: Disable all OneDrive backup features before removal to prevent data loss
-
-> **❗ If issues occur** run it again as administrator and check antivirus isn't blocking it
-
-![BLOCK](./BLOCK.png)
+- **Create a restore point first** (option 1)
+- **OneDrive removal deletes synced files** - disable sync first
+- **VM users**: Don't use registry tweaks (3) or Hyper-V services (8)
+- **Laptop users**: Avoid power plan (9) and registry tweaks (3)
+- **Work/School PCs**: Don't disable Windows Updates (7)
+- **If issues occur**: Run as admin, check if antivirus is blocking
+- **Package removals (10-14) are permanent**
 
 ---
 
@@ -70,19 +82,19 @@
 
 ### ⚙️ Services Management
 
-- ✅ 99+ recommended services disabled
-- 🔵 Bluetooth services
-- 💻 Hyper-V virtualization
-- 🎮 Xbox gaming services
+- 99+ recommended services disabled
+- Bluetooth services
+- Hyper-V virtualization
+- Xbox gaming services
 
 ### 🧹 System Cleanup & Debloat
 
-- 📁 Temporary files removal
-- 🌐 Browser cache cleanup
-- 📊 Event logs cleanup
-- ⚡ Unused power plans removal
-- 🗑️ Remove MS Apps / Xbox Apps / Store Apps
-- 🌐 Remove Edge / OneDrive
+- Temporary files removal
+- Browser cache cleanup
+- Event logs cleanup
+- Unused power plans removal
+- Remove MS Apps / Xbox Apps / Store Apps
+- Remove Edge / OneDrive
 
 ---
 
@@ -120,17 +132,17 @@
 ## 👨‍💻 Development
 
 **What I Built:**
-- ✅ Complete C# backend with Windows system APIs
-- ✅ Batch and PowerShell scripts/commands
-- ✅ All optimization logic and safety checks
-- ✅ Years of Windows tweaking knowledge
-- ✅ CLI version with 20+ optimization modules
-- ✅ Full integration and testing
+- Complete C# backend with Windows system APIs
+- Batch and PowerShell scripts/commands
+- All optimization logic and safety checks
+- Years of Windows tweaking knowledge
+- CLI version with 20+ optimization modules
+- Full integration and testing
 
 **AI-Assisted:**
-- 🤖 React frontend UI
-- 🤖 Electron packaging setup
-- 🤖 Build configuration
+- React frontend UI
+- Electron packaging setup
+- Build configuration
 
 ---
 
