@@ -10,13 +10,16 @@ using HST.Controllers.Tool;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Text.Json;
+using Logger = HST.Controllers.Tool.Logger;
 
 namespace HST.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+    [ApiController] // Enables API-specific behaviors like attribute routing and automatic 400 responses
+    [Route("api/[controller]")] // Sets the base URL path
     public class SystemController : ControllerBase
     {
+        // Fields marked 'private' are hidden from other classes
+        // 'readonly' prevents reassignment after the constructor finishes
         private readonly Debloater _debloater;
         private readonly RegistryOptimizer _regOptimizer;
         private readonly RemovalHelpers _removalHelpers;
@@ -28,6 +31,7 @@ namespace HST.Controllers
         private readonly SysInfo _sysInfo;
         private readonly RestorePointCreator _restorePointCreator;
 
+        // Constructor injection: The .NET IoC container resolves and passes these dependencies
         public SystemController(
             Debloater debloater,
             RegistryOptimizer regOptimizer,
@@ -40,6 +44,7 @@ namespace HST.Controllers
             SysInfo sysInfo,
             RestorePointCreator restorePointCreator)
         {
+            // Store the provided service instances into local fields for class-wide access
             _debloater = debloater;
             _regOptimizer = regOptimizer;
             _removalHelpers = removalTools;
@@ -52,12 +57,14 @@ namespace HST.Controllers
             _restorePointCreator = restorePointCreator;
         }
 
+        // Verifies API availability and runtime status
         [HttpGet("test")]
         public IActionResult Test()
         {
             return Ok(new { status = "API online", timestamp = DateTime.Now });
         }
 
+        // Retrieves system hardware and software information
         [HttpGet("sysinfo")]
         public async Task<IActionResult> GetSystemInfo()
         {
@@ -65,6 +72,7 @@ namespace HST.Controllers
             return Ok(systemInfo);
         }
 
+        // Triggers creation of a Windows System Restore point for rollback safety
         [HttpPost("restore-point")]
         public async Task<IActionResult> CreateRestorePoint()
         {
@@ -80,16 +88,17 @@ namespace HST.Controllers
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"An error occurred during restore point creation: {ex.Message}");
+                Logger.Error("CreateRestorePoint", ex);
                 return Ok(new
                 {
                     status = "FAILED TO CREATE RESTORE POINT",
-                    error = ex.Message,
+                    message = "Operation failed. Check HST-WINDOWS-UTILITY.log for details.",
                     success = false
                 });
             }
         }
 
+        // Applies registry tweaks targeting system performance and responsiveness
         [HttpPost("optimize-registry")]
         public async Task<IActionResult> OptimizeRegistry()
         {
@@ -105,16 +114,17 @@ namespace HST.Controllers
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"An error occurred during registry optimization: {ex.Message}");
+                Logger.Error("OptimizeRegistry", ex);
                 return Ok(new
                 {
                     status = "REGISTRY OPTIMIZATION FAILED",
-                    error = ex.Message,
+                    message = "Operation failed. Check HST-WINDOWS-UTILITY.log for details.",
                     success = false
                 });
             }
         }
 
+        // Disables configured scheduled tasks to reduce background resource usage
         [HttpPost("optimize-taskscheduler")]
         public async Task<IActionResult> OptimizeTaskScheduler()
         {
@@ -130,22 +140,23 @@ namespace HST.Controllers
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"An error occurred during task scheduler optimization: {ex.Message}");
+                Logger.Error("OptimizeTaskScheduler", ex);
                 return Ok(new
                 {
                     status = "TASK SCHEDULER OPTIMIZATION HAS BEEN FAILED",
-                    error = ex.Message,
+                    message = "Operation failed. Check HST-WINDOWS-UTILITY.log for details.",
                     success = false
                 });
             }
         }
 
+        // Disables Windows Update services to reduce bloat and prevent interference with optimizations
         [HttpPost("disable-updates")]
         public async Task<IActionResult> DisableUpdates()
         {
             try
             {
-                await _disableWindowsUpdates.DisableWUpdates();
+                await _disableWindowsUpdates.DisableWUpdatesAsync();
                 return Ok(new
                 {
                     status = "WINDOWS UPDATE HAS BEEN DISABLED",
@@ -155,16 +166,17 @@ namespace HST.Controllers
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"An error occurred while disabling windows updates: {ex.Message}");
+                Logger.Error("DisableUpdatesAsync", ex);
                 return Ok(new
                 {
                     status = "DISABLING WINDOWS UPDATE HAS BEEN FAILED",
-                    error = ex.Message,
+                    message = "Operation failed. Check HST-WINDOWS-UTILITY.log for details.",
                     success = false
                 });
             }
         }
 
+        // Adjusts Windows visual effects to prioritize performance over aesthetics
         [HttpPost("lower-visuals")]
         public async Task<IActionResult> LowerVisuals()
         {
@@ -180,16 +192,17 @@ namespace HST.Controllers
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"An error occurred while modifying visual settings: {ex.Message}");
+                Logger.Error("LowerVisuals", ex);
                 return Ok(new
                 {
                     status = "LOWERING VISUALS HAS FAILED",
-                    error = ex.Message,
+                    message = "Operation failed. Check HST-WINDOWS-UTILITY.log for details.",
                     success = false
                 });
             }
         }
 
+        // Enables system-wide Dark Mode
         [HttpPost("set-darkmode")]
         public async Task<IActionResult> SetDarkMode()
         {
@@ -205,22 +218,23 @@ namespace HST.Controllers
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"An error occurred while setting dark mode: {ex.Message}");
+                Logger.Error("SetDarkMode", ex);
                 return Ok(new
                 {
                     status = "SETTING DARK MODE HAS FAILED",
-                    error = ex.Message,
+                    message = "Operation failed. Check HST-WINDOWS-UTILITY.log for details.",
                     success = false
                 });
             }
         }
 
+        // Imports and activates the HST power plan for maximum performance and lowest latency/lag
         [HttpPost("set-powerplan")]
         public async Task<IActionResult> SetPowerPlan()
         {
             try
             {
-                await _setPowerPlan.AddAndActivatePP();
+                await _setPowerPlan.AddAndActivatePowerplanAsync();
                 return Ok(new
                 {
                     status = $"POWERPLAN HAS BEEN ADDED AND ACTIVATED",
@@ -230,22 +244,41 @@ namespace HST.Controllers
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"ERROR: {ex.Message}");
+                Logger.Error("SetPowerPlan", ex);
                 return Ok(new
                 {
                     status = "SETTING POWERPLAN HAS BEEN FAILED",
-                    error = ex.Message,
+                    message = "Operation failed. Check HST-WINDOWS-UTILITY.log for details.",
                     success = false
                 });
             }
         }
 
+        // Removes specified applications (Steam, Whatsapp etc...) from startup to decrease boot time
         [HttpPost("remove-startup-apps")]
         public async Task<IActionResult> RemoveStartupApps()
         {
+            var startupAppsToRemove = new List<string>();
             try
             {
-                await _debloater.RemoveStartupAppsAsync();
+                var json = await System.IO.File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AppsConfig.json"));
+                var config = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json);
+                startupAppsToRemove.AddRange(config["startupApps"]);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("RemoveStartupApps config loading", ex);
+                return Ok(new
+                {
+                    status = "CONFIG FILE ERROR",
+                    message = $"Error reading configuration. Check HST-WINDOWS-UTILITY.log for details.",
+                    success = false
+                });
+            }
+
+            try
+            {
+                await _debloater.RemoveStartupAppsAsync(startupAppsToRemove);
                 return Ok(new
                 {
                     status = "STARTUP APPS REMOVED",
@@ -255,17 +288,17 @@ namespace HST.Controllers
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"ERROR: {ex.Message}");
+                Logger.Error("RemoveStartupApps operation", ex);
                 return Ok(new
                 {
-                    status = "REMOVING STARTUP APPS FAILED",
-                    error = ex.Message,
+                    status = "OPERATION FAILED",
+                    message = "Startup app removal failed. Check HST-WINDOWS-UTILITY.log for details.",
                     success = false
                 });
             }
         }
 
-
+        // Removes pre-installed Windows bloatware (Edge, OneDrive, Store Apps) based on user's configuration
         [HttpPost("debloat-apps")]
         public async Task<IActionResult> DebloatApps([FromBody] DebloatOptions options = null)
         {
@@ -280,7 +313,6 @@ namespace HST.Controllers
             }
 
             var packagesToRemove = new List<string>();
-
             try
             {
                 var json = await System.IO.File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AppsConfig.json"));
@@ -295,50 +327,64 @@ namespace HST.Controllers
             }
             catch (Exception ex)
             {
+                Logger.Error("DebloatApps config loading", ex);
                 return Ok(new
                 {
                     status = "CONFIG FILE ERROR",
-                    message = $"Error reading configuration: {ex.Message}",
+                    message = $"Error reading configuration. Check HST-WINDOWS-UTILITY.log for details.",
                     success = false
                 });
             }
 
-            if (options.Edge)
+            try
             {
-                await _debloater.RemoveEdgeAsync();
-            }
+                if (options.Edge)
+                {
+                    await _debloater.RemoveEdgeAsync();
+                }
 
-            if (options.Onedrive)
-            {
-                await _debloater.RemoveOneDriveAsync();
-            }
+                if (options.Onedrive)
+                {
+                    await _debloater.RemoveOneDriveAsync();
+                }
 
-            if (packagesToRemove.Any())
-            {
-                await _debloater.RemoveConfiguredPackages(packagesToRemove);
-            }
+                if (packagesToRemove.Any())
+                {
+                    await _debloater.RemoveConfiguredPackagesAsync(packagesToRemove);
+                }
 
-            bool anythingSelected = options.Edge || options.Onedrive || packagesToRemove.Any();
+                bool anythingSelected = options.Edge || options.Onedrive || packagesToRemove.Any();
 
-            if (anythingSelected)
-            {
+                if (anythingSelected)
+                {
+                    return Ok(new
+                    {
+                        status = "APPS REMOVED SUCCESSFULLY",
+                        message = "Apps have been removed",
+                        success = true
+                    });
+                }
+
                 return Ok(new
                 {
-                    status = "APPS REMOVED SUCCESSFULLY",
-                    message = "Apps have been removed",
-                    success = true
+                    status = "NO APPS SELECTED",
+                    message = "Please select apps to remove",
+                    success = false
                 });
             }
-
-            return Ok(new
+            catch (Exception ex)
             {
-                status = "NO APPS SELECTED",
-                message = "Please select apps to remove",
-                success = false
-            });
+                Logger.Error("DebloatApps operation", ex);
+                return Ok(new
+                {
+                    status = "OPERATION FAILED",
+                    message = "Debloat operation failed. Check HST-WINDOWS-UTILITY.log for details.",
+                    success = false
+                });
+            }
         }
 
-
+        // Executes system cleanup routines: temp files, caches, logs, and power plans that comes with Windows
         [HttpPost("cleanup")]
         public async Task<IActionResult> CleanUp([FromBody] CleanUpOptions? options = null)
         {
@@ -356,26 +402,26 @@ namespace HST.Controllers
 
                 if (options.Temp)
                 {
-                    await _cleanUp.RemoveTemp();
+                    await _cleanUp.RemoveTempAsync();
                 }
 
                 if (options.Cache)
                 {
-                    await _cleanUp.CleanInternetCache();
-                    await _cleanUp.ClearUpdateCache();
+                    await _cleanUp.CleanInternetCacheAsync();
+                    await _cleanUp.ClearUpdateCacheAsync();
                 }
 
                 if (options.EventLog)
                 {
-                    await _cleanUp.ClearEventLogs();
+                    await _cleanUp.ClearEventLogsAsync();
                 }
 
                 if (options.PowerPlan)
                 {
-                    await _cleanUp.ClearDefaultPowerPlans();
+                    await _cleanUp.ClearDefaultPowerPlansAsync();
                 }
 
-                await _cleanUp.ClearRecycleBin();
+                await _cleanUp.ClearRecycleBinAsync();
 
                 return Ok(new
                 {
@@ -386,16 +432,17 @@ namespace HST.Controllers
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"ERROR: {ex.Message}");
+                Logger.Error("CleanUp", ex);
                 return Ok(new
                 {
                     status = "CLEANUP HAS FAILED",
-                    error = ex.Message,
+                    message = "Cleanup failed. Check HST-WINDOWS-UTILITY.log for details.",
                     success = false
                 });
             }
         }
 
+        // Disables selected Windows services based on user's configuration (Recommended, Bluetooth, Hyper-V, Xbox)
         [HttpPost("optimize-services")]
         public async Task<IActionResult> DisableServices([FromBody] ServiceOptions options = null)
         {
@@ -434,6 +481,7 @@ namespace HST.Controllers
             }
             catch (Exception ex)
             {
+                Logger.Error("DisableServices config loading", ex);
                 return Ok(new
                 {
                     status = "CONFIG FILE ERROR",
@@ -444,13 +492,26 @@ namespace HST.Controllers
 
             if (servicesToDisable.Any())
             {
-                await _setServices.DisableConfiguredServices(servicesToDisable);
-                return Ok(new
+                try
                 {
-                    status = "SERVICES MODIFIED SUCCESSFULLY",
-                    message = "Services have been optimized",
-                    success = true
-                });
+                    await _setServices.DisableConfiguredServicesAsync(servicesToDisable);
+                    return Ok(new
+                    {
+                        status = "SERVICES DISABLED SUCCESSFULLY",
+                        message = "Services have been optimized",
+                        success = true
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error("DisableServices operation", ex);
+                    return Ok(new
+                    {
+                        status = "OPERATION FAILED",
+                        message = "Service modification failed. Check HST-WINDOWS-UTILITY.log for details.",
+                        success = false
+                    });
+                }
             }
             else
             {
@@ -463,6 +524,7 @@ namespace HST.Controllers
             }
         }
 
+        // Restores system configurations (Services, Tasks, Updates, Registry) to their default states
         [HttpPost("revert-configurations")]
         public async Task<IActionResult> RevertConfigurations([FromBody] RevertOptions options = null)
         {
@@ -475,19 +537,18 @@ namespace HST.Controllers
                     success = false
                 });
             }
-
             bool anyReverted = false;
 
             if (options.Service)
             {
                 try
                 {
-                    await _setServices.DisableConfiguredServicesRevert();
+                    await _setServices.DisableConfiguredServicesRevertAsync();
                     anyReverted = true;
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"ERROR: {ex.Message}");
+                    Logger.Error("ServiceRevert", ex);
                 }
             }
 
@@ -500,7 +561,7 @@ namespace HST.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"An error occurred during task scheduler revert: {ex.Message}");
+                    Logger.Error("TaskSchedulerRevert", ex);
                 }
             }
 
@@ -508,12 +569,12 @@ namespace HST.Controllers
             {
                 try
                 {
-                    await _disableWindowsUpdates.DisableWUpdatesRevert();
+                    await _disableWindowsUpdates.DisableWUpdatesRevertAsync();
                     anyReverted = true;
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"An error occurred while reverting windows updates: {ex.Message}");
+                    Logger.Error("WindowsUpdateRevert", ex);
                 }
             }
 
@@ -526,7 +587,7 @@ namespace HST.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"An error occurred during registry revertion: {ex.Message}");
+                    Logger.Error("RegistryRevert", ex);
                 }
             }
 
@@ -549,6 +610,7 @@ namespace HST.Controllers
         }
     }
 
+    // Data transfer object for system information
     public class SystemInfoDto
     {
         public string User { get; set; } = "";
@@ -559,6 +621,7 @@ namespace HST.Controllers
         public string Storage { get; set; } = "";
     }
 
+    // Data transfer object for service check-boxes
     public class ServiceOptions
     {
         public bool Recommended { get; set; }
@@ -567,6 +630,7 @@ namespace HST.Controllers
         public bool Xbox { get; set; }
     }
 
+    // Data transfer object for debloat check-boxes
     public class DebloatOptions
     {
         public bool MsApps { get; set; }
@@ -576,6 +640,7 @@ namespace HST.Controllers
         public bool StoreApps { get; set; }
     }
 
+    // Data transfer object for cleanup check-boxes
     public class CleanUpOptions
     {
         public bool Temp { get; set; }
@@ -584,6 +649,7 @@ namespace HST.Controllers
         public bool PowerPlan { get; set; }
     }
 
+    // Data transfer object for revertion check-boxes
     public class RevertOptions
     {
         public bool Service { get; set; }

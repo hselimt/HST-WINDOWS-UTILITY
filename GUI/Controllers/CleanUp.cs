@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Text.Json;
 using static HST.Controllers.RemovalTools.Paths;
+using Logger = HST.Controllers.Tool.Logger;
 
 namespace HST.Controllers.Clear
 {
@@ -14,22 +15,34 @@ namespace HST.Controllers.Clear
             _removalHelpers = removalHelpers ?? throw new ArgumentNullException(nameof(removalHelpers));
         }
 
-        public async Task RemoveTemp()
+        // Deletes temporary files from Windows, User, and Prefetch directories to free space
+        public async Task RemoveTempAsync()
         {
-            await Task.Run(() =>
+            Logger.Log("Starting cleaning of Temp and Prefetch");
+            try
             {
-                _removalHelpers.DeleteDirectoryIfExists(Path.GetTempPath());
-                _removalHelpers.DeleteDirectoryIfExists(@"C:\Windows\Temp");
-                _removalHelpers.DeleteDirectoryIfExists(@"C:\Windows\Prefetch");
-                _removalHelpers.DeleteDirectoryIfExists(Path.Combine(LocalAppDataPath, "Temp"));
-            });
+                await Task.Run(() =>
+                {
+                    _removalHelpers.DeleteDirectoryIfExists(Path.GetTempPath());
+                    _removalHelpers.DeleteDirectoryIfExists(@"C:\Windows\Temp");
+                    _removalHelpers.DeleteDirectoryIfExists(@"C:\Windows\Prefetch");
+                    _removalHelpers.DeleteDirectoryIfExists(Path.Combine(LocalAppDataPath, "Temp"));
+                });
+                Logger.Success("Cleaning of Temp and Prefetch completed");
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("RemoveTempAsync", ex);
+            }
         }
 
-        public async Task CleanInternetCache()
+        // Purges Google Chrome cache, code cache, and cookies from the local user profile
+        public async Task CleanInternetCacheAsync()
         {
-            await Task.Run(() =>
+            Logger.Log("Starting cleaning of Chrome cache");
+            try
             {
-                try
+                await Task.Run(() =>
                 {
                     string chromeCache = Path.Combine(LocalAppDataPath, @"Google\Chrome\User Data\Default\Cache");
                     string chromeCodeCache = Path.Combine(LocalAppDataPath, @"Google\Chrome\User Data\Default\Code Cache");
@@ -38,45 +51,57 @@ namespace HST.Controllers.Clear
                     _removalHelpers.DeleteDirectoryIfExists(chromeCache);
                     _removalHelpers.DeleteDirectoryIfExists(chromeCodeCache);
                     _removalHelpers.DeleteFileIfExists(chromeCookies);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Error clearing internet cache: {ex.Message}");
-                }
-            });
+                });
+                Logger.Success("Cleaning of Chrome cache completed");
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("CleanInternetCacheAsync", ex);
+            }
         }
 
-        public async Task ClearUpdateCache()
+        // Clears Windows Update download cache
+        public async Task ClearUpdateCacheAsync()
         {
+            Logger.Log("Starting cleaning of Windows Update cache");
             try
             {
+                // Stops Windows Update services before clearing cache
                 await _removalHelpers.RunCommandAsync("net", "stop wuauserv");
                 await _removalHelpers.RunCommandAsync("net", "stop bits");
                 await Task.Delay(200);
 
                 _removalHelpers.DeleteDirectoryIfExists(@"C:\Windows\SoftwareDistribution\Download");
+
+                Logger.Success("Cleaning of Windows Update cache completed");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error clearing update cache: {ex.Message}");
+                Logger.Error("ClearUpdateCacheAsync", ex);
             }
         }
 
-        public async Task ClearRecycleBin()
+        // Forcefully empties the Recycle Bin
+        public async Task ClearRecycleBinAsync()
         {
+            Logger.Log("Starting cleaning of Recycle Bin");
             try
             {
                 await _removalHelpers.RunCommandAsync("powershell.exe",
                     "-NoProfile -ExecutionPolicy Bypass -Command Clear-RecycleBin -Force");
+
+                Logger.Success("Recycle Bin cleaned");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error clearing recycle bin: {ex.Message}");
+                Logger.Error("ClearRecycleBinAsync", ex);
             }
         }
 
-        public async Task ClearEventLogs()
+        // Clears standard Windows Event Logs to reduce log bloat
+        public async Task ClearEventLogsAsync()
         {
+            Logger.Log("Starting cleaning of Event Logs");
             try
             {
                 string[] logs = { "Application", "System", "Security", "Setup", "ForwardedEvents" };
@@ -91,15 +116,19 @@ namespace HST.Controllers.Clear
 
                 await _removalHelpers.RunCommandAsync("powershell.exe",
                     $"-NoProfile -ExecutionPolicy Bypass -Command \"{clearEventLogsScript.Replace("\"", "\"\"")}\"");
+
+                Logger.Success("Event logs cleaned");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error clearing event logs: {ex.Message}");
+                Logger.Error("ClearEventLogsAsync", ex);
             }
         }
 
-        public async Task ClearDefaultPowerPlans()
+        // Removes default Windows power plans (Balanced, Power Saver, High Performance, Ultimate Performance)
+        public async Task ClearDefaultPowerPlansAsync()
         {
+            Logger.Log("Starting removal of default power plans");
             try
             {
                 var json = await File.ReadAllTextAsync(
@@ -111,10 +140,12 @@ namespace HST.Controllers.Clear
                 {
                     await _removalHelpers.RunCommandAsync("powercfg", $"-delete {guid}");
                 }
+
+                Logger.Success("Default power plans removed");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error clearing power plans: {ex.Message}");
+                Logger.Error("ClearDefaultPowerPlansAsync", ex);
             }
         }
     }

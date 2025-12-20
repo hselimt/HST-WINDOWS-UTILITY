@@ -23,7 +23,7 @@ builder.Services.AddScoped<CleanUp>();
 builder.Services.AddScoped<SysInfo>();
 builder.Services.AddScoped<RestorePointCreator>();
 
-builder.WebHost.UseUrls("http://localhost:5000");
+builder.WebHost.UseUrls("http://localhost:5200");
 
 var app = builder.Build();
 

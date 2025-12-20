@@ -172,7 +172,7 @@ echo.
 :: Step 8: Verify final output
 echo [8/8] Verifying build output...
 
-set "EXE_PATH=%BASE_DIR%dist\HST-WINDOWS-UTILITY-1.5.0.exe"
+set "EXE_PATH=%BASE_DIR%dist\HST-WINDOWS-UTILITY-1.6.0.exe"
 
 if not exist "%EXE_PATH%" (
     echo   ^> ERROR: Final executable not found!

@@ -3,6 +3,7 @@ using HST.Controllers.SetService;
 using System.Diagnostics;
 using System.Text.Json;
 using Microsoft.Win32;
+using Logger = HST.Controllers.Tool.Logger;
 
 namespace HST.Controllers.DisableUpdate
 {
@@ -15,8 +16,10 @@ namespace HST.Controllers.DisableUpdate
             _removalHelpers = removalHelpers ?? throw new ArgumentNullException(nameof(removalHelpers));
         }
 
-        public async Task DisableWUpdates()
+        // Sets policies, modifies registry and disables Windows Update services
+        public async Task DisableWUpdatesAsync()
         {
+            Logger.Log("Starting to disable Windows Updates");
             try
             {
                 var json = await File.ReadAllTextAsync(
@@ -56,16 +59,19 @@ namespace HST.Controllers.DisableUpdate
 
                 await _removalHelpers.RunCommandAsync("powershell.exe",
                     $"-NoProfile -ExecutionPolicy Bypass -Command \"{disableUpdatesScript.Replace("\"", "\"\"")}\"");
+                Logger.Success("Disabling Windows Updates completed");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error disabling Windows update services: {ex.Message}");
+                Logger.Error("DisableWUpdates", ex);
                 throw;
             }
         }
 
-        public async Task DisableWUpdatesRevert()
+        // Modifies registry and enables Windows Update services
+        public async Task DisableWUpdatesRevertAsync()
         {
+            Logger.Log("Starting to enable Windows Updates");
             try
             {
                 try
@@ -75,10 +81,7 @@ namespace HST.Controllers.DisableUpdate
                     key1?.DeleteValue("NoAutoUpdate", false);
                     key1?.DeleteValue("AUOptions", false);
                 }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Error removing NoAutoUpdate policy: {ex.Message}");
-                }
+                catch (Exception ex) { Logger.Log($"Failed to delete WindowsUpdate policy values: {ex.Message}"); }
 
                 try
                 {
@@ -86,34 +89,55 @@ namespace HST.Controllers.DisableUpdate
                         @"SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config", true);
                     key2?.DeleteValue("DODownloadMode", false);
                 }
-                catch (Exception ex)
+                catch (Exception ex) { Logger.Log($"Failed to delete DeliveryOptimization value: {ex.Message}"); }
+
+                try
                 {
-                    Debug.WriteLine($"Error removing DODownloadMode: {ex.Message}");
+                    Registry.LocalMachine.DeleteSubKeyTree(@"SYSTEM\CurrentControlSet\Services\wuauserv\Security", false);
                 }
+                catch (Exception ex) { Logger.Log($"Failed to remove security key for wuauserv: {ex.Message}"); }
 
-                try { Registry.LocalMachine.DeleteSubKeyTree(@"SYSTEM\CurrentControlSet\Services\wuauserv\Security", false); }
-                catch (Exception ex) { Debug.WriteLine($"Security key for wuauserv: {ex.Message}"); }
+                try
+                {
+                    Registry.LocalMachine.DeleteSubKeyTree(@"SYSTEM\CurrentControlSet\Services\BITS\Security", false);
+                }
+                catch (Exception ex) { Logger.Log($"Failed to remove security key for BITS: {ex.Message}"); }
 
-                try { Registry.LocalMachine.DeleteSubKeyTree(@"SYSTEM\CurrentControlSet\Services\BITS\Security", false); }
-                catch (Exception ex) { Debug.WriteLine($"Security key for BITS: {ex.Message}"); }
+                try
+                {
+                    Registry.LocalMachine.DeleteSubKeyTree(@"SYSTEM\CurrentControlSet\Services\UsoSvc\Security", false);
+                }
+                catch (Exception ex) { Logger.Log($"Failed to remove security key for UsoSvc: {ex.Message}"); }
 
-                try { Registry.LocalMachine.DeleteSubKeyTree(@"SYSTEM\CurrentControlSet\Services\UsoSvc\Security", false); }
-                catch (Exception ex) { Debug.WriteLine($"Security key for UsoSvc: {ex.Message}"); }
+                try
+                {
+                    Registry.LocalMachine.DeleteSubKeyTree(@"SYSTEM\CurrentControlSet\Services\WaaSMedicSvc\Security", false);
+                }
+                catch (Exception ex) { Logger.Log($"Failed to remove security key for WaaSMedicSvc: {ex.Message}"); }
 
-                try { Registry.LocalMachine.DeleteSubKeyTree(@"SYSTEM\CurrentControlSet\Services\WaaSMedicSvc\Security", false); }
-                catch (Exception ex) { Debug.WriteLine($"Security key for WaaSMedicSvc: {ex.Message}"); }
+                try
+                {
+                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wuauserv", "Start", 3, RegistryValueKind.DWord);
+                }
+                catch (Exception ex) { Logger.Log($"Failed to set Start value for wuauserv: {ex.Message}"); }
 
-                try { Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wuauserv", "Start", 3, RegistryValueKind.DWord); }
-                catch (Exception ex) { Debug.WriteLine($"Error setting wuauserv Start: {ex.Message}"); }
+                try
+                {
+                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\UsoSvc", "Start", 2, RegistryValueKind.DWord);
+                }
+                catch (Exception ex) { Logger.Log($"Failed to set Start value for UsoSvc: {ex.Message}"); }
 
-                try { Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\UsoSvc", "Start", 2, RegistryValueKind.DWord); }
-                catch (Exception ex) { Debug.WriteLine($"Error setting UsoSvc Start: {ex.Message}"); }
+                try
+                {
+                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc", "Start", 3, RegistryValueKind.DWord);
+                }
+                catch (Exception ex) { Logger.Log($"Failed to set Start value for WaaSMedicSvc: {ex.Message}"); }
 
-                try { Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc", "Start", 3, RegistryValueKind.DWord); }
-                catch (Exception ex) { Debug.WriteLine($"Error setting WaaSMedicSvc Start: {ex.Message}"); }
-
-                try { Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\BITS", "Start", 2, RegistryValueKind.DWord); }
-                catch (Exception ex) { Debug.WriteLine($"Error setting BITS Start: {ex.Message}"); }
+                try
+                {
+                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\BITS", "Start", 2, RegistryValueKind.DWord);
+                }
+                catch (Exception ex) { Logger.Log($"Failed to set Start value for BITS: {ex.Message}"); }
 
                 string[] tasksToEnable = new string[]
                 {
@@ -135,10 +159,11 @@ namespace HST.Controllers.DisableUpdate
 
                 await _removalHelpers.RunCommandAsync("powershell.exe",
                     $"-NoProfile -ExecutionPolicy Bypass -Command \"{enableTasksScript.Replace("\"", "\"\"")}\"");
+                Logger.Success("Enabling Windows Updates completed");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error reverting Windows update disable: {ex.Message}");
+                Logger.Error("DisableWUpdatesRevert", ex);
                 throw;
             }
         }

@@ -2,6 +2,7 @@
 using HST.Controllers.RemovalTools;
 using System.Diagnostics;
 using Microsoft.Win32;
+using Logger = HST.Controllers.Tool.Logger;
 
 namespace HST.Controllers.SetService
 {
@@ -20,12 +21,18 @@ namespace HST.Controllers.SetService
             _removalTools = removalTools ?? throw new ArgumentNullException(nameof(removalTools));
         }
 
-        public async Task DisableConfiguredServices(List<string> servicesToDisable)
+        // Disables configured services and restricts permissions
+        public async Task DisableConfiguredServicesAsync(List<string> servicesToDisable)
         {
+            Logger.Log("Starting to disable configured services");
             if (!servicesToDisable.Any()) return;
 
+            // Splits list into Wildcards and Exact matches
             var wServices = servicesToDisable.Where(s => s.Contains("*")).ToList();
             var services = servicesToDisable.Where(s => !s.Contains("*")).ToList();
+
+            Logger.Log($"Exact services to disable: {services.Count}");
+            Logger.Log($"Wildcard patterns to disable: {wServices.Count}");
 
             string disableServicesScript = "$ErrorActionPreference = 'SilentlyContinue'\n";
 
@@ -39,7 +46,7 @@ namespace HST.Controllers.SetService
                     Set-Service -Name $svc -StartupType Disabled
 
                     # Restrict permissions to make it unrevertable
-                    sc.exe sdset $svc 'D:(D;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCLCSWRPWPDTLOCRRC;;;BA)'
+                    # sc.exe sdset $svc 'D:(D;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCLCSWRPWPDTLOCRRC;;;BA)'
                 }}
                 ";
             }
@@ -53,17 +60,22 @@ namespace HST.Controllers.SetService
                         Set-Service -Name $_.Name -StartupType Disabled
 
                         # Restrict permissions to make it unrevertable
-                        sc.exe sdset $_.Name 'D:(D;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCLCSWRPWPDTLOCRRC;;;BA)'
+                        # sc.exe sdset $_.Name 'D:(D;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCLCSWRPWPDTLOCRRC;;;BA)'
                     }}
                 ";
             }
 
             await _removalTools.RunCommandAsync("powershell.exe",
                 $"-NoProfile -ExecutionPolicy Bypass -Command \"{disableServicesScript.Replace("\"", "\"\"")}\"");
+            Logger.Success("Disabling configured services complete");
         }
 
-        public async Task DisableConfiguredServicesRevert()
+        // Re-enables disabled services
+        public async Task DisableConfiguredServicesRevertAsync()
         {
+            Logger.Log("Starting to enable configured services");
+
+            // Hardcoded list of services with their default startup types
             var services = new Dictionary<string, int>
             {
                 { "tzautoupdate", 3 }, { "BthAvctpSvc", 3 }, { "BDESVC", 3 }, { "wbengine", 3 },
@@ -98,16 +110,18 @@ namespace HST.Controllers.SetService
             {
                 try
                 {
+                    // Removes security restrictions
                     Registry.LocalMachine.DeleteSubKeyTree(
                         $@"SYSTEM\CurrentControlSet\Services\{service.Key}\Security", false);
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"Security key for {service.Key}: {ex.Message}");
+                    Logger.Log($"Could not remove security key for {service.Key}: {ex.Message}");
                 }
 
                 try
                 {
+                    // Restores default startup type
                     Registry.SetValue(
                         $@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\{service.Key}",
                         "Start",
@@ -116,9 +130,10 @@ namespace HST.Controllers.SetService
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"Error setting Start value for {service.Key}: {ex.Message}");
+                    Logger.Log($"Could not set Start value for {service.Key}: {ex.Message}");
                 }
             }
+            Logger.Success("Enabling configured services complete");
         }
     }
 }

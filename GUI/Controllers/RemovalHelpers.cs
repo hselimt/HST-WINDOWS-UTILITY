@@ -1,20 +1,22 @@
 ﻿using System.Diagnostics;
+using Logger = HST.Controllers.Tool.Logger;
 
 namespace HST.Controllers.RemovalTools
 {
     public static class Paths
     {
-        public static string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        public static string ProgramDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-        public static string PublicDesktopPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDesktopDirectory);
-        public static string UserDesktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        public static string UserProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        public static string LocalAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        public static string SystemRoot = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+        public static readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        public static readonly string ProgramDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+        public static readonly string PublicDesktopPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDesktopDirectory);
+        public static readonly string UserDesktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        public static readonly string UserProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        public static readonly string LocalAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        public static readonly string SystemRoot = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
     }
 
     public class RemovalHelpers
     {
+        // Runs command with admin privileges and timeout
         public async Task<bool> RunCommandAsync(string command, string arguments, int timeoutMs = 30000)
         {
             try
@@ -30,27 +32,25 @@ namespace HST.Controllers.RemovalTools
                         CreateNoWindow = true,
                         WindowStyle = ProcessWindowStyle.Hidden
                     };
-
                     process.Start();
-
                     using var cts = new CancellationTokenSource(timeoutMs);
                     await process.WaitForExitAsync(cts.Token);
-
                     return process.ExitCode == 0;
                 }
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException ex)
             {
-                Debug.WriteLine($"Command timed out after {timeoutMs}ms: {command} {arguments}");
+                Logger.Error("RunCommand timeout", ex);
                 return false;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Failed to run command: {ex.Message}");
+                Logger.Error("RunCommand", ex);
                 return false;
             }
         }
 
+        // Deletes directory if it exists
         public void DeleteDirectoryIfExists(string dirPath)
         {
             try
@@ -62,10 +62,11 @@ namespace HST.Controllers.RemovalTools
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Failed to delete directory {dirPath}. Error: {ex.Message}");
+                Logger.Log($"Failed to delete directory {dirPath}: {ex.Message}");
             }
         }
 
+        // Deletes file if it exists, supports environment variables
         public void DeleteFileIfExists(string filePath)
         {
             try
@@ -78,7 +79,7 @@ namespace HST.Controllers.RemovalTools
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Failed to delete file {filePath}. Error: {ex.Message}");
+                Logger.Log($"Failed to delete file {filePath}: {ex.Message}");
             }
         }
     }

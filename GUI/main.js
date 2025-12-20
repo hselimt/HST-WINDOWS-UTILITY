@@ -97,7 +97,7 @@ async function createWindow() {
     });
 
     try {
-        await waitForServer('http://localhost:5000');
+        await waitForServer('http://localhost:5200');
     } catch (err) {
         console.error('Backend failed to start:', err);
         app.quit();
@@ -120,7 +120,7 @@ async function createWindow() {
     });
 
     mainWindow.setMenu(null);
-    mainWindow.loadURL('http://localhost:5000');
+    mainWindow.loadURL('http://localhost:5200');
 }
 
 app.whenReady().then(createWindow);

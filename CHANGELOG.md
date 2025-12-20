@@ -1,3 +1,27 @@
+## [1.6.0] - 2024-12-20
+
+### Added
+- **Comprehensive Logging System** - All operations now log to HST-WINDOWS-UTILITY.log in %TEMP%
+  - Service operations tracking
+  - Error diagnostics and debugging
+  - Operation success/failure reporting
+  - PowerShell script execution logging
+
+### Changed
+- **Port Change** - Backend now runs on port 5200 (was 5000)
+- **UI Status Messages** - More descriptive real-time operation status
+- **UI Text Labels** - Improved clarity and user guidance
+- **Error Handling** - Enhanced error messages with log file references
+- **CLI Menu** - Reorganized options for better workflow
+- **CLI Output** - Improved readability and status reporting
+
+### Fixed
+- **CLI Lower Visuals Crash** - Fixed crashes during visual effects optimization
+- Consistent async method naming conventions
+- Comprehensive code comments and documentation
+
+---
+
 ## [1.5.0] - 2024-12-10
 
 ### Added

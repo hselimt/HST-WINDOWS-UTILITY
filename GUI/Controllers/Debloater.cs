@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Microsoft.Win32;
 using System.IO.Packaging;
 using static HST.Controllers.RemovalTools.Paths;
+using Logger = HST.Controllers.Tool.Logger;
 
 namespace HST.Controllers.DebloatApps
 {
@@ -15,28 +16,40 @@ namespace HST.Controllers.DebloatApps
             _removalTools = removalTools ?? throw new ArgumentNullException(nameof(removalTools));
         }
 
-        public async Task RemoveConfiguredPackages(List<string> PackagesToRemove)
+        // Removes configured Microsoft Store apps and provisioned packages
+        public async Task RemoveConfiguredPackagesAsync(List<string> PackagesToRemove)
         {
             if (!PackagesToRemove.Any()) return;
 
-            foreach (string package in PackagesToRemove)
+            Logger.Log("Starting removal of configured packages");
+            try
             {
-                try
+                foreach (string package in PackagesToRemove)
                 {
-                    await _removalTools.RunCommandAsync("powershell.exe",
-                        $"-NoProfile -ExecutionPolicy Bypass -Command \"Get-AppxPackage -Name '{package}' -AllUsers | Remove-AppxPackage -AllUsers\"");
-                    await _removalTools.RunCommandAsync("powershell.exe",
-                        $"-NoProfile -ExecutionPolicy Bypass -Command \"Get-AppxProvisionedPackage -Online | Where-Object {{ $_.DisplayName -like '{package}' }} | ForEach-Object {{ Remove-AppxProvisionedPackage -Online -PackageName $_.PackageName }}\"");
+                    try
+                    {
+                        await _removalTools.RunCommandAsync("powershell.exe",
+                            $"-NoProfile -ExecutionPolicy Bypass -Command \"Get-AppxPackage -Name '{package}' -AllUsers | Remove-AppxPackage -AllUsers\"");
+                        await _removalTools.RunCommandAsync("powershell.exe",
+                            $"-NoProfile -ExecutionPolicy Bypass -Command \"Get-AppxProvisionedPackage -Online | Where-Object {{ $_.DisplayName -like '{package}' }} | ForEach-Object {{ Remove-AppxProvisionedPackage -Online -PackageName $_.PackageName }}\"");
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Log($"Failed to remove package {package}: {ex.Message}");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Error removing {package}: {ex.Message}");
-                }
+                Logger.Success("Removal of configured packages completed");
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("RemoveConfiguredPackagesAsync", ex);
             }
         }
 
+        // Removes Microsoft Edge browser, shortcuts, and registry entries
         public async Task RemoveEdgeAsync()
         {
+            Logger.Log("Starting removal of Microsoft Edge");
             try
             {
                 await _removalTools.RunCommandAsync("taskkill", "/f /im msedge.exe");
@@ -60,15 +73,18 @@ namespace HST.Controllers.DebloatApps
                 await _removalTools.RunCommandAsync("reg", "delete \"HKLM\\Software\\Microsoft\\EdgeUpdate\" /f");
                 await _removalTools.RunCommandAsync("reg", "delete \"HKLM\\Software\\Clients\\StartMenuInternet\\Microsoft Edge\" /f");
                 await _removalTools.RunCommandAsync("reg", "delete \"HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Microsoft Edge\" /f");
+                Logger.Success("Removal of Microsoft Edge completed");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error removing Edge: {ex.Message}");
+                Logger.Error("RemoveEdgeAsync", ex);
             }
         }
 
+        // Removes OneDrive and cleans up sync settings
         public async Task RemoveOneDriveAsync()
         {
+            Logger.Log("Starting removal of OneDrive");
             try
             {
                 await _removalTools.RunCommandAsync("taskkill", "/f /im OneDrive.exe");
@@ -108,33 +124,31 @@ namespace HST.Controllers.DebloatApps
 
                 string removeOneDriveScript = "Stop-Service -Name OneDrive -ErrorAction SilentlyContinue; Set-Service -Name OneDrive -StartupType Disabled -ErrorAction SilentlyContinue; Remove-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run' -Name 'OneDrive' -ErrorAction SilentlyContinue";
                 await _removalTools.RunCommandAsync("powershell.exe", $"-NoProfile -Command \"{removeOneDriveScript}\"");
+                Logger.Success("Removal of OneDrive completed");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error removing OneDrive: {ex.Message}");
+                Logger.Error("RemoveOneDriveAsync", ex);
             }
         }
 
-        public async Task RemoveStartupAppsAsync()
+        // Removes common startup applications from registry
+        public async Task RemoveStartupAppsAsync(List<string> startupAppsToRemove)
         {
-            await Task.Run(() =>
+            Logger.Log("Starting removal of configured Startup Apps");
+            try
             {
-                try
+                await Task.Run(() =>
                 {
-                    var safeToRemove = new[] { "Steam", "Discord", "Lightshot", "Spotify", "Slack", "Teams", "Zoom", 
-                                            "Epic", "Origin", "Uplay", "Battle.net", "Skype", 
-                                            "Dropbox", "Google Drive", "OneDrive", "Adobe", 
-                                            "WhatsApp", "Telegram", "CCleaner" };
-                    
                     string runPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
-                    
+
                     using (var key = Registry.CurrentUser.OpenSubKey(runPath, true))
                     {
                         if (key != null)
                         {
                             foreach (string name in key.GetValueNames().ToList())
                             {
-                                if (safeToRemove.Any(app => name.Contains(app, StringComparison.OrdinalIgnoreCase)))
+                                if (startupAppsToRemove.Any(app => name.Contains(app, StringComparison.OrdinalIgnoreCase)))
                                     key.DeleteValue(name, false);
                             }
                         }
@@ -145,17 +159,18 @@ namespace HST.Controllers.DebloatApps
                         {
                             foreach (string name in key.GetValueNames().ToList())
                             {
-                                if (safeToRemove.Any(app => name.Contains(app, StringComparison.OrdinalIgnoreCase)))
+                                if (startupAppsToRemove.Any(app => name.Contains(app, StringComparison.OrdinalIgnoreCase)))
                                     key.DeleteValue(name, false);
                             }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Error removing startup apps: {ex.Message}");
-                }
-            });
+                });
+                Logger.Success("Removal of configured Startup Apps completed");
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("RemoveStartupAppsAsync", ex);
+            }
         }
     }
 }

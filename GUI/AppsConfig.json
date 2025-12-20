@@ -62,5 +62,24 @@
   "storeApps": [
     "Microsoft.WindowsStore",
     "Microsoft.StorePurchaseApp"
+  ],
+  "startupApps": [
+    "Steam",
+    "Discord",
+    "Lightshot",
+    "Spotify",
+    "Teams",
+    "Zoom",
+    "Epic",
+    "Origin",
+    "Uplay",
+    "Battle.net",
+    "Skype",
+    "Google Drive",
+    "OneDrive",
+    "Adobe",
+    "WhatsApp",
+    "Telegram",
+    "CCleaner"
   ]
 }

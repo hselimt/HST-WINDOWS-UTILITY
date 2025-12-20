@@ -79,7 +79,7 @@ export default function HSTWindowsUtility() {
 
   const checkApiStatus = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/system/test");
+      const response = await fetch("http://localhost:5200/api/system/test");
       setApiStatus(response.ok ? "online" : "offline");
     } catch (error) {
       setApiStatus("offline");
@@ -88,7 +88,7 @@ export default function HSTWindowsUtility() {
 
   const fetchSystemInfo = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/system/sysinfo");
+      const response = await fetch("http://localhost:5200/api/system/sysinfo");
 
       if (response.ok) {
         const data = await response.json();
@@ -138,7 +138,7 @@ export default function HSTWindowsUtility() {
       }
 
       const response = await fetch(
-        `http://localhost:5000/api/system/${endpoint}`,
+        `http://localhost:5200/api/system/${endpoint}`,
         options
       );
 
@@ -283,7 +283,7 @@ export default function HSTWindowsUtility() {
     icon: Icon,
   }) => {
     const optionLabels = {
-      recommended: "Recommended",
+      recommended: "HST Essentials",
       bluetooth: "Bluetooth",
       hyperv: "Hyper-V",
       xbox: "Xbox",
@@ -292,10 +292,10 @@ export default function HSTWindowsUtility() {
       onedrive: "OneDrive",
       xboxApps: "Xbox Apps",
       storeApps: "Microsoft Store",
-      temp: "Temp Files",
-      cache: "Cache",
+      temp: "Temporary Files",
+      cache: "Browser Cache",
       eventLogs: "Event Logs",
-      powerPlans: "Power Plans",
+      powerPlans: "Default Powerplans",
       service: "Services",
       task: "Task Scheduler",
       wUpdate: "Windows Update",
@@ -767,7 +767,7 @@ export default function HSTWindowsUtility() {
               gradient="linear-gradient(135deg, #0a0a0a 0%, #000000 100%)"
               textColor="#3b82f6"
             >
-              Create Restore Point
+              CREATE RESTORE POINT
             </NeonButton>
             <NeonButton
               onClick={() =>
@@ -777,7 +777,7 @@ export default function HSTWindowsUtility() {
               gradient="linear-gradient(135deg, #0a0a0a 0%, #000000 100%)"
               textColor="#ec4899"
             >
-              Optimize Registry
+              OPTIMIZE REGISTRY
             </NeonButton>
             <NeonButton
               onClick={() =>
@@ -790,7 +790,7 @@ export default function HSTWindowsUtility() {
               gradient="linear-gradient(135deg, #0a0a0a 0%, #000000 100%)"
               textColor="#06b6d4"
             >
-              Task Scheduler
+              OPTIMIZE TASK SCHEDULER
             </NeonButton>
             <NeonButton
               onClick={() =>
@@ -800,7 +800,7 @@ export default function HSTWindowsUtility() {
               gradient="linear-gradient(135deg, #0a0a0a 0%, #000000 100%)"
               textColor="#22c55e"
             >
-              Disable Updates
+              DISABLE WINDOWS UPDATES
             </NeonButton>
             <NeonButton
               onClick={() =>
@@ -810,7 +810,7 @@ export default function HSTWindowsUtility() {
               gradient="linear-gradient(135deg, #0a0a0a 0%, #000000 100%)"
               textColor="#f59e0b"
             >
-              Lower Visuals
+              LOWER VISUAL SETTINGS
             </NeonButton>
             <NeonButton
               onClick={() =>
@@ -820,7 +820,7 @@ export default function HSTWindowsUtility() {
               gradient="linear-gradient(135deg, #0a0a0a 0%, #000000 100%)"
               textColor="#6b7280"
             >
-              Dark Mode
+              SET DARK MODE
             </NeonButton>
             <NeonButton
               onClick={() =>
@@ -830,7 +830,7 @@ export default function HSTWindowsUtility() {
               gradient="linear-gradient(135deg, #0a0a0a 0%, #000000 100%)"
               textColor="#a855f7"
             >
-              Power Plan
+              ACTIVATE HST POWERPLAN
             </NeonButton>
             <NeonButton
               onClick={() =>
@@ -843,7 +843,7 @@ export default function HSTWindowsUtility() {
               gradient="linear-gradient(135deg, #0a0a0a 0%, #000000 100%)"
               textColor="#ef4444"
             >
-              Remove Startup
+              REMOVE STARTUP APPS
             </NeonButton>
           </div>
         </div>
