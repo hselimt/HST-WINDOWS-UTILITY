@@ -1,3 +1,29 @@
+## [1.7.0] - 2024-12-21
+
+### Added
+* **ConfigLoader Utility Class** - Centralized configuration loading, eliminates ~25 lines of duplicate code
+* **Log Rotation** - Automatic cleanup on startup to prevent multi-GB log files
+* **Service Default Startup Types** - Added `defaultStartup` to ServiceInfo DTO for config-driven reverts
+* **CLI service optimization** - Added wildcard services
+
+### Changed
+* **HTTP Status Codes** - Proper REST standards (500 for errors, 400 for bad input) across all 14 endpoints
+* **Service Revert System** - Reads from ServicesConfig.json instead of 80+ hardcoded values
+  - **Note:** Revert restores Windows defaults, not previous custom settings
+* **File Paths** - System-aware paths replace hardcoded values
+* **Task Delays** - Standardized to 200ms throughout codebase
+* **TaskSchedulerOptimizer** - Removed unnecessary Base64 encoding
+* **SetServices Performance** - Optimized with StringBuilder
+
+### Fixed
+* **Wildcard Service Matching** - Services like `CaptureService*` now match correctly
+* **Code Duplication** - ConfigLoader eliminates duplicate JSON handling across 6 files
+
+### Known Issues
+- Services with instance IDs cannot be disabled
+
+---
+
 ## [1.6.0] - 2024-12-20
 
 ### Added

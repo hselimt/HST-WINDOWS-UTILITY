@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableDelayedExpansion
-title HST WINDOWS UTILITY - SCRIPT VERSION v1.6.0
+title HST WINDOWS UTILITY - SCRIPT VERSION v1.7.0
 color 0B
 
 mode con: cols=90 lines=110
@@ -130,7 +130,7 @@ goto MAIN_MENU
 
 :SHOW_HELP
 cls
-echo                         HST WINDOWS UTILITY - HELP GUIDE v1.5.0
+echo                         HST WINDOWS UTILITY - HELP GUIDE v1.7.0
 echo                ============================================================
 echo                =                    IMPORTANT WARNINGS                    =
 echo                ============================================================
@@ -182,7 +182,7 @@ echo                     - Sets service permissions to prevent re-enabling
 echo                    WARNING: You must manually update Windows
 echo                 [8] OPTIMIZE SERVICES
 echo                    Disables unnecessary Windows services
-echo                     - Recommended: 80 general services
+echo                     - Recommended: 95 general services
 echo                     - Bluetooth: 4 services
 echo                     - Hyper-V: 11 virtualization services
 echo                     - Xbox: 4 gaming services
@@ -723,6 +723,7 @@ echo                   - DISABLING FILE HISTORY
 schtasks /Change /TN "\Microsoft\Windows\FileHistory\File History (maintenance mode)" /Disable %nul%
 
 echo                   - DISABLING MISC TASKS
+schtasks /Change /TN "\Microsoft\Windows\Flighting\FeatureConfig\UsageDataReporting" /Disable %nul%
 schtasks /Change /TN "\Microsoft\Windows\International\Synchronize Language Settings" /Disable %nul%
 schtasks /Change /TN "\Microsoft\Windows\Maintenance\WinSAT" /Disable %nul%
 schtasks /Change /TN "\Microsoft\Windows\Maps\MapsToastTask" /Disable %nul%
@@ -835,11 +836,11 @@ echo                ============================================================
 echo.
 echo                               SELECT SERVICES TO DISABLE
 echo.
-echo                             [1] RECOMMENDED (80 SERVICES)
+echo                             [1] RECOMMENDED (95 SERVICES)
 echo                             [2] BLUETOOTH (4 SERVICES)
 echo                             [3] HYPER-V (11 SERVICES)
 echo                             [4] XBOX (4 SERVICES)
-echo                             [5] ALL OF THE ABOVE (99 SERVICES)
+echo                             [5] ALL OF THE ABOVE (95 SERVICES)
 echo.
 echo                             [0] BACK TO MENU
 echo.
@@ -870,7 +871,7 @@ exit /b
 
 
 :DISABLE_SERVICES_ALL_RECOMMENDED
-echo                    - DISABLING SERVICES (BATCH 1/8)
+echo                    - DISABLING SERVICES (BATCH 1/9)
 sc stop tzautoupdate %nul% & sc config tzautoupdate start= disabled %nul%
 sc stop BthAvctpSvc %nul% & sc config BthAvctpSvc start= disabled %nul%
 sc stop BDESVC %nul% & sc config BDESVC start= disabled %nul%
@@ -883,7 +884,7 @@ sc stop DoSvc %nul% & sc config DoSvc start= disabled %nul%
 sc stop DmEnrollmentSvc %nul% & sc config DmEnrollmentSvc start= disabled %nul%
 
 
-echo                    - DISABLING SERVICES (BATCH 2/8)
+echo                    - DISABLING SERVICES (BATCH 2/9)
 sc stop dmwappushservice %nul% & sc config dmwappushservice start= disabled %nul%
 sc stop diagsvc %nul% & sc config diagsvc start= disabled %nul%
 sc stop DPS %nul% & sc config DPS start= disabled %nul%
@@ -896,7 +897,7 @@ sc stop MapsBroker %nul% & sc config MapsBroker start= disabled %nul%
 sc stop MicrosoftEdgeElevationService %nul% & sc config MicrosoftEdgeElevationService start= disabled %nul%
 
 
-echo                    - DISABLING SERVICES (BATCH 3/8)
+echo                    - DISABLING SERVICES (BATCH 3/9)
 sc stop edgeupdate %nul% & sc config edgeupdate start= disabled %nul%
 sc stop edgeupdatem %nul% & sc config edgeupdatem start= disabled %nul%
 sc stop MsKeyboardFilter %nul% & sc config MsKeyboardFilter start= disabled %nul%
@@ -909,7 +910,7 @@ sc stop NetTcpPortSharing %nul% & sc config NetTcpPortSharing start= disabled %n
 sc stop Netlogon %nul% & sc config Netlogon start= disabled %nul%
 
 
-echo                    - DISABLING SERVICES (BATCH 4/8)
+echo                    - DISABLING SERVICES (BATCH 4/9)
 sc stop NcbService %nul% & sc config NcbService start= disabled %nul%
 sc stop CscService %nul% & sc config CscService start= disabled %nul%
 sc stop defragsvc %nul% & sc config defragsvc start= disabled %nul%
@@ -922,7 +923,7 @@ sc stop PrintNotify %nul% & sc config PrintNotify start= disabled %nul%
 sc stop wercplsupport %nul% & sc config wercplsupport start= disabled %nul%
 
 
-echo                    - DISABLING SERVICES (BATCH 5/8)
+echo                    - DISABLING SERVICES (BATCH 5/9)
 sc stop PcaSvc %nul% & sc config PcaSvc start= disabled %nul%
 sc stop QWAVE %nul% & sc config QWAVE start= disabled %nul%
 sc stop RmSvc %nul% & sc config RmSvc start= disabled %nul%
@@ -935,7 +936,7 @@ sc stop RemoteRegistry %nul% & sc config RemoteRegistry start= disabled %nul%
 sc stop RemoteAccess %nul% & sc config RemoteAccess start= disabled %nul%
 
 
-echo                    - DISABLING SERVICES (BATCH 6/8)
+echo                    - DISABLING SERVICES (BATCH 6/9)
 sc stop RetailDemo %nul% & sc config RetailDemo start= disabled %nul%
 sc stop SensorDataService %nul% & sc config SensorDataService start= disabled %nul%
 sc stop SensrSvc %nul% & sc config SensrSvc start= disabled %nul%
@@ -948,7 +949,7 @@ sc stop SCPolicySvc %nul% & sc config SCPolicySvc start= disabled %nul%
 sc stop SysMain %nul% & sc config SysMain start= disabled %nul%
 
 
-echo                    - DISABLING SERVICES (BATCH 7/8)
+echo                    - DISABLING SERVICES (BATCH 7/9)
 sc stop TabletInputService %nul% & sc config TabletInputService start= disabled %nul%
 sc stop TapiSrv %nul% & sc config TapiSrv start= disabled %nul%
 sc stop UevAgentService %nul% & sc config UevAgentService start= disabled %nul%
@@ -961,7 +962,7 @@ sc stop MixedRealityOpenXRSvc %nul% & sc config MixedRealityOpenXRSvc start= dis
 sc stop icssvc %nul% & sc config icssvc start= disabled %nul%
 
 
-echo                    - DISABLING SERVICES (BATCH 8/8)
+echo                    - DISABLING SERVICES (BATCH 8/9)
 sc stop spectrum %nul% & sc config spectrum start= disabled %nul%
 sc stop perceptionsimulation %nul% & sc config perceptionsimulation start= disabled %nul%
 sc stop PushToInstall %nul% & sc config PushToInstall start= disabled %nul%
@@ -978,6 +979,28 @@ sc stop WdiServiceHost %nul% & sc config WdiServiceHost start= disabled %nul%
 sc stop wlidsvc %nul% & sc config wlidsvc start= disabled %nul%
 sc stop WerSvc %nul% & sc config WerSvc start= disabled %nul%
 sc stop workfolderssvc %nul% & sc config workfolderssvc start= disabled %nul%
+
+
+echo                    - DISABLING SERVICES (BATCH 9/9)
+powershell -Command "Get-Service -Name 'CaptureService*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'CaptureService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'CloudBackupRestoreSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'CloudBackupRestoreSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'cbdhsvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'cbdhsvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'ConsentUxUserSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'ConsentUxUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'PimIndexMaintenanceSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'PimIndexMaintenanceSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'CDPUserSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'CDPUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'DusmSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'DusmSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'DevicePickerUserSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'DevicePickerUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'DevicesFlowUserSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'DevicesFlowUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'BcastDVRUserService*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'BcastDVRUserService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'LxpSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'LxpSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'MessagingService*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'MessagingService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'OneSyncSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'OneSyncSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'UserDataSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'UserDataSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'UnistoreSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'UnistoreSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'WpnUserService*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'WpnUserService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'PrintWorkflowUserSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'PrintWorkflowUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'BluetoothUserService*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'BluetoothUserService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'DeviceAssociationBrokerSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'DeviceAssociationBrokerSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
 exit /b
 
 
@@ -1238,6 +1261,9 @@ if /i not "%confirm%"=="Y" goto MAIN_MENU
 echo                    - KILLING ONEDRIVE PROCESS
 taskkill /f /im OneDrive.exe %nul%
 timeout /t 1 /nobreak >nul
+
+echo                    - DISABLING FILE SYNC
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive" /v "DisableFileSync" /t REG_DWORD /d 1 /f %nul%
 
 echo                    - UNINSTALLING ONEDRIVE
 if exist "%SystemRoot%\SysWOW64\OneDriveSetup.exe" (
@@ -1852,7 +1878,7 @@ goto MAIN_MENU
 
 
 :RESTORE_SERVICES_SILENT
-echo                    - RESTORING SERVICES (BATCH 1/8)
+echo                    - RESTORING SERVICES (BATCH 1/9)
 sc config tzautoupdate start= demand %nul%
 sc config BthAvctpSvc start= demand %nul%
 sc config BDESVC start= demand %nul%
@@ -1864,7 +1890,7 @@ sc config DsSvc start= demand %nul%
 sc config DoSvc start= auto %nul%
 sc config DmEnrollmentSvc start= demand %nul%
 
-echo                    - RESTORING SERVICES (BATCH 2/8)
+echo                    - RESTORING SERVICES (BATCH 2/9)
 sc config dmwappushservice start= demand %nul%
 sc config diagsvc start= demand %nul%
 sc config DPS start= auto %nul%
@@ -1876,7 +1902,7 @@ sc config iphlpsvc start= auto %nul%
 sc config MapsBroker start= auto %nul%
 sc config MicrosoftEdgeElevationService start= demand %nul%
 
-echo                    - RESTORING SERVICES (BATCH 3/8)
+echo                    - RESTORING SERVICES (BATCH 3/9)
 sc config edgeupdate start= auto %nul%
 sc config edgeupdatem start= demand %nul%
 sc config MsKeyboardFilter start= disabled %nul%
@@ -1888,7 +1914,7 @@ sc config SmsRouter start= demand %nul%
 sc config NetTcpPortSharing start= disabled %nul%
 sc config Netlogon start= demand %nul%
 
-echo                    - RESTORING SERVICES (BATCH 4/8)
+echo                    - RESTORING SERVICES (BATCH 4/9)
 sc config NcbService start= demand %nul%
 sc config CscService start= demand %nul%
 sc config defragsvc start= demand %nul%
@@ -1900,7 +1926,7 @@ sc config PrintDeviceConfigurationService start= demand %nul%
 sc config PrintNotify start= demand %nul%
 sc config wercplsupport start= demand %nul%
 
-echo                    - RESTORING SERVICES (BATCH 5/8)
+echo                    - RESTORING SERVICES (BATCH 5/9)
 sc config PcaSvc start= auto %nul%
 sc config QWAVE start= demand %nul%
 sc config RmSvc start= demand %nul%
@@ -1912,7 +1938,7 @@ sc config UmRdpService start= demand %nul%
 sc config RemoteRegistry start= disabled %nul%
 sc config RemoteAccess start= disabled %nul%
 
-echo                    - RESTORING SERVICES (BATCH 6/8)
+echo                    - RESTORING SERVICES (BATCH 6/9)
 sc config RetailDemo start= demand %nul%
 sc config SensorDataService start= demand %nul%
 sc config SensrSvc start= demand %nul%
@@ -1924,7 +1950,7 @@ sc config ScDeviceEnum start= demand %nul%
 sc config SCPolicySvc start= demand %nul%
 sc config SysMain start= auto %nul%
 
-echo                    - RESTORING SERVICES (BATCH 7/8)
+echo                    - RESTORING SERVICES (BATCH 7/9)
 sc config TabletInputService start= demand %nul%
 sc config TapiSrv start= demand %nul%
 sc config UevAgentService start= disabled %nul%
@@ -1936,7 +1962,7 @@ sc config wisvc start= demand %nul%
 sc config MixedRealityOpenXRSvc start= demand %nul%
 sc config icssvc start= demand %nul%
 
-echo                    - RESTORING SERVICES (BATCH 8/8)
+echo                    - RESTORING SERVICES (BATCH 8/9)
 sc config spectrum start= demand %nul%
 sc config perceptionsimulation start= demand %nul%
 sc config PushToInstall start= demand %nul%
@@ -1953,6 +1979,27 @@ sc config WdiServiceHost start= demand %nul%
 sc config wlidsvc start= demand %nul%
 sc config WerSvc start= demand %nul%
 sc config workfolderssvc start= demand %nul%
+
+echo                    - RESTORING SERVICES (BATCH 9/9)
+powershell -Command "Get-Service -Name 'CaptureService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'CloudBackupRestoreSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'cbdhsvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'ConsentUxUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'PimIndexMaintenanceSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'CDPUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'DusmSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'DevicePickerUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'DevicesFlowUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'BcastDVRUserService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'LxpSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'MessagingService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'OneSyncSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'UserDataSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'UnistoreSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'WpnUserService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'PrintWorkflowUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'BluetoothUserService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+powershell -Command "Get-Service -Name 'DeviceAssociationBrokerSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
 
 echo                    - RESTORING BLUETOOTH SERVICES
 sc config BTAGService start= demand %nul%
@@ -1983,7 +2030,7 @@ exit /b
 :RESTORE_TASKS
 cls
 echo                ============================================================
-echo                                  RESTORING TASKS DEFAULTS
+echo                                 RESTORING TASKS DEFAULTS
 echo                ============================================================
 echo.
 call :RESTORE_TASKS_SILENT
@@ -2105,13 +2152,13 @@ exit /b
 :RESTORE_UPDATES
 cls
 echo                  ============================================================
-echo                                  RESTORING WINDOWS UPDATES
+echo                                   RESTORING WINDOWS UPDATES
 echo                  ============================================================
 echo.
 call :RESTORE_UPDATES_SILENT
 echo.
 echo                  ============================================================
-echo                                            DONE
+echo                                             DONE
 echo                  ============================================================
 echo.
 pause
@@ -2180,7 +2227,7 @@ cls
 echo                  ============================================================
 echo.
 echo                      RESTART YOUR COMPUTER FOR ALL CHANGES TO TAKE EFFECT
-echo                                       MADE BY HSELIMT
+echo                                        MADE BY HSELIMT
 echo.
 echo                  ============================================================
 echo.

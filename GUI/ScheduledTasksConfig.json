@@ -28,6 +28,7 @@
     "\\Microsoft\\Windows\\DiskFootprint\\Diagnostics",
     "\\Microsoft\\Windows\\DiskFootprint\\StorageSense",
     "\\Microsoft\\Windows\\FileHistory\\File History (maintenance mode)",
+    "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\UsageDataReporting",
     "\\Microsoft\\Windows\\International\\Synchronize Language Settings",
     "\\Microsoft\\Windows\\Maintenance\\WinSAT",
     "\\Microsoft\\Windows\\Maps\\MapsToastTask",

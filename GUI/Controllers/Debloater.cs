@@ -1,4 +1,5 @@
 using HST.Controllers.RemovalTools;
+using HST.Controllers.Tool;
 using System.Diagnostics;
 using Microsoft.Win32;
 using System.IO.Packaging;
@@ -55,15 +56,15 @@ namespace HST.Controllers.DebloatApps
                 await _removalTools.RunCommandAsync("taskkill", "/f /im msedge.exe");
                 await _removalTools.RunCommandAsync("taskkill", "/f /im msedgeupdate.exe");
                 await _removalTools.RunCommandAsync("taskkill", "/f /im MicrosoftEdgeUpdate.exe");
-                await Task.Delay(100);
+                await Task.Delay(200);
 
-                _removalTools.DeleteDirectoryIfExists(@"C:\Program Files (x86)\Microsoft\Edge");
-                _removalTools.DeleteDirectoryIfExists(@"C:\Program Files (x86)\Microsoft\EdgeCore");
-                _removalTools.DeleteDirectoryIfExists(@"C:\Program Files (x86)\Microsoft\EdgeUpdate");
-                _removalTools.DeleteDirectoryIfExists(@"C:\Program Files\Microsoft\Edge");
-                _removalTools.DeleteDirectoryIfExists(@"C:\Program Files\Microsoft\EdgeUpdate");
-                _removalTools.DeleteDirectoryIfExists(@"C:\ProgramData\Microsoft\Edge");
-                _removalTools.DeleteDirectoryIfExists(@"C:\ProgramData\Microsoft\EdgeUpdate");
+                _removalTools.DeleteDirectoryIfExists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Microsoft", "Edge"));
+                _removalTools.DeleteDirectoryIfExists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Microsoft", "EdgeCore"));
+                _removalTools.DeleteDirectoryIfExists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Microsoft", "EdgeUpdate"));
+                _removalTools.DeleteDirectoryIfExists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Microsoft", "Edge"));
+                _removalTools.DeleteDirectoryIfExists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Microsoft", "EdgeUpdate"));
+                _removalTools.DeleteDirectoryIfExists(Path.Combine(ProgramDataPath, "Microsoft", "Edge"));
+                _removalTools.DeleteDirectoryIfExists(Path.Combine(ProgramDataPath, "Microsoft", "EdgeUpdate"));
                 _removalTools.DeleteDirectoryIfExists(Path.Combine(AppDataPath, "Internet Explorer"));
                 _removalTools.DeleteFileIfExists(Path.Combine(AppDataPath, @"Microsoft\Windows\Start Menu\Programs\Microsoft Edge.lnk"));
                 _removalTools.DeleteFileIfExists(Path.Combine(ProgramDataPath, @"Microsoft\Windows\Start Menu\Programs\Microsoft Edge.lnk"));
@@ -87,6 +88,12 @@ namespace HST.Controllers.DebloatApps
             Logger.Log("Starting removal of OneDrive");
             try
             {
+                // --- Disabling File Sync ---
+                using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\OneDrive"))
+                {
+                    key.SetValue("DisableFileSync", 0x1, RegistryValueKind.DWord);
+                }
+
                 await _removalTools.RunCommandAsync("taskkill", "/f /im OneDrive.exe");
 
                 string oneDriveSetup64 = Path.Combine(SystemRoot, "SysWOW64", "OneDriveSetup.exe");
@@ -100,16 +107,16 @@ namespace HST.Controllers.DebloatApps
                 if (File.Exists(oneDriveSetupAlt))
                     await _removalTools.RunCommandAsync(oneDriveSetupAlt, "/uninstall");
 
-                await Task.Delay(100);
+                await Task.Delay(200);
 
                 _removalTools.DeleteDirectoryIfExists(Path.Combine(UserProfilePath, "OneDrive"));
                 _removalTools.DeleteDirectoryIfExists(Path.Combine(LocalAppDataPath, "Microsoft", "OneDrive"));
                 _removalTools.DeleteDirectoryIfExists(Path.Combine(LocalAppDataPath, "OneDrive"));
                 _removalTools.DeleteDirectoryIfExists(Path.Combine(ProgramDataPath, "Microsoft OneDrive"));
-                _removalTools.DeleteDirectoryIfExists(@"C:\Program Files\Microsoft\OneDrive");
-                _removalTools.DeleteDirectoryIfExists(@"C:\Program Files (x86)\Microsoft\OneDrive");
-                _removalTools.DeleteDirectoryIfExists(@"C:\Program Files\Microsoft OneDrive");
-                _removalTools.DeleteDirectoryIfExists(@"C:\Program Files (x86)\Microsoft OneDrive");
+                _removalTools.DeleteDirectoryIfExists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Microsoft", "OneDrive"));
+                _removalTools.DeleteDirectoryIfExists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Microsoft", "OneDrive"));
+                _removalTools.DeleteDirectoryIfExists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Microsoft OneDrive"));
+                _removalTools.DeleteDirectoryIfExists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Microsoft OneDrive"));
 
                 await _removalTools.RunCommandAsync("reg", "delete \"HKCR\\OneDrive\" /f");
                 await _removalTools.RunCommandAsync("reg", "delete \"HKCU\\Software\\Microsoft\\OneDrive\" /f");

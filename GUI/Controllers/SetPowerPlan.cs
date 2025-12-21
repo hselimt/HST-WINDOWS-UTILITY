@@ -26,7 +26,7 @@ namespace HST.Controllers.PowerPlan
                 if (!File.Exists(powFilePath))
                 {
                     Logger.Log($"HST.pow file not found at: {powFilePath}");
-                    return;
+                    throw new FileNotFoundException("HST.pow file not found");
                 }
 
                 bool imported = await _removalTools.RunCommandAsync(
@@ -37,7 +37,7 @@ namespace HST.Controllers.PowerPlan
                 if (!imported)
                 {
                     Logger.Log("Failed to import power plan");
-                    return;
+                    throw new Exception("Failed to import power plan");
                 }
 
                 await Task.Delay(200);
@@ -45,7 +45,7 @@ namespace HST.Controllers.PowerPlan
                 if (!File.Exists(tempOutputFilePath))
                 {
                     Logger.Log("Output file was not created");
-                    return;
+                    throw new Exception("Output file was not created");
                 }
 
                 string output = await File.ReadAllTextAsync(tempOutputFilePath);
@@ -56,7 +56,7 @@ namespace HST.Controllers.PowerPlan
                 if (string.IsNullOrWhiteSpace(newGuid))
                 {
                     Logger.Log($"Failed to extract GUID from output: {output}");
-                    return;
+                    throw new Exception("Failed to extract GUID from output");
                 }
 
                 Logger.Log($"Extracted GUID: {newGuid}");
@@ -66,7 +66,7 @@ namespace HST.Controllers.PowerPlan
                 if (!activated)
                 {
                     Logger.Log("Failed to activate power plan");
-                    return;
+                    throw new Exception("Failed to activate power plan");
                 }
 
                 Logger.Success("Power plan successfully imported and activated");

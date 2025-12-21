@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 using HST.Controllers.RemovalTools;
+using HST.Controllers.Tool;
 using Logger = HST.Controllers.Tool.Logger;
 
 namespace HST.Controllers.TaskSchedulerOptimizerMethods
@@ -48,9 +49,7 @@ namespace HST.Controllers.TaskSchedulerOptimizerMethods
         {
             try
             {
-                var json = await File.ReadAllTextAsync(
-                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ScheduledTasksConfig.json"));
-                var config = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json);
+                var config = await ConfigLoader.LoadStringConfigAsync("ScheduledTasksConfig.json");
                 var tasks = config["tasks"];
 
                 var taskList = string.Join("', '", tasks.Select(t => t.Replace("'", "''")));
@@ -64,11 +63,8 @@ namespace HST.Controllers.TaskSchedulerOptimizerMethods
                     {command}
                 }}";
 
-                var scriptBytes = Encoding.Unicode.GetBytes(psScript);
-                var encodedScript = Convert.ToBase64String(scriptBytes);
-
                 await _removalTools.RunCommandAsync("powershell.exe",
-                    $"-NoProfile -ExecutionPolicy Bypass -EncodedCommand {encodedScript}");
+                    $"-NoProfile -ExecutionPolicy Bypass -Command \"{psScript.Replace("\"", "\"\"")}\"");
             }
             catch (Exception ex)
             {

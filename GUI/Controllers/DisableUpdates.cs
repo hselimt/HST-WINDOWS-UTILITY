@@ -3,6 +3,7 @@ using HST.Controllers.SetService;
 using System.Diagnostics;
 using System.Text.Json;
 using Microsoft.Win32;
+using HST.Controllers.Tool;
 using Logger = HST.Controllers.Tool.Logger;
 
 namespace HST.Controllers.DisableUpdate
@@ -22,16 +23,7 @@ namespace HST.Controllers.DisableUpdate
             Logger.Log("Starting to disable Windows Updates");
             try
             {
-                var json = await File.ReadAllTextAsync(
-                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ServicesConfig.json"));
-
-                var options = new JsonSerializerOptions
-                {
-                    ReadCommentHandling = JsonCommentHandling.Skip,
-                    AllowTrailingCommas = true
-                };
-
-                var config = JsonSerializer.Deserialize<Dictionary<string, List<ServiceInfo>>>(json, options);
+                var config = await ConfigLoader.LoadConfigAsync<ServiceInfo>("ServicesConfig.json");
                 var wuServicesToDisable = config["windowsUpdate"].Select(s => s.service).ToList();
                 string serviceList = string.Join("', '", wuServicesToDisable);
 
@@ -64,7 +56,7 @@ namespace HST.Controllers.DisableUpdate
             catch (Exception ex)
             {
                 Logger.Error("DisableWUpdates", ex);
-                throw;
+                throw new Exception("Failed to disable Windows Updates");
             }
         }
 
@@ -164,7 +156,7 @@ namespace HST.Controllers.DisableUpdate
             catch (Exception ex)
             {
                 Logger.Error("DisableWUpdatesRevert", ex);
-                throw;
+                throw new Exception("Failed to enable Windows Updates");
             }
         }
     }

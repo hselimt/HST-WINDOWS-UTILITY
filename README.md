@@ -65,13 +65,13 @@ Right-click each file → Properties → Check "Unblock" → Apply
 - **Work/School PCs**: Don't disable Windows Updates
 - **If issues occur**: Run as admin, check if antivirus is blocking
 - **Package removals are permanent**
+- **Revert operations restore Windows defaults** - custom settings are not preserved
 
 ---
 
 ## ✨ Features
 
 ### 🛡️ System Management
-
 - **Restore Point Creation** - Automatic system restore points for safe rollback
 - **Registry Optimization** - 500+ performance-focused registry tweaks
 - **Task Scheduler** - Disable unnecessary scheduled tasks
@@ -79,16 +79,17 @@ Right-click each file → Properties → Check "Unblock" → Apply
 - **Visual Effects** - Reduce animations for better performance
 - **Dark Mode** - System-wide dark theme
 - **Power Plan** - Custom high-performance power plan
+- **Comprehensive Logging** - All operations logged to HST-WINDOWS-UTILITY.log in %TEMP%
 
 ### ⚙️ Services Management
-
-- 99+ recommended services disabled
+- 126 services with configurable defaults
+- 99+ recommended services
 - Bluetooth services
 - Hyper-V virtualization
 - Xbox gaming services
+- Windows Update services
 
 ### 🧹 System Cleanup & Debloat
-
 - Temporary files removal
 - Browser cache cleanup
 - Event logs cleanup
@@ -105,6 +106,7 @@ Right-click each file → Properties → Check "Unblock" → Apply
 - Windows Management APIs
 - PowerShell Integration
 - System Registry Access
+- Configuration-driven architecture
 
 **Frontend (GUI)**
 - React

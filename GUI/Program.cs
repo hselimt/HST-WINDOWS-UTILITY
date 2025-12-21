@@ -10,8 +10,9 @@ using HST.Controllers.Tool;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+Logger.InitializeLog();
 
+builder.Services.AddControllers();
 builder.Services.AddScoped<RemovalHelpers>();
 builder.Services.AddScoped<SetServices>();
 builder.Services.AddScoped<Debloater>();
@@ -22,15 +23,22 @@ builder.Services.AddScoped<SetPowerPlan>();
 builder.Services.AddScoped<CleanUp>();
 builder.Services.AddScoped<SysInfo>();
 builder.Services.AddScoped<RestorePointCreator>();
-
 builder.WebHost.UseUrls("http://localhost:5200");
 
-var app = builder.Build();
+try
+{
+    var app = builder.Build();
+    app.UseDefaultFiles();
+    app.UseStaticFiles();
+    app.UseRouting();
+    app.MapControllers();
+    app.MapFallbackToFile("index.html");
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
-app.UseRouting();
-app.MapControllers();
-app.MapFallbackToFile("index.html");
-
-app.Run();
+    Logger.Log("Starting HST WINDOWS UTILITY backend on port 5200");
+    app.Run();
+}
+catch (Exception ex)
+{
+    Logger.Error("Application startup", ex);
+    Environment.Exit(1);
+}

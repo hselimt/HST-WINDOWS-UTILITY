@@ -89,7 +89,7 @@ namespace HST.Controllers
             catch (Exception ex)
             {
                 Logger.Error("CreateRestorePoint", ex);
-                return Ok(new
+                return StatusCode(500, new
                 {
                     status = "FAILED TO CREATE RESTORE POINT",
                     message = "Operation failed. Check HST-WINDOWS-UTILITY.log for details.",
@@ -115,7 +115,7 @@ namespace HST.Controllers
             catch (Exception ex)
             {
                 Logger.Error("OptimizeRegistry", ex);
-                return Ok(new
+                return StatusCode(500, new
                 {
                     status = "REGISTRY OPTIMIZATION FAILED",
                     message = "Operation failed. Check HST-WINDOWS-UTILITY.log for details.",
@@ -141,7 +141,7 @@ namespace HST.Controllers
             catch (Exception ex)
             {
                 Logger.Error("OptimizeTaskScheduler", ex);
-                return Ok(new
+                return StatusCode(500, new
                 {
                     status = "TASK SCHEDULER OPTIMIZATION HAS BEEN FAILED",
                     message = "Operation failed. Check HST-WINDOWS-UTILITY.log for details.",
@@ -167,7 +167,7 @@ namespace HST.Controllers
             catch (Exception ex)
             {
                 Logger.Error("DisableUpdatesAsync", ex);
-                return Ok(new
+                return StatusCode(500, new
                 {
                     status = "DISABLING WINDOWS UPDATE HAS BEEN FAILED",
                     message = "Operation failed. Check HST-WINDOWS-UTILITY.log for details.",
@@ -193,7 +193,7 @@ namespace HST.Controllers
             catch (Exception ex)
             {
                 Logger.Error("LowerVisuals", ex);
-                return Ok(new
+                return StatusCode(500, new
                 {
                     status = "LOWERING VISUALS HAS FAILED",
                     message = "Operation failed. Check HST-WINDOWS-UTILITY.log for details.",
@@ -219,7 +219,7 @@ namespace HST.Controllers
             catch (Exception ex)
             {
                 Logger.Error("SetDarkMode", ex);
-                return Ok(new
+                return StatusCode(500, new
                 {
                     status = "SETTING DARK MODE HAS FAILED",
                     message = "Operation failed. Check HST-WINDOWS-UTILITY.log for details.",
@@ -245,7 +245,7 @@ namespace HST.Controllers
             catch (Exception ex)
             {
                 Logger.Error("SetPowerPlan", ex);
-                return Ok(new
+                return StatusCode(500, new
                 {
                     status = "SETTING POWERPLAN HAS BEEN FAILED",
                     message = "Operation failed. Check HST-WINDOWS-UTILITY.log for details.",
@@ -261,14 +261,13 @@ namespace HST.Controllers
             var startupAppsToRemove = new List<string>();
             try
             {
-                var json = await System.IO.File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AppsConfig.json"));
-                var config = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json);
+                var config = await ConfigLoader.LoadStringConfigAsync("AppsConfig.json");
                 startupAppsToRemove.AddRange(config["startupApps"]);
             }
             catch (Exception ex)
             {
                 Logger.Error("RemoveStartupApps config loading", ex);
-                return Ok(new
+                return StatusCode(500, new
                 {
                     status = "CONFIG FILE ERROR",
                     message = $"Error reading configuration. Check HST-WINDOWS-UTILITY.log for details.",
@@ -289,7 +288,7 @@ namespace HST.Controllers
             catch (Exception ex)
             {
                 Logger.Error("RemoveStartupApps operation", ex);
-                return Ok(new
+                return StatusCode(500, new
                 {
                     status = "OPERATION FAILED",
                     message = "Startup app removal failed. Check HST-WINDOWS-UTILITY.log for details.",
@@ -304,7 +303,7 @@ namespace HST.Controllers
         {
             if (options == null)
             {
-                return Ok(new
+                return StatusCode(400, new
                 {
                     status = "NO OPTIONS PROVIDED",
                     message = "Please provide options",
@@ -315,8 +314,7 @@ namespace HST.Controllers
             var packagesToRemove = new List<string>();
             try
             {
-                var json = await System.IO.File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AppsConfig.json"));
-                var config = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json);
+                var config = await ConfigLoader.LoadStringConfigAsync("AppsConfig.json");
 
                 if (options.MsApps && config.ContainsKey("msApps"))
                     packagesToRemove.AddRange(config["msApps"]);
@@ -328,7 +326,7 @@ namespace HST.Controllers
             catch (Exception ex)
             {
                 Logger.Error("DebloatApps config loading", ex);
-                return Ok(new
+                return StatusCode(500, new
                 {
                     status = "CONFIG FILE ERROR",
                     message = $"Error reading configuration. Check HST-WINDOWS-UTILITY.log for details.",
@@ -365,7 +363,7 @@ namespace HST.Controllers
                     });
                 }
 
-                return Ok(new
+                return StatusCode(400, new
                 {
                     status = "NO APPS SELECTED",
                     message = "Please select apps to remove",
@@ -375,7 +373,7 @@ namespace HST.Controllers
             catch (Exception ex)
             {
                 Logger.Error("DebloatApps operation", ex);
-                return Ok(new
+                return StatusCode(500, new
                 {
                     status = "OPERATION FAILED",
                     message = "Debloat operation failed. Check HST-WINDOWS-UTILITY.log for details.",
@@ -392,7 +390,7 @@ namespace HST.Controllers
             {
                 if (options == null)
                 {
-                    return Ok(new
+                    return StatusCode(400, new
                     {
                         status = "PLEASE SELECT AN OPTION",
                         message = "Please select an option",
@@ -433,7 +431,7 @@ namespace HST.Controllers
             catch (Exception ex)
             {
                 Logger.Error("CleanUp", ex);
-                return Ok(new
+                return StatusCode(500, new
                 {
                     status = "CLEANUP HAS FAILED",
                     message = "Cleanup failed. Check HST-WINDOWS-UTILITY.log for details.",
@@ -448,7 +446,7 @@ namespace HST.Controllers
         {
             if (options == null)
             {
-                return Ok(new
+                return StatusCode(400, new
                 {
                     status = "NO OPTIONS PROVIDED",
                     message = "Please provide options",
@@ -460,15 +458,7 @@ namespace HST.Controllers
 
             try
             {
-                var json = await System.IO.File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ServicesConfig.json"));
-
-                var jsonOptions = new JsonSerializerOptions
-                {
-                    ReadCommentHandling = JsonCommentHandling.Skip,
-                    AllowTrailingCommas = true
-                };
-
-                var config = JsonSerializer.Deserialize<Dictionary<string, List<ServiceInfo>>>(json, jsonOptions);
+                var config = await ConfigLoader.LoadConfigAsync<ServiceInfo>("ServicesConfig.json");
 
                 if (options.Recommended && config.ContainsKey("recommended"))
                     servicesToDisable.AddRange(config["recommended"].Select(s => s.service));
@@ -482,7 +472,7 @@ namespace HST.Controllers
             catch (Exception ex)
             {
                 Logger.Error("DisableServices config loading", ex);
-                return Ok(new
+                return StatusCode(500, new
                 {
                     status = "CONFIG FILE ERROR",
                     message = $"Error reading configuration: {ex.Message}",
@@ -505,7 +495,7 @@ namespace HST.Controllers
                 catch (Exception ex)
                 {
                     Logger.Error("DisableServices operation", ex);
-                    return Ok(new
+                    return StatusCode(500, new
                     {
                         status = "OPERATION FAILED",
                         message = "Service modification failed. Check HST-WINDOWS-UTILITY.log for details.",
@@ -515,7 +505,7 @@ namespace HST.Controllers
             }
             else
             {
-                return Ok(new
+                return StatusCode(400, new
                 {
                     status = "NO SERVICES SELECTED",
                     message = "Please select services to optimize",
@@ -530,7 +520,7 @@ namespace HST.Controllers
         {
             if (options == null)
             {
-                return Ok(new
+                return StatusCode(400, new
                 {
                     status = "NO OPTIONS PROVIDED",
                     message = "Please provide options",
@@ -601,7 +591,7 @@ namespace HST.Controllers
                 });
             }
 
-            return Ok(new
+            return StatusCode(400, new
             {
                 status = "NO OPTIONS SELECTED",
                 message = "Please select at least one option to revert",

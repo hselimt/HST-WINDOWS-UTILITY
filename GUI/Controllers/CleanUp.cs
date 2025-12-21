@@ -1,6 +1,7 @@
 ﻿using HST.Controllers.RemovalTools;
 using System.Diagnostics;
 using System.Text.Json;
+using HST.Controllers.Tool;
 using static HST.Controllers.RemovalTools.Paths;
 using Logger = HST.Controllers.Tool.Logger;
 
@@ -24,8 +25,8 @@ namespace HST.Controllers.Clear
                 await Task.Run(() =>
                 {
                     _removalHelpers.DeleteDirectoryIfExists(Path.GetTempPath());
-                    _removalHelpers.DeleteDirectoryIfExists(@"C:\Windows\Temp");
-                    _removalHelpers.DeleteDirectoryIfExists(@"C:\Windows\Prefetch");
+                    _removalHelpers.DeleteDirectoryIfExists(Path.Combine(Paths.SystemRoot, "Temp"));
+                    _removalHelpers.DeleteDirectoryIfExists(Path.Combine(Paths.SystemRoot, "Prefetch"));
                     _removalHelpers.DeleteDirectoryIfExists(Path.Combine(LocalAppDataPath, "Temp"));
                 });
                 Logger.Success("Cleaning of Temp and Prefetch completed");
@@ -71,7 +72,7 @@ namespace HST.Controllers.Clear
                 await _removalHelpers.RunCommandAsync("net", "stop bits");
                 await Task.Delay(200);
 
-                _removalHelpers.DeleteDirectoryIfExists(@"C:\Windows\SoftwareDistribution\Download");
+                _removalHelpers.DeleteDirectoryIfExists(Path.Combine(Paths.SystemRoot, "SoftwareDistribution", "Download"));
 
                 Logger.Success("Cleaning of Windows Update cache completed");
             }
@@ -131,9 +132,7 @@ namespace HST.Controllers.Clear
             Logger.Log("Starting removal of default power plans");
             try
             {
-                var json = await File.ReadAllTextAsync(
-                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GUIDConfig.json"));
-                var config = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json);
+                var config = await ConfigLoader.LoadStringConfigAsync("GUIDConfig.json");
                 var guidsToRemove = config["powerPlanGuid"];
 
                 foreach (var guid in guidsToRemove)

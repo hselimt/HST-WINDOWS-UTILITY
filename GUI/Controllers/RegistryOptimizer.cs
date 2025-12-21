@@ -669,7 +669,6 @@ namespace HST.Controllers.RegOptimizerMethods
             catch (Exception ex)
             {
                 Logger.Error("OptimizeRegistryAsync", ex);
-                throw;
             }
         }
 
@@ -730,7 +729,6 @@ namespace HST.Controllers.RegOptimizerMethods
             catch (Exception ex)
             {
                 Logger.Error("LowerVisualsAsync", ex);
-                throw;
             }
         }
 
@@ -753,7 +751,6 @@ namespace HST.Controllers.RegOptimizerMethods
             catch (Exception ex)
             {
                 Logger.Error("SwitchDarkModeAsync", ex);
-                throw;
             }
         }
 
@@ -985,15 +982,15 @@ namespace HST.Controllers.RegOptimizerMethods
                         if (key != null)
                         {
                             string[] subs = {
-                    "SubscribedContent-338393Enabled", "SubscribedContent-338388Enabled", "SubscribedContent-314559Enabled",
-                    "SubscribedContent-280815Enabled", "SubscribedContent-202914Enabled", "SubscribedContent-353694Enabled",
-                    "SubscribedContent-353696Enabled", "SubscribedContent-338387Enabled", "SubscribedContent-353698Enabled",
-                    "SubscribedContent-338389Enabled", "SubscribedContent-310093Enabled", "SubscribedContent-314563Enabled",
-                    "RotatingLockScreenOverlayEnabled", "RotatingLockScreenEnabled", "ContentDeliveryAllowed",
-                    "OemPreInstalledAppsEnabled", "PreInstalledAppsEnabled", "PreInstalledAppsEverEnabled",
-                    "SilentInstalledAppsEnabled", "SoftLandingEnabled", "SubscribedContentEnabled",
-                    "FeatureManagementEnabled", "SystemPaneSuggestionsEnabled", "RemediationRequired"
-                };
+                                "SubscribedContent-338393Enabled", "SubscribedContent-338388Enabled", "SubscribedContent-314559Enabled",
+                                "SubscribedContent-280815Enabled", "SubscribedContent-202914Enabled", "SubscribedContent-353694Enabled",
+                                "SubscribedContent-353696Enabled", "SubscribedContent-338387Enabled", "SubscribedContent-353698Enabled",
+                                "SubscribedContent-338389Enabled", "SubscribedContent-310093Enabled", "SubscribedContent-314563Enabled",
+                                "RotatingLockScreenOverlayEnabled", "RotatingLockScreenEnabled", "ContentDeliveryAllowed",
+                                "OemPreInstalledAppsEnabled", "PreInstalledAppsEnabled", "PreInstalledAppsEverEnabled",
+                                "SilentInstalledAppsEnabled", "SoftLandingEnabled", "SubscribedContentEnabled",
+                                "FeatureManagementEnabled", "SystemPaneSuggestionsEnabled", "RemediationRequired"
+                            };
                             foreach (var s in subs) key.SetValue(s, 1, RegistryValueKind.DWord);
                         }
                     }
@@ -1392,7 +1389,6 @@ namespace HST.Controllers.RegOptimizerMethods
             catch (Exception ex)
             {
                 Logger.Error("OptimizeRegistryRevertAsync", ex);
-                throw;
             }
         }
     }

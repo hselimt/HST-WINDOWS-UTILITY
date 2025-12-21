@@ -41,12 +41,12 @@ namespace HST.Controllers.RemovalTools
             catch (OperationCanceledException ex)
             {
                 Logger.Error("RunCommand timeout", ex);
-                return false;
+                throw new Exception("RunCommand timeout");
             }
             catch (Exception ex)
             {
                 Logger.Error("RunCommand", ex);
-                return false;
+                throw new Exception("RunCommand operation failed");
             }
         }
 

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Management;
 using System.Diagnostics;
+using System.Text.Json;
 using static HST.Controllers.SystemController;
 
 namespace HST.Controllers.Tool
@@ -9,9 +10,25 @@ namespace HST.Controllers.Tool
     public static class Logger
     {
         private static string LogPath => Path.Combine(
-            Path.GetTempPath(),
-            "HST-WINDOWS-UTILITY.log"
-        );
+        Path.GetTempPath(),
+        "HST-WINDOWS-UTILITY.log"
+    );
+
+        // Delete old log file on application startup
+        public static void InitializeLog()
+        {
+            try
+            {
+                if (File.Exists(LogPath))
+                {
+                    File.Delete(LogPath);
+                }
+            }
+            catch
+            {
+                // If deletion fails, continue silently
+            }
+        }
 
         public static void Log(string message)
         {
@@ -43,6 +60,28 @@ namespace HST.Controllers.Tool
         public static string GetLogLocation()
         {
             return LogPath;
+        }
+    }
+
+    public class ConfigLoader
+    {
+        private static readonly string _baseDir = AppDomain.CurrentDomain.BaseDirectory;
+
+        public static async Task<Dictionary<string, List<string>>> LoadStringConfigAsync(string filename)
+        {
+            var json = await File.ReadAllTextAsync(Path.Combine(_baseDir, filename));
+            return JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json);
+        }
+
+        public static async Task<Dictionary<string, List<T>>> LoadConfigAsync<T>(string filename)
+        {
+            var json = await File.ReadAllTextAsync(Path.Combine(_baseDir, filename));
+            var options = new JsonSerializerOptions
+            {
+                ReadCommentHandling = JsonCommentHandling.Skip,
+                AllowTrailingCommas = true
+            };
+            return JsonSerializer.Deserialize<Dictionary<string, List<T>>>(json, options);
         }
     }
 
@@ -80,7 +119,7 @@ namespace HST.Controllers.Tool
             catch (Exception ex)
             {
                 Logger.Error("CreateRestorePoint", ex);
-                throw;
+                throw new Exception("Failed to create restore point");
             }
         }
     }
