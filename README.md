@@ -9,125 +9,148 @@
 <img src="https://img.shields.io/badge/Electron-27-47848F?style=for-the-badge&logo=electron&logoColor=white"/>
 </p>
 
----
-
-##  Choose Your Version
-
-<table align="center">
-<tr>
-<td align="center" width="50%">
-
-### 🖥️ GUI
-
-</td>
-<td align="center" width="50%">
-
-### ⌨️ CLI
-
-</td>
-</tr>
-<tr>
-<td align="center">
-<img src="./GUI/HST.png" width="500" height="500"/>
-</td>
-<td align="center">
-<img src="./CLI/HST.png" width="500" height="500"/>
-</td>
-</tr>
-</table>
-
 **Windows optimization tools designed to maximize system performance through registry tweaks, service management, and system cleanup. Perfect for gamers and power users seeking maximum hardware efficiency.**
 
-[![Download](https://img.shields.io/badge/Download-Latest%20Release-success?style=for-the-badge&logo=github)](https://github.com/hselimt/HST-WINDOWS-UTILITY/releases)
-
----
-
-### ⚠️ IMPORTANT: Unblock Files After Download
-
-**Windows will block the files by default. You MUST unblock them:**
-
-Right-click each file → Properties → Check "Unblock" → Apply
-
-![BLOCK](./BLOCK.png)
-
-**Then run as Administrator**
+<table>
+<tr>
+<td align="center"><b>🖥️ GUI</b></td>
+<td align="center"><b>⌨️ CLI</b></td>
+</tr>
+<tr>
+<td><img src="./GUI/HST.png" width="500"/></td>
+<td><img src="./CLI/HST.png" width="500"/></td>
+</tr>
+</table>
 
 </div>
 
 ---
 
-### 🚫 Read Before Use
+## ⚠️ Before You Use
 
-- **Create a restore point first**
-- **OneDrive removal deletes synced files** - disable sync first
-- **VM users**: Don't use registry tweaks or Hyper-V services
-- **Laptop users**: Avoid power plan and registry tweaks
-- **Work/School PCs**: Don't disable Windows Updates
-- **If issues occur**: Run as admin, check if antivirus is blocking
-- **Package removals are permanent**
-- **Revert operations restore Windows defaults** - custom settings are not preserved
+**This tool makes aggressive system changes.** Ideal for: gaming desktops, fresh Windows installs, power users who know what they're doing.
+
+### ⛔ Critical
+
+| Warning | Why it matters |
+|---------|----------------|
+| **Create a restore point first** | Built-in button available — use it before any changes |
+| **OneDrive removal deletes files** | Synced files are removed. Disable sync first |
+| **App removals are permanent** | Microsoft Store apps need Windows reset to restore |
+| **Revert ≠ Undo** | Restores Windows defaults, not your custom settings |
+
+<details>
+<summary><b>🛠️ Troubleshooting</b></summary>
+
+| Issue | Fix |
+|-------|-----|
+| Operations fail silently | Must run as Administrator |
+| App won't start | Unblock the .exe (Properties → Unblock) |
+| Config file error | Re-run as Administrator |
+| Need to see what happened | Check `%TEMP%\HST-WINDOWS-UTILITY.log` |
+| Need to undo everything | Revert panel or Windows System Restore |
+
+</details>
+
+<details>
+<summary><b>🚫 Skip these features if...</b></summary>
+
+| Your situation | What to skip | Why |
+|----------------|--------------|-----|
+| Laptop user | Power plan, registry tweaks | Kills battery life, breaks sleep/hibernate |
+| VM user (VirtualBox, Hyper-V, etc.) | Registry tweaks, Hyper-V services | Breaks guest integration, snapshots |
+| Work/School PC | Windows Update toggle | IT policies will conflict or flag you |
+| Use a printer | Recommended services | Disables Print Spooler |
+| Bluetooth headphones/mouse | Bluetooth services | Devices won't connect |
+| Remote Desktop user | Recommended services | Disables RDP services |
+
+</details>
+
+<details>
+<summary><b>🔧 What registry optimization actually does</b></summary>
+
+| Disabled | What breaks |
+|----------|-------------|
+| Game Bar & DVR | No Xbox overlay, no clip recording, no Game Bar streaming |
+| Location services | Weather widgets, Maps, "Find My Device" won't work |
+| Webcam system access | Video calls fail until re-enabled in Privacy settings |
+| Background apps | Apps won't update or sync when minimized |
+| Notifications | No toast notifications from any app |
+| Search indexing | File searches become slower |
+| Windows Spotlight | No automatic lock screen wallpapers |
+| Mouse acceleration | Raw 1:1 input — feels "slow" at first if you're used to acceleration |
+
+**Still enabled:**
+- Defender real-time protection (only scheduled scans disabled)
+- Firewall
+- Core security features
+
+**Manually reversible:**
+- Webcam: Settings → Privacy → Camera
+- Location: Settings → Privacy → Location
+- Notifications: Settings → System → Notifications
+
+</details>
+
+---
+
+### 📥 Download
+
+[![Download](https://img.shields.io/badge/Download-Latest%20Release-success?style=for-the-badge&logo=github)](https://github.com/hselimt/HST-WINDOWS-UTILITY/releases)
+
+**After downloading Right-click .exe → Properties → Check "Unblock" → Apply → Run as Administrator**
+
+![BLOCK](./BLOCK.png)
 
 ---
 
 ## ✨ Features
 
 ### 🛡️ System Management
-- **Restore Point Creation** - Automatic system restore points for safe rollback
-- **Registry Optimization** - 500+ performance-focused registry tweaks
-- **Task Scheduler** - Disable unnecessary scheduled tasks
-- **Windows Updates** - Control automatic updates
-- **Visual Effects** - Reduce animations for better performance
-- **Dark Mode** - System-wide dark theme
-- **Power Plan** - Custom high-performance power plan
-- **Comprehensive Logging** - All operations logged to HST-WINDOWS-UTILITY.log in %TEMP%
+- **Restore Point Creation** — Automatic system restore points for safe rollback
+- **Registry Optimization** — 120+ performance-focused tweaks (gaming, latency, privacy, telemetry)
+- **Task Scheduler** — Disable 60+ unnecessary scheduled tasks
+- **Windows Updates** — Disable automatic updates and delivery optimization
+- **Visual Effects** — Reduce animations for better performance
+- **Dark Mode** — System-wide dark theme toggle
+- **Power Plan** — Custom high-performance power plan
+- **Startup Apps** — Remove common apps from startup (Discord, Steam, Spotify, etc.)
+- **Logging** — All operations logged to `%TEMP%\HST-WINDOWS-UTILITY.log`
 
 ### ⚙️ Services Management
-- 126 services with configurable defaults
-- 99+ recommended services
-- Bluetooth services
-- Hyper-V virtualization
-- Xbox gaming services
-- Windows Update services
+Disable services by category:
+| Category | Count | Examples |
+|----------|-------|----------|
+| Recommended | 82 | Telemetry, diagnostics, rarely-used services |
+| Bluetooth | 4 | Audio gateway, support service |
+| Hyper-V | 11 | All virtualization services |
+| Xbox | 4 | Game save, networking, auth |
 
-### 🧹 System Cleanup & Debloat
-- Temporary files removal
-- Browser cache cleanup
-- Event logs cleanup
-- Unused power plans removal
-- Remove MS Apps / Xbox Apps / Store Apps
-- Remove Edge / OneDrive
+### 🧹 Cleanup & Debloat
+- **Temp files** — Windows temp, user temp, prefetch
+- **Cache** — Chrome cache, Windows Update cache
+- **Event logs** — Clear all Windows logs
+- **Power plans** — Remove default Windows plans
+- **Debloat** — Remove 45+ Microsoft apps, Edge, OneDrive, Xbox apps, Store
 
 ---
 
 ## 🛠️ Tech Stack
 
-**Backend**
-- C# / ASP.NET Core Web API
-- Windows Management APIs
-- PowerShell Integration
-- System Registry Access
-- Configuration-driven architecture
-
-**Frontend (GUI)**
-- React
-- JavaScript
-- Lucide Icons
-- Electron Desktop
-
-**CLI**
-- Batch scripting
-- Native Windows commands
-- Same optimizations as GUI
+| Component | Technologies |
+|-----------|--------------|
+| **Backend** | C# / ASP.NET Core 8, PowerShell, Windows Registry APIs |
+| **Frontend** | React 18, Electron 27, Lucide Icons |
+| **CLI** | Batch scripting, native Windows commands |
 
 ---
 
-## 🔧 System Requirements
+## 🔧 Requirements
 
-**Minimum:**
-- Windows 10 (64-bit) or later
+- Windows 10/11 (64-bit)
 - Administrator privileges
-- 100 MB free disk space
-- .NET 8.0 Runtime (GUI only, included in .exe)
+- 100 MB disk space
+- .NET 8.0 Runtime (included in GUI executable)
 
 ---
 
@@ -150,7 +173,7 @@ Right-click each file → Properties → Check "Unblock" → Apply
 
 ## 🤝 Contributing
 
-Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
