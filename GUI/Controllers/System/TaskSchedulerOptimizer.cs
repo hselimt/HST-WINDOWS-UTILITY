@@ -1,18 +1,14 @@
-﻿using System.Text;
-using System.Text.Json;
-using HST.Controllers.RemovalTools;
-using HST.Controllers.Tool;
-using Logger = HST.Controllers.Tool.Logger;
+﻿using HST.Controllers.Helpers;
 
-namespace HST.Controllers.TaskSchedulerOptimizerMethods
+namespace HST.Controllers.System
 {
     public class TaskSchedulerOptimizer
     {
-        private readonly RemovalHelpers _removalTools;
+        private readonly ProcessRunner _processRunner;
 
-        public TaskSchedulerOptimizer(RemovalHelpers removalTools)
+        public TaskSchedulerOptimizer(ProcessRunner processRunner)
         {
-            _removalTools = removalTools ?? throw new ArgumentNullException(nameof(removalTools));
+            _processRunner = processRunner ?? throw new ArgumentNullException(nameof(processRunner));
         }
 
         // Disables configured Windows scheduled tasks
@@ -63,7 +59,7 @@ namespace HST.Controllers.TaskSchedulerOptimizerMethods
                     {command}
                 }}";
 
-                await _removalTools.RunCommandAsync("powershell.exe",
+                await _processRunner.RunCommandAsync("powershell.exe",
                     $"-NoProfile -ExecutionPolicy Bypass -Command \"{psScript.Replace("\"", "\"\"")}\"");
             }
             catch (Exception ex)

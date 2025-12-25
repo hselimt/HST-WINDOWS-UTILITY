@@ -1,22 +1,17 @@
-﻿using HST.Controllers.RemovalTools;
-using System.Diagnostics;
-using System.Text.Json;
-using HST.Controllers.Tool;
-using static HST.Controllers.RemovalTools.Paths;
-using Logger = HST.Controllers.Tool.Logger;
+﻿using HST.Controllers.Helpers;
 
-namespace HST.Controllers.Clear
+namespace HST.Controllers.System
 {
     public class CleanUp
     {
-        private readonly RemovalHelpers _removalHelpers;
+        private readonly ProcessRunner _processRunner;
 
-        public CleanUp(RemovalHelpers removalHelpers)
+        public CleanUp(ProcessRunner processRunner)
         {
-            _removalHelpers = removalHelpers ?? throw new ArgumentNullException(nameof(removalHelpers));
+            _processRunner = processRunner ?? throw new ArgumentNullException(nameof(processRunner));
         }
 
-        // Deletes temporary files from Windows, User, and Prefetch directories to free space
+        // Deletes temporary files from Windows, User, and Prefetch directories
         public async Task RemoveTempAsync()
         {
             Logger.Log("Starting cleaning of Temp and Prefetch");
@@ -24,10 +19,10 @@ namespace HST.Controllers.Clear
             {
                 await Task.Run(() =>
                 {
-                    _removalHelpers.DeleteDirectoryIfExists(Path.GetTempPath());
-                    _removalHelpers.DeleteDirectoryIfExists(Path.Combine(Paths.SystemRoot, "Temp"));
-                    _removalHelpers.DeleteDirectoryIfExists(Path.Combine(Paths.SystemRoot, "Prefetch"));
-                    _removalHelpers.DeleteDirectoryIfExists(Path.Combine(LocalAppDataPath, "Temp"));
+                    FileManager.DeleteDirectoryIfExists(Path.GetTempPath());
+                    FileManager.DeleteDirectoryIfExists(Path.Combine(Paths.SystemRoot, "Temp"));
+                    FileManager.DeleteDirectoryIfExists(Path.Combine(Paths.SystemRoot, "Prefetch"));
+                    FileManager.DeleteDirectoryIfExists(Path.Combine(Paths.LocalAppDataPath, "Temp"));
                 });
                 Logger.Success("Cleaning of Temp and Prefetch completed");
             }
@@ -45,13 +40,13 @@ namespace HST.Controllers.Clear
             {
                 await Task.Run(() =>
                 {
-                    string chromeCache = Path.Combine(LocalAppDataPath, @"Google\Chrome\User Data\Default\Cache");
-                    string chromeCodeCache = Path.Combine(LocalAppDataPath, @"Google\Chrome\User Data\Default\Code Cache");
-                    string chromeCookies = Path.Combine(LocalAppDataPath, @"Google\Chrome\User Data\Default\Network\Cookies");
+                    string chromeCache = Path.Combine(Paths.LocalAppDataPath, @"Google\Chrome\User Data\Default\Cache");
+                    string chromeCodeCache = Path.Combine(Paths.LocalAppDataPath, @"Google\Chrome\User Data\Default\Code Cache");
+                    string chromeCookies = Path.Combine(Paths.LocalAppDataPath, @"Google\Chrome\User Data\Default\Network\Cookies");
 
-                    _removalHelpers.DeleteDirectoryIfExists(chromeCache);
-                    _removalHelpers.DeleteDirectoryIfExists(chromeCodeCache);
-                    _removalHelpers.DeleteFileIfExists(chromeCookies);
+                    FileManager.DeleteDirectoryIfExists(chromeCache);
+                    FileManager.DeleteDirectoryIfExists(chromeCodeCache);
+                    FileManager.DeleteFileIfExists(chromeCookies);
                 });
                 Logger.Success("Cleaning of Chrome cache completed");
             }
@@ -68,11 +63,11 @@ namespace HST.Controllers.Clear
             try
             {
                 // Stops Windows Update services before clearing cache
-                await _removalHelpers.RunCommandAsync("net", "stop wuauserv");
-                await _removalHelpers.RunCommandAsync("net", "stop bits");
+                await _processRunner.RunCommandAsync("net", "stop wuauserv");
+                await _processRunner.RunCommandAsync("net", "stop bits");
                 await Task.Delay(200);
 
-                _removalHelpers.DeleteDirectoryIfExists(Path.Combine(Paths.SystemRoot, "SoftwareDistribution", "Download"));
+                FileManager.DeleteDirectoryIfExists(Path.Combine(Paths.SystemRoot, "SoftwareDistribution", "Download"));
 
                 Logger.Success("Cleaning of Windows Update cache completed");
             }
@@ -88,7 +83,7 @@ namespace HST.Controllers.Clear
             Logger.Log("Starting cleaning of Recycle Bin");
             try
             {
-                await _removalHelpers.RunCommandAsync("powershell.exe",
+                await _processRunner.RunCommandAsync("powershell.exe",
                     "-NoProfile -ExecutionPolicy Bypass -Command Clear-RecycleBin -Force");
 
                 Logger.Success("Recycle Bin cleaned");
@@ -115,7 +110,7 @@ namespace HST.Controllers.Clear
                 }}
                 ";
 
-                await _removalHelpers.RunCommandAsync("powershell.exe",
+                await _processRunner.RunCommandAsync("powershell.exe",
                     $"-NoProfile -ExecutionPolicy Bypass -Command \"{clearEventLogsScript.Replace("\"", "\"\"")}\"");
 
                 Logger.Success("Event logs cleaned");
@@ -137,7 +132,7 @@ namespace HST.Controllers.Clear
 
                 foreach (var guid in guidsToRemove)
                 {
-                    await _removalHelpers.RunCommandAsync("powercfg", $"-delete {guid}");
+                    await _processRunner.RunCommandAsync("powercfg", $"-delete {guid}");
                 }
 
                 Logger.Success("Default power plans removed");

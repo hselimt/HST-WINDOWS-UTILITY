@@ -1,28 +1,35 @@
-using HST.Controllers.RemovalTools;
-using HST.Controllers.SetService;
-using HST.Controllers.DebloatApps;
-using HST.Controllers.RegOptimizerMethods;
-using HST.Controllers.DisableUpdate;
-using HST.Controllers.TaskSchedulerOptimizerMethods;
-using HST.Controllers.PowerPlan;
-using HST.Controllers.Clear;
-using HST.Controllers.Tool;
+using HST.Controllers.Debloat;
+using HST.Controllers.Helpers;
+using HST.Controllers.RegistryManager;
+using HST.Controllers.Services;
+using HST.Controllers.System;
 
 var builder = WebApplication.CreateBuilder(args);
 
 Logger.InitializeLog();
 
 builder.Services.AddControllers();
-builder.Services.AddScoped<RemovalHelpers>();
+
+// Helpers
+builder.Services.AddScoped<ProcessRunner>();
+
+// Services
 builder.Services.AddScoped<SetServices>();
-builder.Services.AddScoped<Debloater>();
-builder.Services.AddScoped<RegistryOptimizer>();
-builder.Services.AddScoped<TaskSchedulerOptimizer>();
 builder.Services.AddScoped<DisableWindowsUpdates>();
+
+// Registry
+builder.Services.AddScoped<RegistryOptimizer>();
+
+// Debloat
+builder.Services.AddScoped<Debloater>();
+
+// System
+builder.Services.AddScoped<TaskSchedulerOptimizer>();
 builder.Services.AddScoped<SetPowerPlan>();
 builder.Services.AddScoped<CleanUp>();
 builder.Services.AddScoped<SysInfo>();
 builder.Services.AddScoped<RestorePointCreator>();
+
 builder.WebHost.UseUrls("http://localhost:5200");
 
 try
@@ -33,7 +40,6 @@ try
     app.UseRouting();
     app.MapControllers();
     app.MapFallbackToFile("index.html");
-
     Logger.Log("Starting HST WINDOWS UTILITY backend on port 5200");
     app.Run();
 }

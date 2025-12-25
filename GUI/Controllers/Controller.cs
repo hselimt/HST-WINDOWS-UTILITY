@@ -1,20 +1,13 @@
-﻿using HST.Controllers.DebloatApps;
-using HST.Controllers.RegOptimizerMethods;
-using HST.Controllers.RemovalTools;
-using HST.Controllers.DisableUpdate;
-using HST.Controllers.TaskSchedulerOptimizerMethods;
-using HST.Controllers.SetService;
-using HST.Controllers.PowerPlan;
-using HST.Controllers.Clear;
-using HST.Controllers.Tool;
+﻿using HST.Controllers.Debloat;
+using HST.Controllers.Helpers;
+using HST.Controllers.RegistryManager;
+using HST.Controllers.Services;
+using HST.Controllers.System;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using System.Text.Json;
-using Logger = HST.Controllers.Tool.Logger;
 
 namespace HST.Controllers
 {
-    [ApiController] // Enables API-specific behaviors like attribute routing and automatic 400 responses
+    [ApiController] // Enables API-specific behaviors like attribute routing and automatic responses
     [Route("api/[controller]")] // Sets the base URL path
     public class SystemController : ControllerBase
     {
@@ -22,7 +15,6 @@ namespace HST.Controllers
         // 'readonly' prevents reassignment after the constructor finishes
         private readonly Debloater _debloater;
         private readonly RegistryOptimizer _regOptimizer;
-        private readonly RemovalHelpers _removalHelpers;
         private readonly TaskSchedulerOptimizer _tsOptimizer;
         private readonly SetServices _setServices;
         private readonly DisableWindowsUpdates _disableWindowsUpdates;
@@ -35,7 +27,6 @@ namespace HST.Controllers
         public SystemController(
             Debloater debloater,
             RegistryOptimizer regOptimizer,
-            RemovalHelpers removalTools,
             TaskSchedulerOptimizer tsOptimizer,
             SetServices setServices,
             DisableWindowsUpdates disableWindowsUpdates,
@@ -47,7 +38,6 @@ namespace HST.Controllers
             // Store the provided service instances into local fields for class-wide access
             _debloater = debloater;
             _regOptimizer = regOptimizer;
-            _removalHelpers = removalTools;
             _tsOptimizer = tsOptimizer;
             _setServices = setServices;
             _disableWindowsUpdates = disableWindowsUpdates;
@@ -237,8 +227,8 @@ namespace HST.Controllers
                 await _setPowerPlan.AddAndActivatePowerplanAsync();
                 return Ok(new
                 {
-                    status = $"POWERPLAN HAS BEEN ADDED AND ACTIVATED",
-                    message = $"powerplan has been set",
+                    status = "POWERPLAN HAS BEEN ADDED AND ACTIVATED",
+                    message = "powerplan has been set",
                     success = true
                 });
             }
@@ -270,7 +260,7 @@ namespace HST.Controllers
                 return StatusCode(500, new
                 {
                     status = "CONFIG FILE ERROR",
-                    message = $"Error reading configuration. Check HST-WINDOWS-UTILITY.log for details.",
+                    message = "Error reading configuration. Check HST-WINDOWS-UTILITY.log for details.",
                     success = false
                 });
             }
@@ -329,7 +319,7 @@ namespace HST.Controllers
                 return StatusCode(500, new
                 {
                     status = "CONFIG FILE ERROR",
-                    message = $"Error reading configuration. Check HST-WINDOWS-UTILITY.log for details.",
+                    message = "Error reading configuration. Check HST-WINDOWS-UTILITY.log for details.",
                     success = false
                 });
             }
@@ -337,19 +327,13 @@ namespace HST.Controllers
             try
             {
                 if (options.Edge)
-                {
                     await _debloater.RemoveEdgeAsync();
-                }
 
                 if (options.Onedrive)
-                {
                     await _debloater.RemoveOneDriveAsync();
-                }
 
                 if (packagesToRemove.Any())
-                {
                     await _debloater.RemoveConfiguredPackagesAsync(packagesToRemove);
-                }
 
                 bool anythingSelected = options.Edge || options.Onedrive || packagesToRemove.Any();
 
@@ -399,9 +383,7 @@ namespace HST.Controllers
                 }
 
                 if (options.Temp)
-                {
                     await _cleanUp.RemoveTempAsync();
-                }
 
                 if (options.Cache)
                 {
@@ -410,14 +392,10 @@ namespace HST.Controllers
                 }
 
                 if (options.EventLog)
-                {
                     await _cleanUp.ClearEventLogsAsync();
-                }
 
                 if (options.PowerPlan)
-                {
                     await _cleanUp.ClearDefaultPowerPlansAsync();
-                }
 
                 await _cleanUp.ClearRecycleBinAsync();
 
@@ -527,6 +505,7 @@ namespace HST.Controllers
                     success = false
                 });
             }
+
             bool anyReverted = false;
 
             if (options.Service)
@@ -600,18 +579,7 @@ namespace HST.Controllers
         }
     }
 
-    // Data transfer object for system information
-    public class SystemInfoDto
-    {
-        public string User { get; set; } = "";
-        public string Time { get; set; } = "";
-        public string Gpu { get; set; } = "";
-        public string Cpu { get; set; } = "";
-        public string Ram { get; set; } = "";
-        public string Storage { get; set; } = "";
-    }
-
-    // Data transfer object for service check-boxes
+    // DTO classes
     public class ServiceOptions
     {
         public bool Recommended { get; set; }
@@ -620,7 +588,6 @@ namespace HST.Controllers
         public bool Xbox { get; set; }
     }
 
-    // Data transfer object for debloat check-boxes
     public class DebloatOptions
     {
         public bool MsApps { get; set; }
@@ -630,7 +597,6 @@ namespace HST.Controllers
         public bool StoreApps { get; set; }
     }
 
-    // Data transfer object for cleanup check-boxes
     public class CleanUpOptions
     {
         public bool Temp { get; set; }
@@ -639,7 +605,6 @@ namespace HST.Controllers
         public bool PowerPlan { get; set; }
     }
 
-    // Data transfer object for revertion check-boxes
     public class RevertOptions
     {
         public bool Service { get; set; }
@@ -647,5 +612,4 @@ namespace HST.Controllers
         public bool WUpdate { get; set; }
         public bool Registry { get; set; }
     }
-
 }
