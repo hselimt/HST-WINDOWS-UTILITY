@@ -836,7 +836,7 @@ echo                ============================================================
 echo.
 echo                               SELECT SERVICES TO DISABLE
 echo.
-echo                             [1] RECOMMENDED (95 SERVICES)
+echo                             [1] RECOMMENDED (108 SERVICES)
 echo                             [2] BLUETOOTH (4 SERVICES)
 echo                             [3] HYPER-V (11 SERVICES)
 echo                             [4] XBOX (4 SERVICES)
@@ -982,25 +982,28 @@ sc stop workfolderssvc %nul% & sc config workfolderssvc start= disabled %nul%
 
 
 echo                    - DISABLING SERVICES (BATCH 9/9)
-powershell -Command "Get-Service -Name 'CaptureService*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'CaptureService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'CloudBackupRestoreSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'CloudBackupRestoreSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'cbdhsvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'cbdhsvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'ConsentUxUserSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'ConsentUxUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'PimIndexMaintenanceSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'PimIndexMaintenanceSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'CDPUserSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'CDPUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'DusmSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'DusmSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'DevicePickerUserSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'DevicePickerUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'DevicesFlowUserSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'DevicesFlowUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'BcastDVRUserService*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'BcastDVRUserService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'LxpSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'LxpSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'MessagingService*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'MessagingService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'OneSyncSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'OneSyncSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'UserDataSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'UserDataSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'UnistoreSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'UnistoreSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'WpnUserService*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'WpnUserService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'PrintWorkflowUserSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'PrintWorkflowUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'BluetoothUserService*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'BluetoothUserService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'DeviceAssociationBrokerSvc*' -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue" %nul% & powershell -Command "Get-Service -Name 'DeviceAssociationBrokerSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue" %nul%
+sc stop CaptureService %nul% & sc config CaptureService start= disabled %nul%
+sc stop CloudBackupRestoreSvc %nul% & sc config CloudBackupRestoreSvc start= disabled %nul%
+sc stop cbdhsvc %nul% & sc config cbdhsvc start= disabled %nul%
+sc stop ConsentUxUserSvc %nul% & sc config ConsentUxUserSvc start= disabled %nul%
+sc stop PimIndexMaintenanceSvc %nul% & sc config PimIndexMaintenanceSvc start= disabled %nul%
+sc stop CDPUserSvc %nul% & sc config CDPUserSvc start= disabled %nul%
+sc stop DusmSvc %nul% & sc config DusmSvc start= disabled %nul%
+sc stop DevicePickerUserSvc %nul% & sc config DevicePickerUserSvc start= disabled %nul%
+sc stop DevicesFlowUserSvc %nul% & sc config DevicesFlowUserSvc start= disabled %nul%
+sc stop BcastDVRUserService %nul% & sc config BcastDVRUserService start= disabled %nul%
+sc stop LxpSvc %nul% & sc config LxpSvc start= disabled %nul%
+sc stop MessagingService %nul% & sc config MessagingService start= disabled %nul%
+sc stop OneSyncSvc %nul% & sc config OneSyncSvc start= disabled %nul%
+sc stop UserDataSvc %nul% & sc config UserDataSvc start= disabled %nul%
+sc stop UnistoreSvc %nul% & sc config UnistoreSvc start= disabled %nul%
+sc stop WpnUserService %nul% & sc config WpnUserService start= disabled %nul%
+sc stop PrintWorkflowUserSvc %nul% & sc config PrintWorkflowUserSvc start= disabled %nul%
+sc stop whesvc %nul% & sc config whesvc start= disabled %nul%
+sc stop TrkWks %nul% & sc config TrkWks start= disabled %nul%
+sc stop InventorySvc %nul% & sc config InventorySvc start= disabled %nul%
+sc stop CDPSvc %nul% & sc config CDPSvc start= disabled %nul%
+sc stop WpnService %nul% & sc config WpnService start= disabled %nul%
 exit /b
 
 
@@ -1008,6 +1011,8 @@ exit /b
 echo                    - DISABLING BLUETOOTH SERVICES
 sc stop BTAGService %nul% & sc config BTAGService start= disabled %nul%
 sc stop bthserv %nul% & sc config bthserv start= disabled %nul%
+sc stop BluetoothUserService %nul% & sc config BluetoothUserService start= disabled %nul%
+sc stop DeviceAssociationBrokerSvc %nul% & sc config DeviceAssociationBrokerSvc start= disabled %nul%
 exit /b
 
 
@@ -1981,29 +1986,34 @@ sc config WerSvc start= demand %nul%
 sc config workfolderssvc start= demand %nul%
 
 echo                    - RESTORING SERVICES (BATCH 9/9)
-powershell -Command "Get-Service -Name 'CaptureService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'CloudBackupRestoreSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'cbdhsvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'ConsentUxUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'PimIndexMaintenanceSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'CDPUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'DusmSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'DevicePickerUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'DevicesFlowUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'BcastDVRUserService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'LxpSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'MessagingService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'OneSyncSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'UserDataSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'UnistoreSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'WpnUserService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'PrintWorkflowUserSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'BluetoothUserService*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
-powershell -Command "Get-Service -Name 'DeviceAssociationBrokerSvc*' -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue" %nul%
+sc config CaptureService start= demand %nul%
+sc config CloudBackupRestoreSvc start= demand %nul%
+sc config cbdhsvc start= demand %nul%
+sc config ConsentUxUserSvc start= demand %nul%
+sc config PimIndexMaintenanceSvc start= demand %nul%
+sc config CDPUserSvc start= demand %nul%
+sc config DusmSvc start= demand %nul%
+sc config DevicePickerUserSvc start= demand %nul%
+sc config DevicesFlowUserSvc start= demand %nul%
+sc config BcastDVRUserService start= demand %nul%
+sc config LxpSvc start= demand %nul%
+sc config MessagingService start= demand %nul%
+sc config OneSyncSvc start= demand %nul%
+sc config UserDataSvc start= demand %nul%
+sc config UnistoreSvc start= demand %nul%
+sc config WpnUserService start= demand %nul%
+sc config PrintWorkflowUserSvc start= demand %nul%
+sc config whesvc start= auto %nul%
+sc config TrkWks start= auto %nul%
+sc config InventorySvc start= auto %nul%
+sc config CDPSvc start= auto %nul%
+sc config WpnService start= auto %nul%
 
 echo                    - RESTORING BLUETOOTH SERVICES
 sc config BTAGService start= demand %nul%
 sc config bthserv start= demand %nul%
+sc config BluetoothUserService start= demand %nul%
+sc config DeviceAssociationBrokerSvc start= demand %nul%
 
 echo                    - RESTORING HYPER-V SERVICES
 sc config HvHost start= demand %nul%
