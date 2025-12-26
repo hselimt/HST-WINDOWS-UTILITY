@@ -121,8 +121,8 @@
 Disable services by category:
 | Category | Count | Examples |
 |----------|-------|----------|
-| Recommended | 82 | Telemetry, diagnostics, rarely-used services |
-| Bluetooth | 4 | Audio gateway, support service |
+| Recommended | 108 | Telemetry, diagnostics, rarely-used services |
+| Bluetooth | 4 | Audio gateway, support services |
 | Hyper-V | 11 | All virtualization services |
 | Xbox | 4 | Game save, networking, auth |
 
@@ -132,6 +132,27 @@ Disable services by category:
 - **Event logs** — Clear all Windows logs
 - **Power plans** — Remove default Windows plans
 - **Debloat** — Remove 45+ Microsoft apps, Edge, OneDrive, Xbox apps, Store
+
+---
+
+## 🧪 Testing & Validation
+
+To ensure system stability and safety, every function in this utility has been tested across multiple clean installation environments using virtual machines
+
+| Operating System | Version | Status |
+|------------------|---------|--------|
+| Windows 10 | 22H2 | ✅ Verified |
+| Windows 11 | 21H2 | ✅ Verified |
+| Windows 11 | 22H2 | ✅ Verified |
+| Windows 11 | 23H2 | ✅ Verified |
+| Windows 11 | 24H2 | ✅ Verified |
+| Windows 11 | 25H2 | ✅ Verified |
+
+### Quality Assurance Process
+
+- **Environment:** Tests were conducted on VirtualBox and Hyper-V simulating fresh Windows installations to isolate variables
+- **Coverage:** Each button, toggle, and script was executed multiple times individually to verify functionality
+- **Reversibility:** Revert functions were tested to ensure systems could be returned to default states without errors
 
 ---
 
@@ -145,7 +166,7 @@ Disable services by category:
 
 ---
 
-## 🔧 Requirements
+## 🔧 Requirements For GUI
 
 - Windows 10/11 (64-bit)
 - Administrator privileges
@@ -157,10 +178,10 @@ Disable services by category:
 ## 👨‍💻 Development
 
 **What I Built:**
+- Years of Windows tweaking knowledge
 - Complete C# backend with Windows system APIs
 - Batch and PowerShell scripts/commands
 - All optimization logic and safety checks
-- Years of Windows tweaking knowledge
 - CLI version with 20+ optimization modules
 - Full integration and testing
 

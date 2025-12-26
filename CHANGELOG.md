@@ -1,26 +1,24 @@
-## [1.7.0] - 2024-12-21
+## [1.7.0] - 2024-12-26
 
 ### Added
-* **ConfigLoader Utility Class** - Centralized configuration loading, eliminates ~25 lines of duplicate code
-* **Log Rotation** - Automatic cleanup on startup to prevent multi-GB log files
-* **Service Default Startup Types** - Added `defaultStartup` to ServiceInfo DTO for config-driven reverts
-* **CLI service optimization** - Added wildcard services
+* **ConfigLoader Utility Class** - Centralized configuration loading
+* **Log Rotation** - Automatic cleanup on startup
+* **Service Default Startup Types** - `defaultStartup` field for config-driven reverts
+* **New Telemetry Services** - Added whesvc, TrkWks, InventorySvc, CDPSvc, WpnService
+* **Template-based Per-User Services** - Proper handling of services like CDPUserSvc, OneSyncSvc
 
 ### Changed
-* **HTTP Status Codes** - Proper REST standards (500 for errors, 400 for bad input) across all 14 endpoints
-* **Service Revert System** - Reads from ServicesConfig.json instead of 80+ hardcoded values
-  - **Note:** Revert restores Windows defaults, not previous custom settings
-* **File Paths** - System-aware paths replace hardcoded values
-* **Task Delays** - Standardized to 200ms throughout codebase
-* **TaskSchedulerOptimizer** - Removed unnecessary Base64 encoding
-* **SetServices Performance** - Optimized with StringBuilder
+* **HTTP Status Codes** - Proper REST standards across all endpoints
+* **Service Revert System** - Reads from ServicesConfig.json instead of hardcoded values
+* **CLI Service Optimization** - Removed wildcard approach, using template service names
+* **Recommended Services Count** - Now 108 services (was 82)
 
 ### Fixed
-* **Wildcard Service Matching** - Services like `CaptureService*` now match correctly
-* **Code Duplication** - ConfigLoader eliminates duplicate JSON handling across 6 files
+* **Per-User Service Disabling** - Template services now disable correctly for all users
+* **Code Duplication** - ConfigLoader eliminates duplicate JSON handling
 
-### Known Issues
-- Services with instance IDs cannot be disabled
+### Removed
+* **Wildcard PowerShell Commands** - Replaced with direct sc commands for reliability
 
 ---
 
