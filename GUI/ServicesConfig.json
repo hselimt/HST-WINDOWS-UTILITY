@@ -26,12 +26,12 @@
       "defaultStartup": 3
     },
     {
-      "service": "CaptureService*",
+      "service": "CaptureService",
       "name": "CaptureService",
       "defaultStartup": 3
     },
     {
-      "service": "CloudBackupRestoreSvc*",
+      "service": "CloudBackupRestoreSvc",
       "name": "Windows Backup",
       "defaultStartup": 3
     },
@@ -41,7 +41,7 @@
       "defaultStartup": 3
     },
     {
-      "service": "cbdhsvc*",
+      "service": "cbdhsvc",
       "name": "Clipboard User Service",
       "defaultStartup": 3
     },
@@ -51,17 +51,17 @@
       "defaultStartup": 2
     },
     {
-      "service": "ConsentUxUserSvc*",
+      "service": "ConsentUxUserSvc",
       "name": "ConsentUX User Service",
       "defaultStartup": 3
     },
     {
-      "service": "PimIndexMaintenanceSvc*",
+      "service": "PimIndexMaintenanceSvc",
       "name": "Contact Data",
       "defaultStartup": 3
     },
     {
-      "service": "CDPUserSvc*",
+      "service": "CDPUserSvc",
       "name": "Connected Devices Platform User Service",
       "defaultStartup": 3
     },
@@ -71,7 +71,7 @@
       "defaultStartup": 3
     },
     {
-      "service": "DusmSvc*",
+      "service": "DusmSvc",
       "name": "Data Usage",
       "defaultStartup": 3
     },
@@ -91,12 +91,12 @@
       "defaultStartup": 3
     },
     {
-      "service": "DevicePickerUserSvc*",
+      "service": "DevicePickerUserSvc",
       "name": "Device Picker User Service",
       "defaultStartup": 3
     },
     {
-      "service": "DevicesFlowUserSvc*",
+      "service": "DevicesFlowUserSvc",
       "name": "Devices Flow User Service",
       "defaultStartup": 3
     },
@@ -126,7 +126,7 @@
       "defaultStartup": 3
     },
     {
-      "service": "BcastDVRUserService*",
+      "service": "BcastDVRUserService",
       "name": "GameDVR and Broadcast User Service",
       "defaultStartup": 3
     },
@@ -141,7 +141,7 @@
       "defaultStartup": 2
     },
     {
-      "service": "LxpSvc*",
+      "service": "LxpSvc",
       "name": "Language Experience Service",
       "defaultStartup": 3
     },
@@ -151,7 +151,7 @@
       "defaultStartup": 2
     },
     {
-      "service": "MessagingService*",
+      "service": "MessagingService",
       "name": "Messaging Service",
       "defaultStartup": 3
     },
@@ -256,7 +256,7 @@
       "defaultStartup": 3
     },
     {
-      "service": "PrintWorkflowUserSvc*",
+      "service": "PrintWorkflowUserSvc",
       "name": "PrintWorkflow",
       "defaultStartup": 3
     },
@@ -361,7 +361,7 @@
       "defaultStartup": 3
     },
     {
-      "service": "OneSyncSvc*",
+      "service": "OneSyncSvc",
       "name": "Sync Host",
       "defaultStartup": 3
     },
@@ -381,12 +381,12 @@
       "defaultStartup": 3
     },
     {
-      "service": "UserDataSvc*",
+      "service": "UserDataSvc",
       "name": "User Data Access",
       "defaultStartup": 3
     },
     {
-      "service": "UnistoreSvc*",
+      "service": "UnistoreSvc",
       "name": "User Data Storage",
       "defaultStartup": 3
     },
@@ -441,7 +441,7 @@
       "defaultStartup": 3
     },
     {
-      "service": "WpnUserService*",
+      "service": "WpnUserService",
       "name": "Windows Push Notifications User Service",
       "defaultStartup": 3
     },
@@ -496,6 +496,51 @@
       "defaultStartup": 3
     },
     {
+      "service": "whesvc",
+      "name": "Windows Health and Optimized Experiences",
+      "defaultStartup": 2
+    },
+    {
+      "service": "TrkWks",
+      "name": "Distributed Link Tracking Client",
+      "defaultStartup": 2
+    },
+    {
+      "service": "InventorySvc",
+      "name": "Inventory and Compatibility Appraisal",
+      "defaultStartup": 2
+    },
+    {
+      "service": "CDPSvc",
+      "name": "Connected Devices Platform Service",
+      "defaultStartup": 2
+    },
+    {
+      "service": "CDPUserSvc",
+      "name": "Connected Devices Platform User Service",
+      "defaultStartup": 2
+    },
+    {
+      "service": "OneSyncSvc",
+      "name": "Sync Host",
+      "defaultStartup": 2
+    },
+    {
+      "service": "PimIndexMaintenanceSvc",
+      "name": "Contact Data",
+      "defaultStartup": 3
+    },
+    {
+      "service": "WpnService",
+      "name": "Windows Push Notifications System Service",
+      "defaultStartup": 2
+    },
+    {
+      "service": "WpnUserService",
+      "name": "Windows Push Notifications User Service",
+      "defaultStartup": 2
+    },
+    {
       "service": "WdiServiceHost",
       "name": "Diagnostic Service Host",
       "defaultStartup": 3
@@ -528,12 +573,12 @@
       "defaultStartup": 3
     },
     {
-      "service": "BluetoothUserService*",
+      "service": "BluetoothUserService",
       "name": "Bluetooth User Support Service",
       "defaultStartup": 3
     },
     {
-      "service": "DeviceAssociationBrokerSvc*",
+      "service": "DeviceAssociationBrokerSvc",
       "name": "Device Association Broker",
       "defaultStartup": 3
     }

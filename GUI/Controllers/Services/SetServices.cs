@@ -18,51 +18,32 @@ namespace HST.Controllers.Services
 
         public SetServices(ProcessRunner processRunner)
         {
-            // Validates that the process runner dependency is provided
+            // Ensures process runner is not null
             _processRunner = processRunner ?? throw new ArgumentNullException(nameof(processRunner));
         }
 
-        // Disables configured services
+        // Disables configured services by stopping them and setting startup type to Disabled
         public async Task DisableConfiguredServicesAsync(List<string> servicesToDisable)
         {
             Logger.Log("Starting to disable configured services");
             if (!servicesToDisable.Any()) return;
 
-            // Separates services into exact names
-            var wServices = servicesToDisable.Where(s => s.Contains("*")).ToList();
-            var services = servicesToDisable.Where(s => !s.Contains("*")).ToList();
-
-            Logger.Log($"Exact services to disable: {services.Count}");
-            Logger.Log($"Wildcard patterns to disable: {wServices.Count}");
+            Logger.Log($"Services to disable: {servicesToDisable.Count}");
 
             var scriptBuilder = new StringBuilder();
             // Prevents script termination on non-critical errors
             scriptBuilder.AppendLine("$ErrorActionPreference = 'SilentlyContinue'");
 
-            // Generates PowerShell commands for exact service matches
-            foreach (var service in services)
-            {
-                // Stops the service and sets its startup type to Disabled (4) in the Registry
-                scriptBuilder.AppendLine($@"
-                    Stop-Service -Name '{service}' -Force -ErrorAction SilentlyContinue
-                    Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\{service}' -Name 'Start' -Value 4 -Type DWord -Force
-                ");
-            }
+            string serviceList = string.Join("', '", servicesToDisable);
+            scriptBuilder.AppendLine($@"
+                $services = @('{serviceList}')
+                foreach ($svc in $services) {{
+                    Stop-Service -Name $svc -Force
+                    Set-Service -Name $svc -StartupType Disabled
+                }}
+            ");
 
-            // Generates PowerShell commands for wildcard matches
-            foreach (string pattern in wServices)
-            {
-                // Finds all services matching the pattern, stops them, and disables them via Registry
-                scriptBuilder.AppendLine($@"
-                    Get-Service | Where-Object {{ $_.Name -like '{pattern}' }} | ForEach-Object {{
-                        Stop-Service -Name $_.Name -Force -ErrorAction SilentlyContinue
-                        $regPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\' + $_.Name
-                        Set-ItemProperty -Path $regPath -Name 'Start' -Value 4 -Type DWord -Force
-                    }}
-                ");
-            }
-
-            // Executes the script with admin privileges
+            // Executes the constructed script
             await _processRunner.RunCommandAsync("powershell.exe",
                 $"-NoProfile -ExecutionPolicy Bypass -Command \"{scriptBuilder.ToString().Replace("\"", "\"\"")}\"");
             Logger.Success("Disabling configured services complete");
@@ -71,10 +52,10 @@ namespace HST.Controllers.Services
         // Reverts all configured services to their default startup state
         public async Task DisableConfiguredServicesRevertAsync()
         {
-            Logger.Log("Starting to enable configured services");
+            Logger.Log("Starting to revert configured services");
             try
             {
-                // Loads the full list of services that this tool manages
+                // Loads the full list of services
                 var config = await ConfigLoader.LoadConfigAsync<ServiceInfo>("ServicesConfig.json");
                 var allServices = config.Values.SelectMany(list => list);
 
@@ -82,47 +63,22 @@ namespace HST.Controllers.Services
                 {
                     try
                     {
-                        var serviceNames = new List<string>();
+                        // Removes the Security subkey which may contain access restrictions set by sdset
+                        Registry.LocalMachine.DeleteSubKeyTree(
+                            $@"SYSTEM\CurrentControlSet\Services\{serviceInfo.service}\Security", false);
 
-                        // Handles wildcard services (e.g., per-user services like 'cbdhsvc_xxxxx')
-                        if (serviceInfo.service.Contains("*"))
-                        {
-                            var baseName = serviceInfo.service.TrimEnd('*');
-                            // Searches the registry for services starting with the base name
-                            using var servicesKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Services");
-                            if (servicesKey != null)
-                            {
-                                serviceNames = servicesKey.GetSubKeyNames()
-                                    .Where(n => n.StartsWith(baseName + "_", StringComparison.OrdinalIgnoreCase))
-                                    .ToList();
-                            }
-                        }
-                        else
-                        {
-                            // Adds the exact service name
-                            serviceNames.Add(serviceInfo.service);
-                        }
+                        // Resets the startup type to the default value defined in config
+                        Registry.SetValue(
+                            $@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\{serviceInfo.service}",
+                            "Start",
+                            serviceInfo.defaultStartup,
+                            RegistryValueKind.DWord);
 
-                        // Restores each identified service
-                        foreach (var serviceName in serviceNames)
-                        {
-                            // Removes the 'Security' subkey which may contain access restrictions (like those set by sdset)
-                            Registry.LocalMachine.DeleteSubKeyTree(
-                                $@"SYSTEM\CurrentControlSet\Services\{serviceName}\Security", false);
-
-                            // Resets the startup type to the default value defined in config
-                            Registry.SetValue(
-                                $@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\{serviceName}",
-                                "Start",
-                                serviceInfo.defaultStartup,
-                                RegistryValueKind.DWord);
-
-                            Logger.Log($"Restored service to default: {serviceName} (Startup: {serviceInfo.defaultStartup})");
-                        }
+                        Logger.Log($"Restored: {serviceInfo.service} (Startup: {serviceInfo.defaultStartup})");
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error($"Failed to restore service: {serviceInfo.service}", ex);
+                        Logger.Error($"Failed to restore: {serviceInfo.service}", ex);
                     }
                 }
                 Logger.Success("Restoring configured services complete");
