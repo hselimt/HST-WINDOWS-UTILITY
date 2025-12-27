@@ -1,4 +1,4 @@
-## [1.7.0] - 2024-12-27
+## [1.7.0] - 2025-12-27
 
 ### Added
 * **Help Page** - Implemented detailed HelpPage component with full documentation of what this project does and how to use the features
@@ -25,7 +25,7 @@
 
 ---
 
-## [1.6.0] - 2024-12-20
+## [1.6.0] - 2025-12-20
 
 ### Added
 - **Comprehensive Logging System** - All operations now log to HST-WINDOWS-UTILITY.log in %TEMP%
@@ -49,7 +49,7 @@
 
 ---
 
-## [1.5.0] - 2024-12-10
+## [1.5.0] - 2025-12-10
 
 ### Added
 - **Restore Features** - Complete reversal options for all modifications
@@ -80,7 +80,7 @@
 
 ---
 
-## [1.0.0] - 2024-09-05
+## [1.0.0] - 2025-09-05
 
 ### Added
 - **GUI Version** - Electron-based desktop application with React frontend
