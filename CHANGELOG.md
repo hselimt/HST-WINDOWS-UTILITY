@@ -85,7 +85,7 @@
 ### Added
 - **GUI Version** - Electron-based desktop application with React frontend
 - **CLI Version** - Batch script with full feature parity
-- **Registry Optimization** - 500+ performance-focused registry tweaks
+- **Registry Optimization** - 100+ performance-focused registry tweaks
   - Gaming optimizations (GPU/CPU priority, latency reduction)
   - Network optimizations (throttling removal)
   - Telemetry and bloatware disabling
