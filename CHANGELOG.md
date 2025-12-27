@@ -1,6 +1,8 @@
-## [1.7.0] - 2024-12-26
+## [1.7.0] - 2024-12-27
 
 ### Added
+* **Help Page** - Implemented detailed HelpPage component with full documentation of what this project does and how to use the features
+* **Scrollbar** - Scrollbar that will be used on help page
 * **ConfigLoader Utility Class** - Centralized configuration loading
 * **Log Rotation** - Automatic cleanup on startup
 * **Service Default Startup Types** - `defaultStartup` field for config-driven reverts
@@ -16,6 +18,7 @@
 ### Fixed
 * **Per-User Service Disabling** - Template services now disable correctly for all users
 * **Code Duplication** - ConfigLoader eliminates duplicate JSON handling
+* **Json Duplication** - Removed duplications from ServicesConfig
 
 ### Removed
 * **Wildcard PowerShell Commands** - Replaced with direct sc commands for reliability
