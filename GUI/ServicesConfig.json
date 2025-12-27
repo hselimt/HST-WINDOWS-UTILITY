@@ -21,18 +21,13 @@
       "defaultStartup": 3
     },
     {
-      "service": "autotimesvc",
-      "name": "Cellular Time",
-      "defaultStartup": 3
-    },
-    {
       "service": "CaptureService",
       "name": "CaptureService",
       "defaultStartup": 3
     },
     {
-      "service": "CloudBackupRestoreSvc",
-      "name": "Windows Backup",
+      "service": "autotimesvc",
+      "name": "Cellular Time",
       "defaultStartup": 3
     },
     {
@@ -44,6 +39,16 @@
       "service": "cbdhsvc",
       "name": "Clipboard User Service",
       "defaultStartup": 3
+    },
+    {
+      "service": "CDPSvc",
+      "name": "Connected Devices Platform Service",
+      "defaultStartup": 2
+    },
+    {
+      "service": "CDPUserSvc",
+      "name": "Connected Devices Platform User Service",
+      "defaultStartup": 2
     },
     {
       "service": "DiagTrack",
@@ -61,11 +66,6 @@
       "defaultStartup": 3
     },
     {
-      "service": "CDPUserSvc",
-      "name": "Connected Devices Platform User Service",
-      "defaultStartup": 3
-    },
-    {
       "service": "DsSvc",
       "name": "Data Sharing Service",
       "defaultStartup": 3
@@ -79,6 +79,11 @@
       "service": "DoSvc",
       "name": "Delivery Optimization",
       "defaultStartup": 2
+    },
+    {
+      "service": "DeviceAssociationBrokerSvc",
+      "name": "Device Association Broker",
+      "defaultStartup": 3
     },
     {
       "service": "DmEnrollmentSvc",
@@ -111,6 +116,16 @@
       "defaultStartup": 2
     },
     {
+      "service": "WdiServiceHost",
+      "name": "Diagnostic Service Host",
+      "defaultStartup": 3
+    },
+    {
+      "service": "WdiSystemHost",
+      "name": "Diagnostic System Host",
+      "defaultStartup": 3
+    },
+    {
       "service": "DialogBlockingService",
       "name": "DialogBlockingService",
       "defaultStartup": 4
@@ -119,6 +134,16 @@
       "service": "DisplayEnhancementService",
       "name": "Display Enhancement Service",
       "defaultStartup": 3
+    },
+    {
+      "service": "TrkWks",
+      "name": "Distributed Link Tracking Client",
+      "defaultStartup": 2
+    },
+    {
+      "service": "MapsBroker",
+      "name": "Downloaded Maps Manager",
+      "defaultStartup": 2
     },
     {
       "service": "fhsvc",
@@ -136,6 +161,11 @@
       "defaultStartup": 3
     },
     {
+      "service": "InventorySvc",
+      "name": "Inventory and Compatibility Appraisal",
+      "defaultStartup": 2
+    },
+    {
       "service": "iphlpsvc",
       "name": "IP Helper",
       "defaultStartup": 2
@@ -146,13 +176,28 @@
       "defaultStartup": 3
     },
     {
-      "service": "MapsBroker",
-      "name": "Downloaded Maps Manager",
-      "defaultStartup": 2
-    },
-    {
       "service": "MessagingService",
       "name": "Messaging Service",
+      "defaultStartup": 3
+    },
+    {
+      "service": "wlidsvc",
+      "name": "Microsoft Account Sign-in Assistant",
+      "defaultStartup": 3
+    },
+    {
+      "service": "AppVClient",
+      "name": "Microsoft App-V Client",
+      "defaultStartup": 4
+    },
+    {
+      "service": "cloudidsvc",
+      "name": "Microsoft Cloud Identity Service",
+      "defaultStartup": 3
+    },
+    {
+      "service": "diagnosticshub.standardcollector.service",
+      "name": "Microsoft Diagnostics Hub Standard Collector Service",
       "defaultStartup": 3
     },
     {
@@ -311,14 +356,14 @@
       "defaultStartup": 4
     },
     {
-      "service": "RemoteAccess",
-      "name": "Routing and Remote Access",
-      "defaultStartup": 4
-    },
-    {
       "service": "RetailDemo",
       "name": "Retail Demo Service",
       "defaultStartup": 3
+    },
+    {
+      "service": "RemoteAccess",
+      "name": "Routing and Remote Access",
+      "defaultStartup": 4
     },
     {
       "service": "SensorDataService",
@@ -363,7 +408,7 @@
     {
       "service": "OneSyncSvc",
       "name": "Sync Host",
-      "defaultStartup": 3
+      "defaultStartup": 2
     },
     {
       "service": "SysMain",
@@ -371,13 +416,13 @@
       "defaultStartup": 2
     },
     {
-      "service": "TabletInputService",
-      "name": "Touch Keyboard and Handwriting Panel Service",
+      "service": "TapiSrv",
+      "name": "Telephony",
       "defaultStartup": 3
     },
     {
-      "service": "TapiSrv",
-      "name": "Telephony",
+      "service": "TabletInputService",
+      "name": "Touch Keyboard and Handwriting Panel Service",
       "defaultStartup": 3
     },
     {
@@ -396,8 +441,23 @@
       "defaultStartup": 4
     },
     {
-      "service": "SDRSVC",
+      "service": "WFDSConMgrSvc",
+      "name": "Wi-Fi Direct Services Connection Manager Service",
+      "defaultStartup": 3
+    },
+    {
+      "service": "CloudBackupRestoreSvc",
       "name": "Windows Backup",
+      "defaultStartup": 3
+    },
+    {
+      "service": "SDRSVC",
+      "name": "Windows Backup (SDRSVC)",
+      "defaultStartup": 3
+    },
+    {
+      "service": "WbioSrvc",
+      "name": "Windows Biometric Service",
       "defaultStartup": 3
     },
     {
@@ -411,9 +471,19 @@
       "defaultStartup": 3
     },
     {
+      "service": "WerSvc",
+      "name": "Windows Error Reporting Service",
+      "defaultStartup": 3
+    },
+    {
       "service": "Wecsvc",
       "name": "Windows Event Collector",
       "defaultStartup": 3
+    },
+    {
+      "service": "whesvc",
+      "name": "Windows Health and Optimized Experiences",
+      "defaultStartup": 2
     },
     {
       "service": "wisvc",
@@ -441,96 +511,6 @@
       "defaultStartup": 3
     },
     {
-      "service": "WpnUserService",
-      "name": "Windows Push Notifications User Service",
-      "defaultStartup": 3
-    },
-    {
-      "service": "PushToInstall",
-      "name": "Windows PushToInstall Service",
-      "defaultStartup": 3
-    },
-    {
-      "service": "W32Time",
-      "name": "Windows Time",
-      "defaultStartup": 3
-    },
-    {
-      "service": "WFDSConMgrSvc",
-      "name": "Wi-Fi Direct Services Connection Manager Service",
-      "defaultStartup": 3
-    },
-    {
-      "service": "WSearch",
-      "name": "Windows Search",
-      "defaultStartup": 2
-    },
-    {
-      "service": "LanmanWorkstation",
-      "name": "Workstation",
-      "defaultStartup": 2
-    },
-    {
-      "service": "AppVClient",
-      "name": "Microsoft App-V Client",
-      "defaultStartup": 4
-    },
-    {
-      "service": "cloudidsvc",
-      "name": "Microsoft Cloud Identity Service",
-      "defaultStartup": 3
-    },
-    {
-      "service": "diagnosticshub.standardcollector.service",
-      "name": "Microsoft Diagnostics Hub Standard Collector Service",
-      "defaultStartup": 3
-    },
-    {
-      "service": "WbioSrvc",
-      "name": "Windows Biometric Service",
-      "defaultStartup": 3
-    },
-    {
-      "service": "WdiSystemHost",
-      "name": "Diagnostic System Host",
-      "defaultStartup": 3
-    },
-    {
-      "service": "whesvc",
-      "name": "Windows Health and Optimized Experiences",
-      "defaultStartup": 2
-    },
-    {
-      "service": "TrkWks",
-      "name": "Distributed Link Tracking Client",
-      "defaultStartup": 2
-    },
-    {
-      "service": "InventorySvc",
-      "name": "Inventory and Compatibility Appraisal",
-      "defaultStartup": 2
-    },
-    {
-      "service": "CDPSvc",
-      "name": "Connected Devices Platform Service",
-      "defaultStartup": 2
-    },
-    {
-      "service": "CDPUserSvc",
-      "name": "Connected Devices Platform User Service",
-      "defaultStartup": 2
-    },
-    {
-      "service": "OneSyncSvc",
-      "name": "Sync Host",
-      "defaultStartup": 2
-    },
-    {
-      "service": "PimIndexMaintenanceSvc",
-      "name": "Contact Data",
-      "defaultStartup": 3
-    },
-    {
       "service": "WpnService",
       "name": "Windows Push Notifications System Service",
       "defaultStartup": 2
@@ -541,24 +521,29 @@
       "defaultStartup": 2
     },
     {
-      "service": "WdiServiceHost",
-      "name": "Diagnostic Service Host",
+      "service": "PushToInstall",
+      "name": "Windows PushToInstall Service",
       "defaultStartup": 3
     },
     {
-      "service": "wlidsvc",
-      "name": "Microsoft Account Sign-in Assistant",
-      "defaultStartup": 3
+      "service": "WSearch",
+      "name": "Windows Search",
+      "defaultStartup": 2
     },
     {
-      "service": "WerSvc",
-      "name": "Windows Error Reporting Service",
+      "service": "W32Time",
+      "name": "Windows Time",
       "defaultStartup": 3
     },
     {
       "service": "workfolderssvc",
       "name": "Work Folders",
       "defaultStartup": 3
+    },
+    {
+      "service": "LanmanWorkstation",
+      "name": "Workstation",
+      "defaultStartup": 2
     }
   ],
   "bluetooth": [
@@ -664,9 +649,14 @@
   ],
   "windowsUpdate": [
     {
-      "service": "WaaSMedicSvc",
-      "name": "Windows Update Medic Service",
+      "service": "BITS",
+      "name": "Background Intelligent Transfer Service",
       "defaultStartup": 3
+    },
+    {
+      "service": "UsoSvc",
+      "name": "Update Orchestrator Service",
+      "defaultStartup": 2
     },
     {
       "service": "wuauserv",
@@ -674,13 +664,8 @@
       "defaultStartup": 3
     },
     {
-      "service": "UsoSvc",
-      "name": "Update Orchestrator Service",
-      "defaultStartup": 3
-    },
-    {
-      "service": "BITS",
-      "name": "Background Intelligent Transfer Service",
+      "service": "WaaSMedicSvc",
+      "name": "Windows Update Medic Service",
       "defaultStartup": 3
     }
   ]
