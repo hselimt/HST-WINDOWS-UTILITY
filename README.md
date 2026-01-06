@@ -11,11 +11,11 @@
 
 **Windows optimization tools designed to maximize system performance through registry tweaks, service management, and system cleanup. Perfect for gamers and power users seeking maximum hardware efficiency.**
 
+</div>
 
+>  **Tutorial recorded on:** Fresh Windows 11 25H2 → Updated → Installed browser → Restarted - Make sure you have a stable GPU driver installed
 
 https://github.com/user-attachments/assets/063aa012-9401-460f-9741-def6cb5f6398
-
-
 
 <table>
 <tr>
@@ -27,8 +27,6 @@ https://github.com/user-attachments/assets/063aa012-9401-460f-9741-def6cb5f6398
 <td><img src="./CLI/HST.png" width="500"/></td>
 </tr>
 </table>
-
-</div>
 
 ---
 
