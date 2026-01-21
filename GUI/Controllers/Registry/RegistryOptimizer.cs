@@ -43,7 +43,6 @@ namespace HST.Controllers.RegistryManager
             // Disabling Fast Startup
             using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Power"))
             {
-                key.SetValue("HiberbootEnabled", 0x0, RegistryValueKind.DWord);
                 key.SetValue("SleepStudyDisabled", 0x1, RegistryValueKind.DWord);
             }
 
@@ -153,49 +152,7 @@ namespace HST.Controllers.RegistryManager
                 key.SetValue("SFIO Priority", "High", RegistryValueKind.String);
                 key.SetValue("Latency Sensitive", "True", RegistryValueKind.String);
             }
-
-            // Power Latency Settings
-            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Power"))
-            {
-                key.SetValue("ExitLatency", 0x1, RegistryValueKind.DWord);
-                key.SetValue("ExitLatencyCheckEnabled", 0x1, RegistryValueKind.DWord);
-                key.SetValue("Latency", 0x1, RegistryValueKind.DWord);
-                key.SetValue("LatencyToleranceDefault", 0x1, RegistryValueKind.DWord);
-                key.SetValue("LatencyToleranceFSVP", 0x1, RegistryValueKind.DWord);
-                key.SetValue("LatencyTolerancePerfOverride", 0x1, RegistryValueKind.DWord);
-                key.SetValue("LatencyToleranceScreenOffIR", 0x1, RegistryValueKind.DWord);
-                key.SetValue("RtlCapabilityCheckLatency", 0x1, RegistryValueKind.DWord);
-            }
-
-            // Graphics Driver Power/Latency Settings
-            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power"))
-            {
-                key.SetValue("DefaultD3TransitionLatencyActivelyUsed", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultD3TransitionLatencyIdleLongTime", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultD3TransitionLatencyIdleMonitorOff", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultD3TransitionLatencyIdleNoContext", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultD3TransitionLatencyIdleShortTime", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultD3TransitionLatencyIdleVeryLongTime", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultLatencyToleranceIdle0", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultLatencyToleranceIdle0MonitorOff", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultLatencyToleranceIdle1", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultLatencyToleranceIdle1MonitorOff", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultLatencyToleranceMemory", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultLatencyToleranceNoContext", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultLatencyToleranceNoContextMonitorOff", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultLatencyToleranceOther", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultLatencyToleranceTimerPeriod", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultMemoryRefreshLatencyToleranceActivelyUsed", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultMemoryRefreshLatencyToleranceMonitorOff", 0x1, RegistryValueKind.DWord);
-                key.SetValue("DefaultMemoryRefreshLatencyToleranceNoContext", 0x1, RegistryValueKind.DWord);
-                key.SetValue("Latency", 0x1, RegistryValueKind.DWord);
-                key.SetValue("MaxIAverageGraphicsLatencyInOneBucket", 0x1, RegistryValueKind.DWord);
-                key.SetValue("MiracastPerfTrackGraphicsLatency", 0x1, RegistryValueKind.DWord);
-                key.SetValue("MonitorLatencyTolerance", 0x1, RegistryValueKind.DWord);
-                key.SetValue("MonitorRefreshLatencyTolerance", 0x1, RegistryValueKind.DWord);
-                key.SetValue("TransitionLatency", 0x1, RegistryValueKind.DWord);
-            }
-
+            
             // Disabling Ulps (Ultra Low Power State for AMD GPUs)
             using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000"))
             {
@@ -805,7 +762,6 @@ namespace HST.Controllers.RegistryManager
             {
                 if (key != null)
                 {
-                    key.SetValue("HiberbootEnabled", 1, RegistryValueKind.DWord);
                     key.SetValue("SleepStudyDisabled", 0, RegistryValueKind.DWord);
                 }
             }
@@ -815,14 +771,6 @@ namespace HST.Controllers.RegistryManager
                 if (key != null)
                 {
                     key.SetValue("HibernateEnabled", 1, RegistryValueKind.DWord);
-                    key.DeleteValue("ExitLatency", false);
-                    key.DeleteValue("ExitLatencyCheckEnabled", false);
-                    key.DeleteValue("Latency", false);
-                    key.DeleteValue("LatencyToleranceDefault", false);
-                    key.DeleteValue("LatencyToleranceFSVP", false);
-                    key.DeleteValue("LatencyTolerancePerfOverride", false);
-                    key.DeleteValue("LatencyToleranceScreenOffIR", false);
-                    key.DeleteValue("RtlCapabilityCheckLatency", false);
                 }
             }
 
@@ -925,27 +873,6 @@ namespace HST.Controllers.RegistryManager
                     key.DeleteValue("Scheduling Category", false);
                     key.DeleteValue("SFIO Priority", false);
                     key.DeleteValue("Latency Sensitive", false);
-                }
-            }
-
-            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power"))
-            {
-                if (key != null)
-                {
-                    string[] values = {
-                        "DefaultD3TransitionLatencyActivelyUsed", "DefaultD3TransitionLatencyIdleLongTime",
-                        "DefaultD3TransitionLatencyIdleMonitorOff", "DefaultD3TransitionLatencyIdleNoContext",
-                        "DefaultD3TransitionLatencyIdleShortTime", "DefaultD3TransitionLatencyIdleVeryLongTime",
-                        "DefaultLatencyToleranceIdle0", "DefaultLatencyToleranceIdle0MonitorOff",
-                        "DefaultLatencyToleranceIdle1", "DefaultLatencyToleranceIdle1MonitorOff",
-                        "DefaultLatencyToleranceMemory", "DefaultLatencyToleranceNoContext",
-                        "DefaultLatencyToleranceNoContextMonitorOff", "DefaultLatencyToleranceOther",
-                        "DefaultLatencyToleranceTimerPeriod", "DefaultMemoryRefreshLatencyToleranceActivelyUsed",
-                        "DefaultMemoryRefreshLatencyToleranceMonitorOff", "DefaultMemoryRefreshLatencyToleranceNoContext",
-                        "Latency", "MaxIAverageGraphicsLatencyInOneBucket", "MiracastPerfTrackGraphicsLatency",
-                        "MonitorLatencyTolerance", "MonitorRefreshLatencyTolerance", "TransitionLatency"
-                    };
-                    foreach (var v in values) key.DeleteValue(v, false);
                 }
             }
 
