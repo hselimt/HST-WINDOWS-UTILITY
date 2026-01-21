@@ -1083,6 +1083,7 @@ echo                    - REMOVING APPS (BATCH 4/6)
 powershell.exe -NoProfile -Command "Get-AppxPackage -Name 'Microsoft.ScreenSketch' -AllUsers | Remove-AppxPackage -AllUsers" %nul%
 powershell.exe -NoProfile -Command "Get-AppxPackage -Name 'Microsoft.SkypeApp' -AllUsers | Remove-AppxPackage -AllUsers" %nul%
 powershell.exe -NoProfile -Command "Get-AppxPackage -Name 'Microsoft.SkyDrive.Desktop' -AllUsers | Remove-AppxPackage -AllUsers" %nul%
+powershell.exe -NoProfile -Command "Get-AppxPackage -Name 'Microsoft.StartExperiencesApp' -AllUsers | Remove-AppxPackage -AllUsers" %nul%
 powershell.exe -NoProfile -Command "Get-AppxPackage -Name 'Microsoft.WindowsTerminal' -AllUsers | Remove-AppxPackage -AllUsers" %nul%
 powershell.exe -NoProfile -Command "Get-AppxPackage -Name 'Microsoft.Todos' -AllUsers | Remove-AppxPackage -AllUsers" %nul%
 powershell.exe -NoProfile -Command "Get-AppxPackage -Name 'Microsoft.Wallet' -AllUsers | Remove-AppxPackage -AllUsers" %nul%
