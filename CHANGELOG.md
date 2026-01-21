@@ -1,3 +1,18 @@
+## [1.7.1] - 2026-01-21
+
+### Changed
+* **AppsConfig.json** - Updated package list
+
+### Fixed
+* **Fast Startup Disabling** - Disabled Fast Startup (HiberbootEnabled = 0) to fix hardware initialization on cold boot
+* **Unstable Settings** - Removed unstable power latency settings in OptimizeLatency
+* **Revert Methods** - Updated Revert methods with current fixes
+
+### Removed
+* **Wildcard PowerShell Commands** - Replaced with direct sc commands for reliability
+
+---
+
 ## [1.7.0] - 2025-12-27
 
 ### Added
