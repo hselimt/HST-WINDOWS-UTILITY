@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableDelayedExpansion
-title HST WINDOWS UTILITY - SCRIPT VERSION v1.7.0
+title HST WINDOWS UTILITY - SCRIPT VERSION v1.7.1
 color 0B
 
 mode con: cols=90 lines=110
@@ -130,7 +130,7 @@ goto MAIN_MENU
 
 :SHOW_HELP
 cls
-echo                         HST WINDOWS UTILITY - HELP GUIDE v1.7.0
+echo                         HST WINDOWS UTILITY - HELP GUIDE v1.7.1
 echo                ============================================================
 echo                =                    IMPORTANT WARNINGS                    =
 echo                ============================================================
