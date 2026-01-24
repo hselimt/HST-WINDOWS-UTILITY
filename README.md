@@ -67,6 +67,7 @@ https://github.com/user-attachments/assets/063aa012-9401-460f-9741-def6cb5f6398
 | Use a printer | Recommended services | Disables Print Spooler |
 | Bluetooth headphones/mouse | Bluetooth services | Devices won't connect |
 | Remote Desktop user | Recommended services | Disables RDP services |
+| Realtek 2.5GbE Ethernet | Power plan | Driver may not initialize after cold boot, you would have to restart |
 
 </details>
 
