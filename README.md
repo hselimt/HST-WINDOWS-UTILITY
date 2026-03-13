@@ -13,6 +13,9 @@
 
 </div>
 
+> [!WARNING]
+> In the current state of Windows with all the different hardware, software, and configurations people run, it's impossible to create a utility that suits every user's needs out of the box. That's why every feature is fully documented both in the GUI (? icon in top-right) and the CLI ([H] Help). **Read the documentation before running any features** so you know what to expect and what might not work well with your specific setup.
+
 >  **Tutorial recorded on:** Fresh Windows 11 25H2 → Updated → Installed browser → Restarted - Make sure you have a stable GPU driver installed
 
 https://github.com/user-attachments/assets/063aa012-9401-460f-9741-def6cb5f6398
@@ -49,7 +52,8 @@ https://github.com/user-attachments/assets/063aa012-9401-460f-9741-def6cb5f6398
 | Issue | Fix |
 |-------|-----|
 | Operations fail silently | Must run as Administrator |
-| App won't start | Unblock the .exe (Properties → Unblock) |
+| HST-W-U won't start | Unblock the .exe (Properties → Unblock) |
+| Apps won't start | Revert Services and registry tweaks |
 | Config file error | Re-run as Administrator |
 | Need to see what happened | Check `%TEMP%\HST-WINDOWS-UTILITY.log` |
 | Need to undo everything | Revert panel or Windows System Restore |
@@ -68,6 +72,7 @@ https://github.com/user-attachments/assets/063aa012-9401-460f-9741-def6cb5f6398
 | Bluetooth headphones/mouse | Bluetooth services | Devices won't connect |
 | Remote Desktop user | Recommended services | Disables RDP services |
 | Realtek 2.5GbE Ethernet | Power plan | Driver may not initialize after cold boot, you would have to restart |
+| Web Applications | HST Essential Services | Some web apps requires some services that this software disables |
 
 </details>
 
