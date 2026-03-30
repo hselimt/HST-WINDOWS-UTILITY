@@ -71,7 +71,7 @@ namespace HST.Controllers.Services
                 ";
 
                 await _processRunner.RunCommandAsync("powershell.exe",
-                    $"-NoProfile -ExecutionPolicy Bypass -Command ""{disableTasksScript.Replace("\"", "\"\"")}"" ");
+                    $"-NoProfile -ExecutionPolicy Bypass -Command \"{disableTasksScript.Replace("\"", "\"\"")}\"");
                 
             }
             catch (Exception ex)
