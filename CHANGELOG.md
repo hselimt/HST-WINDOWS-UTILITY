@@ -1,3 +1,26 @@
+## [1.7.2] - 2026-03-30
+
+### Fixed
+* **Bluetooth Breaking Without Selection** - Moved BthAvctpSvc and DeviceAssociationBrokerSvc from recommended to bluetooth-only services
+* **Fast Startup Not Actually Disabled** - Added HiberbootEnabled = 0 to registry optimization
+* **Webcam Access Blocked** - Changed webcam CapabilityAccessManager from Deny to Allow
+* **DisableWindowsConsumerFeatures** - Fixed value from 0 to 1
+* **DisableThirdPartySuggestions (HKLM)** - Fixed value from 2 to 1
+* **Windows Update Tasks Not Disabled** - Disable Updates now also disables update scheduled tasks
+* **Temp Directory Not Recreated** - Added directory recreation after cleanup deletion
+
+### Changed
+* **Startup Apps** - Synced CLI and GUI startup app lists
+* **Update Task Revert** - Now config-driven from ScheduledTasksConfig.json instead of hardcoded
+* **CLI Services Menu** - Removed service counts
+* **Help Page** - Updated service lists, added sleep/lock warning to troubleshooting
+
+### Removed
+* **Bare "Microsoft" Wildcard** - Removed wildcard entry from AppsConfig.json
+* **wuTaskPaths Wildcards** - Replaced with specific task names (wuTasks) in ScheduledTasksConfig.json
+
+---
+
 ## [1.7.1] - 2026-01-21
 
 ### Changed

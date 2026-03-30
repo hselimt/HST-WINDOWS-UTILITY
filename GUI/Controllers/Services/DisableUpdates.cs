@@ -23,8 +23,10 @@ namespace HST.Controllers.Services
                 // Loads the list of update-related services from configuration
                 var config = await ConfigLoader.LoadConfigAsync<ServiceInfo>("ServicesConfig.json");
                 var wuServices = config["windowsUpdate"];
-
+                var taskConfig = await ConfigLoader.LoadStringConfigAsync("ScheduledTasksConfig.json");
+                var wuTasks = taskConfig["wuTasks"];
                 var scriptBuilder = new StringBuilder();
+
                 // Prevents script termination on non-critical errors
                 scriptBuilder.AppendLine("$ErrorActionPreference = 'SilentlyContinue'");
 
@@ -57,6 +59,20 @@ namespace HST.Controllers.Services
                 await _processRunner.RunCommandAsync("powershell.exe",
                     $"-NoProfile -ExecutionPolicy Bypass -Command \"{scriptBuilder.ToString().Replace("\"", "\"\"")}\"");
                 Logger.Success("Disabling Windows Updates completed");
+
+                // Disables Windows Update scheduled tasks
+                string taskList = string.Join("', '", wuTasks);
+                string disableTasksScript = $@"
+                    $ErrorActionPreference = 'SilentlyContinue'
+                    $tasks = @('{taskList}')
+                    foreach ($task in $tasks) {{
+                        Disable-ScheduledTask -TaskName $task
+                    }}
+                ";
+
+                await _processRunner.RunCommandAsync("powershell.exe",
+                    $"-NoProfile -ExecutionPolicy Bypass -Command ""{disableTasksScript.Replace("\"", "\"\"")}"" ");
+                
             }
             catch (Exception ex)
             {
@@ -71,6 +87,14 @@ namespace HST.Controllers.Services
             Logger.Log("Starting to enable Windows Updates");
             try
             {
+                // Reloads service config to restore original startup types
+                var config = await ConfigLoader.LoadConfigAsync<ServiceInfo>("ServicesConfig.json");
+                var wuServices = config["windowsUpdate"];
+                // Loads update tasks from config
+                var taskConfig = await ConfigLoader.LoadStringConfigAsync("ScheduledTasksConfig.json");
+                var wuTasks = taskConfig["wuTasks"];
+                string taskList = string.Join("', '", wuTasks);
+                
                 // Removes the registry policies that blocked updates
                 try
                 {
@@ -89,10 +113,6 @@ namespace HST.Controllers.Services
                     key2?.DeleteValue("DODownloadMode", false);
                 }
                 catch (Exception ex) { Logger.Log($"Failed to delete DeliveryOptimization value: {ex.Message}"); }
-
-                // Reloads service config to restore original startup types
-                var config = await ConfigLoader.LoadConfigAsync<ServiceInfo>("ServicesConfig.json");
-                var wuServices = config["windowsUpdate"];
 
                 foreach (var serviceInfo in wuServices)
                 {
@@ -117,18 +137,6 @@ namespace HST.Controllers.Services
                     }
                 }
 
-                // List of scheduled tasks to re-enable
-                string[] tasksToEnable = new string[]
-                {
-                    @"\Microsoft\Windows\WindowsUpdate\Scheduled Start",
-                    @"\Microsoft\Windows\UpdateOrchestrator\Schedule Scan",
-                    @"\Microsoft\Windows\UpdateOrchestrator\Schedule Maintenance Work",
-                    @"\Microsoft\Windows\UpdateOrchestrator\UpdateAssistant",
-                    @"\Microsoft\Windows\WaaSMedic\PerformRemediation"
-                };
-
-                // Enables the scheduled tasks via PowerShell
-                string taskList = string.Join("', '", tasksToEnable);
                 string enableTasksScript = $@"
                     $ErrorActionPreference = 'SilentlyContinue'
                     $tasks = @('{taskList}')

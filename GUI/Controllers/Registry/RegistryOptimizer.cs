@@ -46,6 +46,12 @@ namespace HST.Controllers.RegistryManager
                 key.SetValue("SleepStudyDisabled", 0x1, RegistryValueKind.DWord);
             }
 
+            // Disabling Hiberboot
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Power"))
+            {
+                key.SetValue("HiberbootEnabled", 0x0, RegistryValueKind.DWord);
+            }
+
             // Disabling Hibernation
             using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Power"))
             {
@@ -317,7 +323,7 @@ namespace HST.Controllers.RegistryManager
             {
                 using (RegistryKey key = Registry.LocalMachine.CreateSubKey($@"SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\{subKey}"))
                 {
-                    key.SetValue("Value", subKey == "microphone" ? "Allow" : "Deny", RegistryValueKind.String);
+                    key.SetValue("Value", (subKey == "microphone" || subKey == "webcam") ? "Allow" : "Deny", RegistryValueKind.String);
                 }
             }
 
@@ -438,8 +444,8 @@ namespace HST.Controllers.RegistryManager
             // Disabling Windows Consumer Features
             using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\CloudContent"))
             {
-                key.SetValue("DisableThirdPartySuggestions", 0x2, RegistryValueKind.DWord);
-                key.SetValue("DisableWindowsConsumerFeatures", 0x0, RegistryValueKind.DWord);
+                key.SetValue("DisableThirdPartySuggestions", 0x1, RegistryValueKind.DWord);
+                key.SetValue("DisableWindowsConsumerFeatures", 0x1, RegistryValueKind.DWord);
             }
 
             // Disabling News and Interests
@@ -763,6 +769,14 @@ namespace HST.Controllers.RegistryManager
                 if (key != null)
                 {
                     key.SetValue("SleepStudyDisabled", 0, RegistryValueKind.DWord);
+                }
+            }
+
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Power"))
+            {
+                if (key != null)
+                {
+                    key.SetValue("HiberbootEnabled", 1, RegistryValueKind.DWord);
                 }
             }
 

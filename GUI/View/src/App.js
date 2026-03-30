@@ -282,7 +282,6 @@ const HelpPage = ({ onBack }) => {
     // Service data for detailed lists
     const essentialServices = [
         "Auto Time Zone Updater (tzautoupdate)",
-        "AVCTP service (BthAvctpSvc)",
         "BitLocker Drive Encryption (BDESVC)",
         "Block Level Backup Engine (wbengine)",
         "CaptureService (CaptureService)",
@@ -297,7 +296,6 @@ const HelpPage = ({ onBack }) => {
         "Data Sharing Service (DsSvc)",
         "Data Usage (DusmSvc)",
         "Delivery Optimization (DoSvc)",
-        "Device Association Broker (DeviceAssociationBrokerSvc)",
         "Device Management Enrollment Service (DmEnrollmentSvc)",
         "Device Management WAP Push (dmwappushservice)",
         "Device Picker User Service (DevicePickerUserSvc)",
@@ -393,6 +391,7 @@ const HelpPage = ({ onBack }) => {
     ];
 
     const bluetoothServices = [
+        "AVCTP service (BthAvctpSvc)",
         "Bluetooth Audio Gateway Service (BTAGService)",
         "Bluetooth Support Service (bthserv)",
         "Bluetooth User Support Service (BluetoothUserService)",
@@ -1096,6 +1095,11 @@ const HelpPage = ({ onBack }) => {
                     <div style={{ display: "grid", gap: "8px", marginBottom: "16px" }}>
                         {[
                             {
+                                feature: "Sleep / Lock options",
+                                cause: "Registry optimization hides Sleep and Lock from power menu",
+                                fix: "Revert → Registry, or manually set ShowSleepOption and ShowLockOption to 1 in Registry Editor",
+                            },
+                            {
                                 feature: "Printing",
                                 cause: "HST Essentials disables Print Spooler service",
                                 fix: "Revert → Services, or enable 'Print Spooler' in services.msc",
@@ -1134,6 +1138,11 @@ const HelpPage = ({ onBack }) => {
                                 feature: "OneDrive sync",
                                 cause: "OneDrive removed via Debloat",
                                 fix: "Download OneDrive installer from microsoft.com/onedrive",
+                            },
+                            {
+                                feature: "Microsoft Account Apps",
+                                cause: "HST Essentials disables Microsoft Account Sign-in Assistant (wlidsvc)",
+                                fix: "Revert → Services, or enable 'Microsoft Account Sign-in Assistant' in services.msc",
                             },
                         ].map((item) => (
                             <div

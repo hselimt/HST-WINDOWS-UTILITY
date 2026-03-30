@@ -57,6 +57,7 @@ https://github.com/user-attachments/assets/063aa012-9401-460f-9741-def6cb5f6398
 | Config file error | Re-run as Administrator |
 | Need to see what happened | Check `%TEMP%\HST-WINDOWS-UTILITY.log` |
 | Need to undo everything | Revert panel or Windows System Restore |
+| Microsoft Account can't sign-in | Revert Services, or enable wlidsvc in services.msc |
 
 </details>
 
@@ -83,7 +84,6 @@ https://github.com/user-attachments/assets/063aa012-9401-460f-9741-def6cb5f6398
 |----------|-------------|
 | Game Bar & DVR | No Xbox overlay, no clip recording, no Game Bar streaming |
 | Location services | Weather widgets, Maps, "Find My Device" won't work |
-| Webcam system access | Video calls fail until re-enabled in Privacy settings |
 | Background apps | Apps won't update or sync when minimized |
 | Notifications | No toast notifications from any app |
 | Search indexing | File searches become slower |
@@ -131,8 +131,8 @@ https://github.com/user-attachments/assets/063aa012-9401-460f-9741-def6cb5f6398
 Disable services by category:
 | Category | Count | Examples |
 |----------|-------|----------|
-| Recommended | 108 | Telemetry, diagnostics, rarely-used services |
-| Bluetooth | 4 | Audio gateway, support services |
+| Recommended | 107 | Telemetry, diagnostics, rarely-used services |
+| Bluetooth | 5 | Audio gateway, support services |
 | Hyper-V | 11 | All virtualization services |
 | Xbox | 4 | Game save, networking, auth |
 

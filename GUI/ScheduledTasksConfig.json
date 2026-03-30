@@ -64,11 +64,11 @@
     "\\Microsoft\\Windows\\WS\\WSRefreshBannedAppsListTask",
     "\\Microsoft\\Windows\\WS\\WSTask"
   ],
-  "wuTaskPaths": [
-    "\\Microsoft\\Windows\\WindowsUpdate\\*",
-    "\\Microsoft\\Windows\\InstallService\\*",
-    "\\Microsoft\\Windows\\UpdateAssistant\\*",
-    "\\Microsoft\\Windows\\UpdateOrchestrator\\*",
-    "\\Microsoft\\Windows\\WaaSMedic\\*"
-  ]
+  "wuTasks": [
+    "\\Microsoft\\Windows\\WindowsUpdate\\Scheduled Start",
+    "\\Microsoft\\Windows\\UpdateOrchestrator\\Schedule Scan",
+    "\\Microsoft\\Windows\\UpdateOrchestrator\\Schedule Maintenance Work",
+    "\\Microsoft\\Windows\\UpdateOrchestrator\\UpdateAssistant",
+    "\\Microsoft\\Windows\\WaaSMedic\\PerformRemediation"
+]
 }

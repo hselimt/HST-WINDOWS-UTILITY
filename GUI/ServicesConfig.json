@@ -6,11 +6,6 @@
       "defaultStartup": 3
     },
     {
-      "service": "BthAvctpSvc",
-      "name": "AVCTP service",
-      "defaultStartup": 3
-    },
-    {
       "service": "BDESVC",
       "name": "BitLocker Drive Encryption Service",
       "defaultStartup": 3
@@ -79,11 +74,6 @@
       "service": "DoSvc",
       "name": "Delivery Optimization",
       "defaultStartup": 2
-    },
-    {
-      "service": "DeviceAssociationBrokerSvc",
-      "name": "Device Association Broker",
-      "defaultStartup": 3
     },
     {
       "service": "DmEnrollmentSvc",
@@ -547,6 +537,11 @@
     }
   ],
   "bluetooth": [
+    {
+      "service": "BthAvctpSvc",
+      "name": "AVCTP service",
+      "defaultStartup": 3
+    },
     {
       "service": "BTAGService",
       "name": "Bluetooth Audio Gateway Service",

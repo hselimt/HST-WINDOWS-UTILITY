@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableDelayedExpansion
-title HST WINDOWS UTILITY - SCRIPT VERSION v1.7.1
+title HST WINDOWS UTILITY - SCRIPT VERSION v1.7.2
 color 0B
 
 mode con: cols=90 lines=110
@@ -130,7 +130,7 @@ goto MAIN_MENU
 
 :SHOW_HELP
 cls
-echo                         HST WINDOWS UTILITY - HELP GUIDE v1.7.1
+echo                         HST WINDOWS UTILITY - HELP GUIDE v1.7.2
 echo                ============================================================
 echo                =                    IMPORTANT WARNINGS                    =
 echo                ============================================================
@@ -316,6 +316,7 @@ goto MAIN_MENU
 echo                   - PERFORMANCE SETTINGS
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d 38 /f %nul%
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v "SleepStudyDisabled" /t REG_DWORD /d 1 /f %nul%
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v "HiberbootEnabled" /t REG_DWORD /d 0 /f %nul%
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v "HibernateEnabled" /t REG_DWORD /d 0 /f %nul%
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance" /v "MaintenanceDisabled" /t REG_DWORD /d 1 /f %nul%
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling" /v "PowerThrottlingOff" /t REG_DWORD /d 1 /f %nul%
@@ -513,7 +514,7 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\phoneCallHistory" /v "Value" /t REG_SZ /d "Deny" /f %nul%
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\picturesLibrary" /v "Value" /t REG_SZ /d "Deny" /f %nul%
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\radios" /v "Value" /t REG_SZ /d "Deny" /f %nul%
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam" /v "Value" /t REG_SZ /d "Deny" /f %nul%
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam" /v "Value" /t REG_SZ /d "Allow" /f %nul%
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userAccountInformation" /v "Value" /t REG_SZ /d "Deny" /f %nul%
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userDataTasks" /v "Value" /t REG_SZ /d "Deny" /f %nul%
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userNotificationListener" /v "Value" /t REG_SZ /d "Deny" /f %nul%
@@ -784,6 +785,13 @@ sc sdset UsoSvc D:(D;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCLCSWRPWPDTLOCRRC;;;BA) %nul%
 sc sdset WaaSMedicSvc D:(D;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCLCSWRPWPDTLOCRRC;;;BA) %nul%
 sc sdset BITS D:(D;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCLCSWRPWPDTLOCRRC;;;BA) %nul%
 
+echo                   - DISABLING UPDATE SCHEDULED TASKS
+schtasks /Change /TN "\Microsoft\Windows\WindowsUpdate\Scheduled Start" /Disable %nul%
+schtasks /Change /TN "\Microsoft\Windows\UpdateOrchestrator\Schedule Scan" /Disable %nul%
+schtasks /Change /TN "\Microsoft\Windows\UpdateOrchestrator\Schedule Maintenance Work" /Disable %nul%
+schtasks /Change /TN "\Microsoft\Windows\UpdateOrchestrator\UpdateAssistant" /Disable %nul%
+schtasks /Change /TN "\Microsoft\Windows\WaaSMedic\PerformRemediation" /Disable %nul%
+
 echo                   - SETTING UPDATE POLICIES
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "NoAutoUpdate" /t REG_DWORD /d 1 /f %nul%
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "AUOptions" /t REG_DWORD /d 1 /f %nul%
@@ -799,13 +807,13 @@ echo                ============================================================
 echo.
 echo                               SELECT SERVICES TO DISABLE
 echo.
-echo                             [1] RECOMMENDED (108 SERVICES)
-echo                             [2] BLUETOOTH (4 SERVICES)
-echo                             [3] HYPER-V (11 SERVICES)
-echo                             [4] XBOX (4 SERVICES)
-echo                             [5] ALL OF THE ABOVE (95 SERVICES)
+echo                               [1] RECOMMENDED
+echo                               [2] BLUETOOTH
+echo                               [3] HYPER-V
+echo                               [4] XBOX
+echo                               [5] ALL OF THE ABOVE
 echo.
-echo                             [0] BACK TO MENU
+echo                               [0] BACK TO MENU
 echo.
 set /p svc_choice="                 YOUR CHOICE -> "
 
@@ -836,7 +844,6 @@ exit /b
 :DISABLE_SERVICES_ALL_RECOMMENDED
 echo                    - DISABLING SERVICES (BATCH 1/9)
 sc stop tzautoupdate %nul% & sc config tzautoupdate start= disabled %nul%
-sc stop BthAvctpSvc %nul% & sc config BthAvctpSvc start= disabled %nul%
 sc stop BDESVC %nul% & sc config BDESVC start= disabled %nul%
 sc stop wbengine %nul% & sc config wbengine start= disabled %nul%
 sc stop autotimesvc %nul% & sc config autotimesvc start= disabled %nul%
@@ -972,6 +979,7 @@ exit /b
 
 :DISABLE_BLUETOOTH_SERVICES
 echo                    - DISABLING BLUETOOTH SERVICES
+sc stop BthAvctpSvc %nul% & sc config BthAvctpSvc start= disabled %nul%
 sc stop BTAGService %nul% & sc config BTAGService start= disabled %nul%
 sc stop bthserv %nul% & sc config bthserv start= disabled %nul%
 sc stop BluetoothUserService %nul% & sc config BluetoothUserService start= disabled %nul%
@@ -1312,23 +1320,14 @@ echo                    - REMOVING USER APPS FROM STARTUP
 reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Steam" /f 2>nul
 reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Discord" /f 2>nul
 reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Spotify" /f 2>nul
-reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Slack" /f 2>nul
 reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Teams" /f 2>nul
 reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Zoom" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Lightshot" /f 2>nul
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "WhatsApp" /f 2>nul
 reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Epic Games Launcher" /f 2>nul
 reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Origin" /f 2>nul
 reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Uplay" /f 2>nul
 reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Battle.net" /f 2>nul
-reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Skype" /f 2>nul
-reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Dropbox" /f 2>nul
-reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "GoogleDriveSync" /f 2>nul
-reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Adobe Creative Cloud" /f 2>nul
-reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "CCleaner" /f 2>nul
-
-reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Steam" /f 2>nul
-reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Discord" /f 2>nul
-reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Spotify" /f 2>nul
-reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Adobe Creative Cloud" /f 2>nul
 
 echo.
 echo                ============================================================
@@ -1520,6 +1519,7 @@ goto MAIN_MENU
 echo                    - RESTORING PERFORMANCE SETTINGS
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d 2 /f %nul%
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v "SleepStudyDisabled" /t REG_DWORD /d 0 /f %nul%
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v "HiberbootEnabled" /t REG_DWORD /d 1 /f %nul%
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v "HibernateEnabled" /t REG_DWORD /d 1 /f %nul%
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance" /v "MaintenanceDisabled" /t REG_DWORD /d 0 /f %nul%
 reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling" /v "PowerThrottlingOff" /f %nul%
@@ -1812,7 +1812,6 @@ goto MAIN_MENU
 :RESTORE_SERVICES_SILENT
 echo                    - RESTORING SERVICES (BATCH 1/9)
 sc config tzautoupdate start= demand %nul%
-sc config BthAvctpSvc start= demand %nul%
 sc config BDESVC start= demand %nul%
 sc config wbengine start= demand %nul%
 sc config autotimesvc start= demand %nul%
@@ -1937,6 +1936,7 @@ sc config CDPSvc start= auto %nul%
 sc config WpnService start= auto %nul%
 
 echo                    - RESTORING BLUETOOTH SERVICES
+sc config BthAvctpSvc start= demand %nul%
 sc config BTAGService start= demand %nul%
 sc config bthserv start= demand %nul%
 sc config BluetoothUserService start= demand %nul%

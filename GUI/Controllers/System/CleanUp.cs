@@ -20,6 +20,7 @@ namespace HST.Controllers.System
                 await Task.Run(() =>
                 {
                     FileManager.DeleteDirectoryIfExists(Path.GetTempPath());
+                    Directory.CreateDirectory(Path.GetTempPath());
                     FileManager.DeleteDirectoryIfExists(Path.Combine(Paths.SystemRoot, "Temp"));
                     FileManager.DeleteDirectoryIfExists(Path.Combine(Paths.SystemRoot, "Prefetch"));
                     FileManager.DeleteDirectoryIfExists(Path.Combine(Paths.LocalAppDataPath, "Temp"));

@@ -4,7 +4,6 @@
     "Disney",
     "LinkedInforWindows",
     "LinkedIn",
-    "Microsoft",
     "Microsoft.BingNews",
     "Microsoft.BingSearch",
     "Microsoft.BingWeather",
@@ -67,20 +66,14 @@
   "startupApps": [
     "Steam",
     "Discord",
-    "Lightshot",
     "Spotify",
     "Teams",
     "Zoom",
-    "Epic",
+    "Lightshot",
+    "WhatsApp",
+    "Epic Games Launcher",
     "Origin",
     "Uplay",
-    "Battle.net",
-    "Skype",
-    "Google Drive",
-    "OneDrive",
-    "Adobe",
-    "WhatsApp",
-    "Telegram",
-    "CCleaner"
+    "Battle.net"
   ]
 }
