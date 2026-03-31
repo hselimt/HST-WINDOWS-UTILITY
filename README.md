@@ -1,12 +1,8 @@
 <div align="center">
   
 # HST WINDOWS UTILITY
-
 <p>
-<img src="https://img.shields.io/badge/Windows-10%20%7C%2011-0078D6?style=for-the-badge&logo=windows&logoColor=white"/>
-<img src="https://img.shields.io/badge/C%23-ASP.NET%20Core-239120?style=for-the-badge&logo=csharp&logoColor=white"/>
-<img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black"/>
-<img src="https://img.shields.io/badge/Electron-27-47848F?style=for-the-badge&logo=electron&logoColor=white"/>
+  <img src="https://img.shields.io/github/downloads/hselimt/HST-WINDOWS-UTILITY/total?style=for-the-badge&logo=github&label=Downloads"/>
 </p>
 
 **Windows optimization tools designed to maximize system performance through registry tweaks, service management, and system cleanup. Perfect for gamers and power users seeking maximum hardware efficiency.**
