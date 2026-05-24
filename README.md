@@ -10,7 +10,11 @@
 </div>
 
 > [!WARNING]
-> In the current state of Windows with all the different hardware, software, and configurations people run, it's impossible to create a utility that suits every user's needs out of the box. That's why every feature is fully documented both in the GUI (? icon in top-right) and the CLI ([H] Help). **Read the documentation before running any features** so you know what to expect and what might not work well with your specific setup.
+> **GUI version could take up to 1 minute to start** This is expected since it's a portable exe file. It contains all the dependencies inside. App launches background processes and waits for them to initialize before loading.
+> 
+> **If you prefer instant startup**, use the **CLI version** instead, it has all the features that exist in GUI version.
+> 
+> Every feature is fully documented both in the GUI (? icon in top-right) and the CLI ([H] Help). **Read the documentation before running any features** so you know what to expect and what might/might not work well with your specific setup.
 
 >  **Tutorial recorded on:** Fresh Windows 11 25H2 → Updated → Installed browser → Restarted - Make sure you have a stable GPU driver installed
 
