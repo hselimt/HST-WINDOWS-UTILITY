@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableDelayedExpansion
-title HST WINDOWS UTILITY - SCRIPT VERSION v1.7.2
+title HST WINDOWS UTILITY - SCRIPT VERSION v1.8.0
 color 0B
 
 mode con: cols=90 lines=110
@@ -130,7 +130,7 @@ goto MAIN_MENU
 
 :SHOW_HELP
 cls
-echo                         HST WINDOWS UTILITY - HELP GUIDE v1.7.2
+echo                         HST WINDOWS UTILITY - HELP GUIDE v1.8.0
 echo                ============================================================
 echo                =                    IMPORTANT WARNINGS                    =
 echo                ============================================================
@@ -1197,13 +1197,13 @@ taskkill /f /im MicrosoftEdgeUpdate.exe %nul%
 timeout /t 1 /nobreak >nul
 
 echo                    - REMOVING EDGE DIRECTORIES
-rd /s /q "C:\Program Files (x86)\Microsoft\Edge" %nul%
-rd /s /q "C:\Program Files (x86)\Microsoft\EdgeCore" %nul%
-rd /s /q "C:\Program Files (x86)\Microsoft\EdgeUpdate" %nul%
-rd /s /q "C:\Program Files\Microsoft\Edge" %nul%
-rd /s /q "C:\Program Files\Microsoft\EdgeUpdate" %nul%
-rd /s /q "C:\ProgramData\Microsoft\Edge" %nul%
-rd /s /q "C:\ProgramData\Microsoft\EdgeUpdate" %nul%
+rd /s /q "%ProgramFiles(x86)%\Microsoft\Edge" %nul%
+rd /s /q "%ProgramFiles(x86)%\Microsoft\EdgeCore" %nul%
+rd /s /q "%ProgramFiles(x86)%\Microsoft\EdgeUpdate" %nul%
+rd /s /q "%ProgramFiles%\Microsoft\Edge" %nul%
+rd /s /q "%ProgramFiles%\Microsoft\EdgeUpdate" %nul%
+rd /s /q "%ProgramData%\Microsoft\Edge" %nul%
+rd /s /q "%ProgramData%\Microsoft\EdgeUpdate" %nul%
 rd /s /q "%APPDATA%\Microsoft\Internet Explorer" %nul%
 
 echo                    - REMOVING EDGE SHORTCUTS
@@ -1259,10 +1259,10 @@ rd /s /q "%USERPROFILE%\OneDrive" %nul%
 rd /s /q "%LOCALAPPDATA%\Microsoft\OneDrive" %nul%
 rd /s /q "%LOCALAPPDATA%\OneDrive" %nul%
 rd /s /q "%ProgramData%\Microsoft OneDrive" %nul%
-rd /s /q "C:\Program Files\Microsoft\OneDrive" %nul%
-rd /s /q "C:\Program Files (x86)\Microsoft\OneDrive" %nul%
-rd /s /q "C:\Program Files\Microsoft OneDrive" %nul%
-rd /s /q "C:\Program Files (x86)\Microsoft OneDrive" %nul%
+rd /s /q "%ProgramFiles%\Microsoft\OneDrive" %nul%
+rd /s /q "%ProgramFiles(x86)%\Microsoft\OneDrive" %nul%
+rd /s /q "%ProgramFiles%\Microsoft OneDrive" %nul%
+rd /s /q "%ProgramFiles(x86)%\Microsoft OneDrive" %nul%
 
 echo                    - REMOVING ONEDRIVE SHORTCUTS
 del /f /q "%USERPROFILE%\Desktop\OneDrive.lnk" %nul%
@@ -1360,12 +1360,12 @@ rd /s /q "%TEMP%" %nul%
 mkdir "%TEMP%" %nul%
 
 echo                    - CLEANING WINDOWS TEMP
-del /f /s /q "C:\Windows\Temp\*" %nul%
-rd /s /q "C:\Windows\Temp" %nul%
-mkdir "C:\Windows\Temp" %nul%
+del /f /s /q "%WINDIR%\Temp\*" %nul%
+rd /s /q "%WINDIR%\Temp" %nul%
+mkdir "%WINDIR%\Temp" %nul%
 
 echo                    - CLEANING PREFETCH
-del /f /s /q "C:\Windows\Prefetch\*" %nul%
+del /f /s /q "%WINDIR%\Prefetch\*" %nul%
 
 echo                    - CLEANING LOCAL TEMP
 del /f /s /q "%LOCALAPPDATA%\Temp\*" %nul%
@@ -1407,9 +1407,9 @@ echo                    - CLEANING WINDOWS UPDATE CACHE
 net stop wuauserv %nul%
 net stop bits %nul%
 timeout /t 1 /nobreak >nul
-del /f /s /q "C:\Windows\SoftwareDistribution\Download\*" %nul%
-rd /s /q "C:\Windows\SoftwareDistribution\Download" %nul%
-mkdir "C:\Windows\SoftwareDistribution\Download" %nul%
+del /f /s /q "%WINDIR%\SoftwareDistribution\Download\*" %nul%
+rd /s /q "%WINDIR%\SoftwareDistribution\Download" %nul%
+mkdir "%WINDIR%\SoftwareDistribution\Download" %nul%
 
 exit /b
 

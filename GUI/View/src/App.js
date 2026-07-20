@@ -22,7 +22,6 @@ import {
     CheckCircle,
     Loader,
     Server,
-    Watch,
     Zap,
     RotateCcw,
     HelpCircle,
@@ -1320,7 +1319,7 @@ export default function HSTWindowsUtility() {
     const [activeOperation, setActiveOperation] = useState(null);
     const [systemInfo, setSystemInfo] = useState({
         user: "LOADING...",
-        time: "LOADING...",
+        os: "LOADING...",
         gpu: "LOADING...",
         cpu: "LOADING...",
         ram: "LOADING...",
@@ -1379,7 +1378,7 @@ export default function HSTWindowsUtility() {
             } else {
                 setSystemInfo({
                     user: "ERROR",
-                    time: "ERROR",
+                    os: "ERROR",
                     gpu: "ERROR",
                     cpu: "ERROR",
                     ram: "ERROR",
@@ -1389,7 +1388,7 @@ export default function HSTWindowsUtility() {
         } catch (error) {
             setSystemInfo({
                 user: "OFFLINE",
-                time: "OFFLINE",
+                os: "OFFLINE",
                 gpu: "OFFLINE",
                 cpu: "OFFLINE",
                 ram: "OFFLINE",
@@ -1923,9 +1922,9 @@ export default function HSTWindowsUtility() {
                                     color: "#8b5cf6",
                                 },
                                 {
-                                    label: "TIME",
-                                    value: systemInfo.time,
-                                    icon: Watch,
+                                    label: "OS",
+                                    value: systemInfo.os,
+                                    icon: Info,
                                     color: "#8b5cf6",
                                 },
                                 {

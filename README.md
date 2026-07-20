@@ -10,10 +10,6 @@
 </div>
 
 > [!WARNING]
-> **GUI version could take up to 1 minute to start** This is expected since it's a portable exe file. It contains all the dependencies inside. App launches background processes and waits for them to initialize before loading.
-> 
-> **If you prefer instant startup**, use the **CLI version** instead, it has all the features that exist in GUI version.
-> 
 > Every feature is fully documented both in the GUI (? icon in top-right) and the CLI ([H] Help). **Read the documentation before running any features** so you know what to expect and what might/might not work well with your specific setup.
 
 >  **Tutorial recorded on:** Fresh Windows 11 25H2 → Updated → Installed browser → Restarted - Make sure you have a stable GPU driver installed
@@ -108,9 +104,17 @@ https://github.com/user-attachments/assets/063aa012-9401-460f-9741-def6cb5f6398
 
 [![Download](https://img.shields.io/badge/Download-Latest%20Release-success?style=for-the-badge&logo=github)](https://github.com/hselimt/HST-WINDOWS-UTILITY/releases)
 
-**After downloading Right-click .exe → Properties → Check "Unblock" → Apply → Run as Administrator**
+The GUI ships as an NSIS installer (`HST-WINDOWS-UTILITY-1.8.exe`):
+
+1. Download the installer from the Releases page above.
+2. If Windows flags it as downloaded from the internet, right-click it → Properties → check **"Unblock"** → Apply (same as any downloaded .exe — see screenshot below).
+3. Run the installer. It requests Administrator via UAC — accept the prompt.
+4. Click through the install wizard (you can choose a desktop shortcut during install). This creates a Start Menu entry and, optionally, a desktop shortcut.
+5. Launch HST WINDOWS UTILITY from either shortcut. It also requests Administrator on every launch, since nearly every feature needs elevation.
 
 ![BLOCK](./BLOCK.png)
+
+If the app doesn't open, or a window flashes and disappears, check `%TEMP%\HST-WINDOWS-UTILITY.log` — the app also shows an error dialog with the reason if its backend fails to start.
 
 ---
 
@@ -162,7 +166,17 @@ To ensure system stability and safety, every function in this utility has been t
 
 - **Environment:** Tests were conducted on VirtualBox and Hyper-V simulating fresh Windows installations to isolate variables
 - **Coverage:** Each button, toggle, and script was executed multiple times individually to verify functionality
-- **Reversibility:** Revert functions were tested to ensure systems could be returned to default states without errors
+- **Reversibility:** Revert functions were tested for the categories they cover (Services, Scheduled Tasks, Registry, Windows Update) — see **Known Issues** below for cases where revert doesn't fully apply, isn't available, or doesn't restore your prior settings
+
+---
+
+## 🐞 Known Issues
+
+| Issue | Detail |
+|-------|--------|
+| **Debloat & Cleanup have no revert path** | Removing apps (Edge, OneDrive, Xbox, Store, startup apps) or running Cleanup is one-way — there is no "undo" for these categories, in GUI or CLI. Use a System Restore point or reinstall manually if you need something back. |
+| **Registry revert can partially apply** | If any single registry key is locked, protected, or blocked (e.g. by group policy or antivirus), Optimize/Revert stops applying further changes but can still report success. There's no per-key status shown — check `%TEMP%\HST-WINDOWS-UTILITY.log` if something doesn't look reverted. |
+| **Revert restores Windows factory defaults, not your prior settings** | Revert writes Windows' original/default values — it does not know or remember what your settings were *before* you ran this tool. If something was already customized away from default beforehand, Revert will not restore that customization. |
 
 ---
 
@@ -180,7 +194,7 @@ To ensure system stability and safety, every function in this utility has been t
 
 - Windows 10/11 (64-bit)
 - Administrator privileges
-- 100 MB disk space
+- ~350 MB disk space
 - .NET 8.0 Runtime (included in GUI executable)
 
 ---

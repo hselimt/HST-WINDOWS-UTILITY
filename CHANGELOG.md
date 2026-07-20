@@ -1,3 +1,27 @@
+## [1.8.0] - 2026-07-20
+
+### Added
+* **Clean Script** - `Clean-GUI.bat` removes build artifacts (bin, obj, dist, node_modules, wwwroot) while preserving the Powerplan folder
+
+### Changed
+* **Installer** - Replaced portable exe distribution with an NSIS installer (Start Menu entry, optional desktop shortcut, install wizard instead of silent one-click install)
+* **Package Size** - Cut packaged app size from ~687MB to ~350MB by deleting the leftover intermediate `.NET` build directory after publish, pruning Electron's bundled locales to `en-US` only, and excluding compile-time reference assemblies (`ref/`) from the publish output
+* **System Information Panel** - TIME field replaced with OS (name + build number); RAM now shows used/total plus module speed; Storage now detects the actual Windows system drive instead of assuming `C:`, and shows used/total instead of free space only
+* **External Links** - Links (e.g. GitHub) now open in the default browser instead of navigating inside the app window
+
+### Fixed
+* **Blank Window on Some GPUs** - The app could launch to an empty window on machines where Chromium's GPU process crashed. Hardware acceleration is now disabled, resolving it
+* **Silent Startup Failure** - A native error dialog now shows the failure reason when the backend fails to start, instead of the app silently vanishing with no explanation
+* **Duplicate Instances** - Launching the app while it's already running now focuses the existing window instead of starting a second instance with its own backend
+* **Orphaned Elevated Processes** - `ProcessRunner` now kills the entire process tree on a command timeout instead of abandoning it running in the background
+* **Backend Readiness Check** - The Electron shell now verifies the backend is serving the actual app before loading it, instead of accepting any HTTP response
+* **CLI Hardcoded Paths** - Cleanup and app-removal routines now resolve `%WINDIR%`, `%ProgramFiles%`, `%ProgramFiles(x86)%`, and `%ProgramData%` instead of assuming `C:\`
+
+### Removed
+* **Orphaned Files** - Deleted a stale `launchSettings.json` containing outdated build configuration
+
+---
+
 ## [1.7.2] - 2026-03-30
 
 ### Fixed

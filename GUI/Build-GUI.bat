@@ -93,7 +93,7 @@ echo [4/8] Building .NET backend...
 cd /d "%BASE_DIR%"
 
 echo   ^> Publishing backend (this may take a few minutes)...
-call dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true --nologo
+call dotnet publish -c Release -r win-x64 --self-contained true --nologo
 if errorlevel 1 (
     echo   ^> ERROR: .NET publish failed!
     pause
@@ -125,6 +125,9 @@ if not exist "bin\HST-WINDOWS-UTILITY.exe" (
     pause
     exit /b 1
 )
+
+echo   ^> Cleaning up intermediate build output...
+rmdir /S /Q "bin\Release"
 
 echo   ^> Backend ready!
 echo.
@@ -172,7 +175,7 @@ echo.
 :: Step 8: Verify final output
 echo [8/8] Verifying build output...
 
-set "EXE_PATH=%BASE_DIR%dist\HST-WINDOWS-UTILITY-1.7.2.exe"
+set "EXE_PATH=%BASE_DIR%dist\HST-WINDOWS-UTILITY-1.8.0.exe"
 
 if not exist "%EXE_PATH%" (
     echo   ^> ERROR: Final executable not found!

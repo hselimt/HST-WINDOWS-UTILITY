@@ -1,4 +1,4 @@
-﻿const { app, BrowserWindow } = require('electron');
+﻿const { app, BrowserWindow, shell, dialog } = require('electron');
 const { spawn } = require('child_process');
 const path = require('path');
 const http = require('http');
@@ -7,22 +7,40 @@ const fs = require('fs');
 let mainWindow;
 let apiProcess;
 
-app.requestSingleInstanceLock();
+const gotSingleInstanceLock = app.requestSingleInstanceLock();
+
+if (!gotSingleInstanceLock) {
+    app.quit();
+}
 
 function waitForServer(url, maxAttempts = 30) {
     return new Promise((resolve, reject) => {
         let attempts = 0;
         const check = () => {
             http.get(url, (res) => {
-                resolve();
-            }).on('error', (err) => {
-                attempts++;
-                if (attempts >= maxAttempts) {
-                    reject(new Error('Server failed to start'));
-                } else {
-                    setTimeout(check, 1000);
+                if (res.statusCode !== 200) {
+                    res.resume(); // drain so the socket can be reused
+                    retry();
+                    return;
                 }
-            });
+                let body = '';
+                res.on('data', (chunk) => { body += chunk; });
+                res.on('end', () => {
+                    if (body.includes('id="root"')) {
+                        resolve();
+                    } else {
+                        retry();
+                    }
+                });
+            }).on('error', retry);
+        };
+        const retry = () => {
+            attempts++;
+            if (attempts >= maxAttempts) {
+                reject(new Error('Server failed to start'));
+            } else {
+                setTimeout(check, 1000);
+            }
         };
         check();
     });
@@ -100,6 +118,7 @@ async function createWindow() {
         await waitForServer('http://localhost:5200');
     } catch (err) {
         console.error('Backend failed to start:', err);
+        dialog.showErrorBox('HST WINDOWS UTILITY', `The backend failed to start:\n\n${err.message}`);
         app.quit();
         return;
     }
@@ -121,8 +140,34 @@ async function createWindow() {
 
     mainWindow.setMenu(null);
     mainWindow.loadURL('http://localhost:5200');
+
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+        shell.openExternal(url);
+        return { action: 'deny' };
+    });
+
+    mainWindow.webContents.on('will-navigate', (event, url) => {
+        if (!url.startsWith('http://localhost:5200')) {
+            event.preventDefault();
+            shell.openExternal(url);
+        }
+    });
+
+    if (process.env.HST_DEBUG) {
+        mainWindow.webContents.openDevTools({ mode: 'detach' });
+    }
 }
 
+app.on('second-instance', () => {
+    if (mainWindow) {
+        if (mainWindow.isMinimized()) {
+            mainWindow.restore();
+        }
+        mainWindow.focus();
+    }
+});
+
+app.disableHardwareAcceleration();
 app.whenReady().then(createWindow);
 
 app.on('before-quit', () => {
