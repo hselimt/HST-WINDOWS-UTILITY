@@ -6,13 +6,10 @@
 </p>
 
 **Windows optimization tools designed to maximize system performance through registry tweaks, service management, and system cleanup. Perfect for gamers and power users seeking maximum hardware efficiency.**
-
 </div>
 
 > [!WARNING]
-> Every feature is fully documented both in the GUI (? icon in top-right) and the CLI ([H] Help). **Read the documentation before running any features** so you know what to expect and what might/might not work well with your specific setup.
-
->  **Tutorial recorded on:** Fresh Windows 11 25H2 → Updated → Installed browser → Restarted - Make sure you have a stable GPU driver installed
+> This tool makes aggressive system changes. Read the documentation before running any features  **GUI (? icon in top-right) and the CLI ([H] Help)**.
 
 https://github.com/user-attachments/assets/063aa012-9401-460f-9741-def6cb5f6398
 
@@ -25,96 +22,37 @@ https://github.com/user-attachments/assets/063aa012-9401-460f-9741-def6cb5f6398
 <td><img src="./GUI/HST.png" width="500"/></td>
 <td><img src="./CLI/HST.png" width="500"/></td>
 </tr>
+<tr>
+<td valign="top">
+
+Installer (`.exe`). Graphical interface.
+
+- ~350 MB disk space
+- .NET 8.0 Runtime (bundled)
+- Windows 10/11 64-bit
+- Administrator required
+- Docs: **?** icon, top-right
+
+</td>
+<td valign="top">
+
+Portable script. No installer, no runtime, no leftovers.
+
+- A few hundred KB
+- Same feature set as the GUI
+- Windows 10/11 64-bit
+- Administrator required
+- Docs: **[H] Help**
+
+</td>
+</tr>
 </table>
 
----
-
-## ⚠️ Before You Use
-
-**This tool makes aggressive system changes.** Ideal for: gaming desktops, fresh Windows installs, power users who know what they're doing.
-
-### ⛔ Critical
-
-| Warning | Why it matters |
-|---------|----------------|
-| **Create a restore point first** | Built-in button available — use it before any changes |
-| **OneDrive removal deletes files** | Synced files are removed. Disable sync first |
-| **App removals are permanent** | Microsoft Store apps need Windows reset to restore |
-| **Revert ≠ Undo** | Restores Windows defaults, not your custom settings |
-
-<details>
-<summary><b>🛠️ Troubleshooting</b></summary>
-
-| Issue | Fix |
-|-------|-----|
-| Operations fail silently | Must run as Administrator |
-| HST-W-U won't start | Unblock the .exe (Properties → Unblock) |
-| Apps won't start | Revert Services and registry tweaks |
-| Config file error | Re-run as Administrator |
-| Need to see what happened | Check `%TEMP%\HST-WINDOWS-UTILITY.log` |
-| Need to undo everything | Revert panel or Windows System Restore |
-| Microsoft Account can't sign-in | Revert Services, or enable wlidsvc in services.msc |
-
-</details>
-
-<details>
-<summary><b>🚫 Skip these features if...</b></summary>
-
-| Your situation | What to skip | Why |
-|----------------|--------------|-----|
-| Laptop user | Power plan, registry tweaks | Kills battery life, breaks sleep/hibernate |
-| VM user (VirtualBox, Hyper-V, etc.) | Registry tweaks, Hyper-V services | Breaks guest integration, snapshots |
-| Work/School PC | Windows Update toggle | IT policies will conflict or flag you |
-| Use a printer | Recommended services | Disables Print Spooler |
-| Bluetooth headphones/mouse | Bluetooth services | Devices won't connect |
-| Remote Desktop user | Recommended services | Disables RDP services |
-| Realtek 2.5GbE Ethernet | Power plan | Driver may not initialize after cold boot, you would have to restart |
-| Web Applications | HST Essential Services | Some web apps requires some services that this software disables |
-
-</details>
-
-<details>
-<summary><b>🔧 What registry optimization actually does</b></summary>
-
-| Disabled | What breaks |
-|----------|-------------|
-| Game Bar & DVR | No Xbox overlay, no clip recording, no Game Bar streaming |
-| Location services | Weather widgets, Maps, "Find My Device" won't work |
-| Background apps | Apps won't update or sync when minimized |
-| Notifications | No toast notifications from any app |
-| Search indexing | File searches become slower |
-| Windows Spotlight | No automatic lock screen wallpapers |
-| Mouse acceleration | Raw 1:1 input — feels "slow" at first if you're used to acceleration |
-
-**Still enabled:**
-- Defender real-time protection (only scheduled scans disabled)
-- Firewall
-- Core security features
-
-**Manually reversible:**
-- Webcam: Settings → Privacy → Camera
-- Location: Settings → Privacy → Location
-- Notifications: Settings → System → Notifications
-
-</details>
-
----
-
-### 📥 Download
+<div align="center">
 
 [![Download](https://img.shields.io/badge/Download-Latest%20Release-success?style=for-the-badge&logo=github)](https://github.com/hselimt/HST-WINDOWS-UTILITY/releases)
 
-The GUI ships as an NSIS installer (`HST-WINDOWS-UTILITY-1.8.exe`):
-
-1. Download the installer from the Releases page above.
-2. If Windows flags it as downloaded from the internet, right-click it → Properties → check **"Unblock"** → Apply (same as any downloaded .exe — see screenshot below).
-3. Run the installer. It requests Administrator via UAC — accept the prompt.
-4. Click through the install wizard (you can choose a desktop shortcut during install). This creates a Start Menu entry and, optionally, a desktop shortcut.
-5. Launch HST WINDOWS UTILITY from either shortcut. It also requests Administrator on every launch, since nearly every feature needs elevation.
-
-![BLOCK](./BLOCK.png)
-
-If the app doesn't open, or a window flashes and disappears, check `%TEMP%\HST-WINDOWS-UTILITY.log` — the app also shows an error dialog with the reason if its backend fails to start.
+</div>
 
 ---
 
@@ -147,36 +85,51 @@ Disable services by category:
 - **Power plans** — Remove default Windows plans
 - **Debloat** — Remove 45+ Microsoft apps, Edge, OneDrive, Xbox apps, Store
 
----
-
 ## 🧪 Testing & Validation
-
-To ensure system stability and safety, every function in this utility has been tested across multiple clean installation environments using virtual machines
-
-| Operating System | Version | Status |
-|------------------|---------|--------|
-| Windows 10 | 22H2 | ✅ Verified |
-| Windows 11 | 21H2 | ✅ Verified |
-| Windows 11 | 22H2 | ✅ Verified |
-| Windows 11 | 23H2 | ✅ Verified |
-| Windows 11 | 24H2 | ✅ Verified |
-| Windows 11 | 25H2 | ✅ Verified |
-
-### Quality Assurance Process
-
-- **Environment:** Tests were conducted on VirtualBox and Hyper-V simulating fresh Windows installations to isolate variables
-- **Coverage:** Each button, toggle, and script was executed multiple times individually to verify functionality
-- **Reversibility:** Revert functions were tested for the categories they cover (Services, Scheduled Tasks, Registry, Windows Update) — see **Known Issues** below for cases where revert doesn't fully apply, isn't available, or doesn't restore your prior settings
+Every button, toggle, and script in this utility has been tested across multiple clean installation environments using virtual machines:
+- Windows 10 22H2
+- Windows 11 21H2/22H2/23H2/24H2/25H2
 
 ---
 
-## 🐞 Known Issues
+## ⛔ Before You Install
 
-| Issue | Detail |
-|-------|--------|
-| **Debloat & Cleanup have no revert path** | Removing apps (Edge, OneDrive, Xbox, Store, startup apps) or running Cleanup is one-way — there is no "undo" for these categories, in GUI or CLI. Use a System Restore point or reinstall manually if you need something back. |
-| **Registry revert can partially apply** | If any single registry key is locked, protected, or blocked (e.g. by group policy or antivirus), Optimize/Revert stops applying further changes but can still report success. There's no per-key status shown — check `%TEMP%\HST-WINDOWS-UTILITY.log` if something doesn't look reverted. |
-| **Revert restores Windows factory defaults, not your prior settings** | Revert writes Windows' original/default values — it does not know or remember what your settings were *before* you ran this tool. If something was already customized away from default beforehand, Revert will not restore that customization. |
+| Warning | Why it matters |
+|---------|----------------|
+| **Create a restore point first** | Built-in button available — use it before any changes |
+| **OneDrive removal deletes files** | Synced files are removed. Disable sync first |
+| **App removals are permanent** | Microsoft Store apps need Windows reset to restore |
+| **Revert ≠ Undo** | Restores Windows defaults, not your custom settings |
+
+<details>
+<summary><b>🚫 Skip these features if...</b></summary>
+
+| Your situation | What to skip | Why |
+|----------------|--------------|-----|
+| Laptop user | Power plan, registry tweaks | Kills battery life, breaks sleep/hibernate |
+| VM user (VirtualBox, Hyper-V, etc.) | Registry tweaks, Hyper-V services | Breaks guest integration, snapshots |
+| Use a printer | Recommended services | Disables Print Spooler |
+| Bluetooth headphones/mouse | Bluetooth services | Devices won't connect |
+| Remote Desktop user | Recommended services | Disables RDP services |
+| Unstable hardware | Power plan | Driver may not initialize after cold boot, you would have to restart |
+| Web Applications | HST Essential Services | Some web apps requires some services that this software disables |
+
+</details>
+
+---
+
+<details>
+<summary><b>🛠️ App won't start?</b></summary>
+
+| Issue | Fix |
+|-------|-----|
+| Nothing happens when launching | Unblock the .exe — right-click → Properties → check **Unblock** → Apply |
+| Operations fail silently | Must run as Administrator |
+| Config file error | Re-run as Administrator |
+| Need to see what happened | Check `%TEMP%\HST-WINDOWS-UTILITY.log` |
+| Need to undo everything | Revert panel or Windows System Restore |
+
+</details>
 
 ---
 
@@ -190,38 +143,6 @@ To ensure system stability and safety, every function in this utility has been t
 
 ---
 
-## 🔧 Requirements For GUI
-
-- Windows 10/11 (64-bit)
-- Administrator privileges
-- ~350 MB disk space
-- .NET 8.0 Runtime (included in GUI executable)
-
----
-
-## 👨‍💻 Development
-
-**What I Built:**
-- Years of Windows tweaking knowledge
-- Complete C# backend with Windows system APIs
-- Batch and PowerShell scripts/commands
-- All optimization logic and safety checks
-- CLI version with 20+ optimization modules
-- Full integration and testing
-
-**AI-Assisted:**
-- React frontend UI
-- Electron packaging setup
-- Build configuration
-
----
-
 ## 🤝 Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
----
-
-## 📞 Contact
-
-[![Email](https://img.shields.io/badge/Email-hselimt%40gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:hselimt@gmail.com)
+See [CONTRIBUTING](CONTRIBUTING.md) for guidelines.
